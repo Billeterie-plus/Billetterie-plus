@@ -34,8 +34,8 @@ export default function HomePage() {
   return (
     <div>
       <div className="mb-8 rounded-2xl bg-gradient-to-r from-brand to-brand-light p-8 text-white">
-        <h1 className="text-3xl font-bold">Trains, concerts, spectacles — un seul endroit</h1>
-        <p className="mt-2 text-white/90">Trouvez et réservez vos billets en quelques secondes.</p>
+        <h1 className="text-3xl font-bold">Votre prochain événement vous attend</h1>
+        <p className="mt-2 text-white/90">Trains, concerts, spectacles — réservez vos billets en quelques secondes.</p>
       </div>
 
       <div className="mb-6 flex flex-wrap items-center gap-3">
