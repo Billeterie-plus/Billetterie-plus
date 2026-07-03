@@ -38,6 +38,12 @@ export default function HomePage() {
         <p className="mt-2 text-white/90">Trains, concerts, spectacles — réservez vos billets en quelques secondes.</p>
       </div>
 
+      <p className="mb-8 max-w-2xl text-slate-600">
+        My Ticket réunit tous vos billets au même endroit : trains, concerts, sport et spectacles.
+        Achetez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des
+        événements, gérez-les depuis votre propre espace organisateur.
+      </p>
+
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <input
           value={q}
