@@ -1,10 +1,9 @@
 // Prisma schema for the ticketing platform.
-// Uses SQLite for zero-config local dev. For production, switch the
-// datasource provider to "postgresql" and set DATABASE_URL accordingly
-// (the rest of the schema is fully compatible with Postgres).
+// Uses PostgreSQL (Railway, Render, Supabase...). For du dev 100% local sans
+// service externe, vous pouvez remettre provider = "sqlite" temporairement.
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
