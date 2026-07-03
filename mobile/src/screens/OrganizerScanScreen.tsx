@@ -57,7 +57,7 @@ export default function OrganizerScanScreen() {
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24, backgroundColor: "#f8fafc" },
   permissionText: { textAlign: "center", marginBottom: 16, color: "#334155" },
-  btn: { backgroundColor: "#5b21b6", borderRadius: 10, paddingHorizontal: 20, paddingVertical: 12 },
+  btn: { backgroundColor: "#1d4ed8", borderRadius: 10, paddingHorizontal: 20, paddingVertical: 12 },
   btnText: { color: "white", fontWeight: "700" },
   resultBanner: { position: "absolute", bottom: 0, left: 0, right: 0, padding: 20 },
   resultOk: { backgroundColor: "rgba(22,101,52,0.95)" },

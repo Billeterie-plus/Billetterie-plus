@@ -114,7 +114,7 @@ export default function EventDetailScreen({ route, navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f8fafc" },
-  type: { color: "#5b21b6", fontWeight: "600" },
+  type: { color: "#1d4ed8", fontWeight: "600" },
   title: { fontSize: 24, fontWeight: "800", marginTop: 4 },
   subtitle: { color: "#64748b", marginTop: 6 },
   date: { color: "#64748b", marginTop: 2 },
@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
   totalRow: { flexDirection: "row", justifyContent: "space-between", marginTop: 14 },
   totalLabel: { fontWeight: "700" },
   totalValue: { fontWeight: "700" },
-  buyBtn: { marginTop: 14, backgroundColor: "#5b21b6", borderRadius: 10, paddingVertical: 14, alignItems: "center" },
+  buyBtn: { marginTop: 14, backgroundColor: "#1d4ed8", borderRadius: 10, paddingVertical: 14, alignItems: "center" },
   buyBtnText: { color: "white", fontWeight: "700" },
 });

@@ -37,7 +37,7 @@ export default function HomeScreen({ navigation }: Props) {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={handleAccount} style={{ marginRight: 12 }}>
-          <Text style={{ color: "#5b21b6", fontWeight: "600" }}>Compte</Text>
+          <Text style={{ color: "#1d4ed8", fontWeight: "600" }}>Compte</Text>
         </TouchableOpacity>
       ),
     });
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
   search: { backgroundColor: "white", borderRadius: 10, padding: 12, marginBottom: 12, borderWidth: 1, borderColor: "#e2e8f0" },
   chipsRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginBottom: 16 },
   chip: { backgroundColor: "#e2e8f0", borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6, marginRight: 8, marginBottom: 8 },
-  chipActive: { backgroundColor: "#5b21b6" },
+  chipActive: { backgroundColor: "#1d4ed8" },
   chipText: { color: "#334155" },
   chipTextActive: { color: "white" },
   card: { backgroundColor: "white", borderRadius: 14, padding: 14, marginBottom: 12, borderWidth: 1, borderColor: "#e2e8f0" },
-  cardType: { color: "#5b21b6", fontWeight: "600", fontSize: 12 },
+  cardType: { color: "#1d4ed8", fontWeight: "600", fontSize: 12 },
   cardTitle: { fontSize: 17, fontWeight: "700", marginTop: 2 },
   cardSubtitle: { color: "#64748b", marginTop: 2 },
   cardPrice: { marginTop: 8, fontWeight: "600" },

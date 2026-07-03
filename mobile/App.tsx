@@ -19,8 +19,8 @@ export default function App() {
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerTintColor: "#5b21b6" }}>
-          <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Billetterie+" }} />
+        <Stack.Navigator screenOptions={{ headerTintColor: "#1d4ed8" }}>
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: "My Ticket" }} />
           <Stack.Screen name="EventDetail" component={EventDetailScreen} options={{ title: "Détail" }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ title: "Connexion" }} />
           <Stack.Screen name="Register" component={RegisterScreen} options={{ title: "Créer un compte" }} />

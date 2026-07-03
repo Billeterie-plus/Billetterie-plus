@@ -1,4 +1,4 @@
-# Billetterie+ — Plateforme de billetterie (train, concert, spectacle...)
+# My Ticket — Plateforme de billetterie (train, concert, spectacle...)
 
 Plateforme complète de vente de billets avec application web, application mobile,
 et espace organisateur. Un même backend sert les deux clients.

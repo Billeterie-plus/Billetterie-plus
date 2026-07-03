@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#f8fafc" },
   actionsRow: { flexDirection: "row", gap: 10, marginBottom: 16 },
   actionBtn: { flex: 1, backgroundColor: "#e2e8f0", borderRadius: 10, paddingVertical: 12, alignItems: "center" },
-  actionBtnPrimary: { backgroundColor: "#5b21b6" },
+  actionBtnPrimary: { backgroundColor: "#1d4ed8" },
   actionText: { fontWeight: "600", color: "#334155" },
   actionTextPrimary: { fontWeight: "600", color: "white" },
   card: { backgroundColor: "white", borderRadius: 12, padding: 14, marginBottom: 10, borderWidth: 1, borderColor: "#e2e8f0" },

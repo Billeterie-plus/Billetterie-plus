@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "Billetterie+",
-    "slug": "billetterie-plus",
+    "name": "My Ticket",
+    "slug": "my-ticket",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "splash": {
-      "backgroundColor": "#5b21b6"
+      "backgroundColor": "#1e3a8a"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.example.billetterieplus"
+      "bundleIdentifier": "com.example.myticket"
     },
     "android": {
-      "package": "com.example.billetterieplus",
+      "package": "com.example.myticket",
       "permissions": ["CAMERA"]
     },
     "plugins": [

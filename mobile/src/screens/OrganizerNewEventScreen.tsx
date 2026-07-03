@@ -91,10 +91,10 @@ const styles = StyleSheet.create({
   input: { borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 10, padding: 12, marginBottom: 12, backgroundColor: "white" },
   typeRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginBottom: 12 },
   typeChip: { backgroundColor: "#e2e8f0", borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 },
-  typeChipActive: { backgroundColor: "#5b21b6" },
+  typeChipActive: { backgroundColor: "#1d4ed8" },
   typeChipText: { color: "#334155", fontSize: 12 },
   typeChipTextActive: { color: "white", fontSize: 12 },
   section: { fontWeight: "700", marginBottom: 8, marginTop: 4 },
-  btn: { backgroundColor: "#5b21b6", borderRadius: 10, paddingVertical: 14, alignItems: "center", marginTop: 8 },
+  btn: { backgroundColor: "#1d4ed8", borderRadius: 10, paddingVertical: 14, alignItems: "center", marginTop: 8 },
   btnText: { color: "white", fontWeight: "700" },
 });

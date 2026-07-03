@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 24, justifyContent: "center", backgroundColor: "#f8fafc" },
   title: { fontSize: 26, fontWeight: "800", marginBottom: 24 },
   input: { borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 10, padding: 12, marginBottom: 12, backgroundColor: "white" },
-  btn: { backgroundColor: "#5b21b6", borderRadius: 10, paddingVertical: 14, alignItems: "center", marginTop: 8 },
+  btn: { backgroundColor: "#1d4ed8", borderRadius: 10, paddingVertical: 14, alignItems: "center", marginTop: 8 },
   btnText: { color: "white", fontWeight: "700" },
-  link: { color: "#5b21b6", textAlign: "center", marginTop: 16 },
+  link: { color: "#1d4ed8", textAlign: "center", marginTop: 16 },
   hint: { color: "#94a3b8", fontSize: 12, textAlign: "center", marginTop: 24 },
 });

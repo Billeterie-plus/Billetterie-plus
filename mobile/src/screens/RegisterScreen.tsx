@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
   input: { borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 10, padding: 12, marginBottom: 12, backgroundColor: "white" },
   roleRow: { flexDirection: "row", gap: 10, marginBottom: 12 },
   roleBtn: { flex: 1, borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 10, paddingVertical: 10, alignItems: "center", backgroundColor: "white" },
-  roleBtnActive: { backgroundColor: "#5b21b6", borderColor: "#5b21b6" },
+  roleBtnActive: { backgroundColor: "#1d4ed8", borderColor: "#1d4ed8" },
   roleText: { color: "#334155" },
   roleTextActive: { color: "white", fontWeight: "700" },
-  btn: { backgroundColor: "#5b21b6", borderRadius: 10, paddingVertical: 14, alignItems: "center", marginTop: 8 },
+  btn: { backgroundColor: "#1d4ed8", borderRadius: 10, paddingVertical: 14, alignItems: "center", marginTop: 8 },
   btnText: { color: "white", fontWeight: "700" },
 });

@@ -3,7 +3,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Billetterie+ — Trains, concerts & événements",
+  title: "My Ticket — Trains, concerts & événements",
   description: "Achetez vos billets de train, concert et spectacle en quelques clics.",
 };
 
