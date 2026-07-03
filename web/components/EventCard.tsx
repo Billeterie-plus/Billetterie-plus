@@ -1,0 +1,37 @@
+import Link from "next/link";
+
+const TYPE_LABELS: Record<string, string> = {
+  TRAIN: "🚆 Train",
+  CONCERT: "🎵 Concert",
+  SPORT: "🏟️ Sport",
+  THEATRE: "🎭 Théâtre",
+  OTHER: "🎟️ Événement",
+};
+
+export default function EventCard({ event }: { event: any }) {
+  const minPrice = Math.min(...event.ticketTypes.map((t: any) => t.price));
+  const date = new Date(event.startDateTime).toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
+  return (
+    <Link
+      href={`/events/${event.id}`}
+      className="block rounded-xl border bg-white p-4 shadow-sm transition hover:shadow-md"
+    >
+      <div className="text-xs font-medium text-brand">{TYPE_LABELS[event.type] || event.type}</div>
+      <h3 className="mt-1 text-lg font-semibold">{event.title}</h3>
+      <p className="mt-1 text-sm text-slate-500">
+        {event.type === "TRAIN"
+          ? `${event.departureStation} → ${event.arrivalStation}`
+          : event.venue}
+      </p>
+      <div className="mt-3 flex items-center justify-between text-sm">
+        <span className="text-slate-500">{date}</span>
+        <span className="font-semibold">à partir de {minPrice}€</span>
+      </div>
+    </Link>
+  );
+}

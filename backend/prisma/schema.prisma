@@ -1,0 +1,190 @@
+// Prisma schema for the ticketing platform.
+// Uses SQLite for zero-config local dev. For production, switch the
+// datasource provider to "postgresql" and set DATABASE_URL accordingly
+// (the rest of the schema is fully compatible with Postgres).
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  BUYER
+  ORGANIZER
+  ADMIN
+}
+
+enum EventType {
+  TRAIN
+  CONCERT
+  SPORT
+  THEATRE
+  OTHER
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+  REFUNDED
+}
+
+enum TicketStatus {
+  VALID
+  USED
+  CANCELLED
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         Role      @default(BUYER)
+  createdAt    DateTime  @default(now())
+
+  organization Organization?
+  orders       Order[]
+  tickets      Ticket[]
+  notifications Notification[]
+}
+
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  logoUrl     String?
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     String   @unique
+  createdAt   DateTime @default(now())
+
+  events      Event[]
+  promoCodes  PromoCode[]
+}
+
+model Event {
+  id                String      @id @default(cuid())
+  organization      Organization @relation(fields: [organizationId], references: [id])
+  organizationId    String
+  title             String
+  description       String?
+  type              EventType
+  imageUrl          String?
+  venue             String?      // concert hall, stadium, etc.
+  departureStation   String?     // for TRAIN events
+  arrivalStation     String?     // for TRAIN events
+  startDateTime     DateTime
+  endDateTime       DateTime?
+  status            EventStatus @default(DRAFT)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  ticketTypes       TicketType[]
+  orders            Order[]
+  tickets           Ticket[]
+  promoCodes        PromoCode[]
+}
+
+model TicketType {
+  id          String   @id @default(cuid())
+  event       Event    @relation(fields: [eventId], references: [id])
+  eventId     String
+  name        String   // e.g. "1ère classe", "Fosse", "Carré Or", "Wagon 3"
+  description String?
+  price       Float
+  currency    String   @default("EUR")
+  quota       Int      // total available
+  sold        Int      @default(0)
+  seated      Boolean  @default(false)
+
+  orderItems  OrderItem[]
+  tickets     Ticket[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  user            User        @relation(fields: [userId], references: [id])
+  userId          String
+  event           Event       @relation(fields: [eventId], references: [id])
+  eventId         String
+  status          OrderStatus @default(PENDING)
+  totalAmount     Float
+  currency        String      @default("EUR")
+  promoCode       PromoCode?  @relation(fields: [promoCodeId], references: [id])
+  promoCodeId     String?
+  stripeSessionId String?
+  createdAt       DateTime    @default(now())
+
+  items           OrderItem[]
+  tickets         Ticket[]
+}
+
+model OrderItem {
+  id           String     @id @default(cuid())
+  order        Order      @relation(fields: [orderId], references: [id])
+  orderId      String
+  ticketType   TicketType @relation(fields: [ticketTypeId], references: [id])
+  ticketTypeId String
+  quantity     Int
+  unitPrice    Float
+}
+
+model Ticket {
+  id           String       @id @default(cuid())
+  order        Order        @relation(fields: [orderId], references: [id])
+  orderId      String
+  event        Event        @relation(fields: [eventId], references: [id])
+  eventId      String
+  ticketType   TicketType   @relation(fields: [ticketTypeId], references: [id])
+  ticketTypeId String
+  owner        User         @relation(fields: [ownerId], references: [id])
+  ownerId      String
+  qrToken      String       @unique // encoded in the QR code, scanned at entry
+  seatInfo     String?      // e.g. "Voiture 3, Place 42"
+  status       TicketStatus @default(VALID)
+  checkedInAt  DateTime?
+  createdAt    DateTime     @default(now())
+}
+
+model PromoCode {
+  id             String       @id @default(cuid())
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  event          Event?       @relation(fields: [eventId], references: [id])
+  eventId        String?
+  code           String       @unique
+  discountType   DiscountType
+  discountValue  Float
+  maxUses        Int?
+  usedCount      Int          @default(0)
+  expiresAt      DateTime?
+  createdAt      DateTime     @default(now())
+
+  orders         Order[]
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  title     String
+  body      String
+  channel   String   // EMAIL | PUSH
+  status    String   @default("QUEUED") // QUEUED | SENT | FAILED
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Billetterie+",
+    "slug": "billetterie-plus",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#5b21b6"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.billetterieplus"
+    },
+    "android": {
+      "package": "com.example.billetterieplus",
+      "permissions": ["CAMERA"]
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Autoriser l'accès à la caméra pour scanner les billets."
+        }
+      ]
+    ]
+  }
+}

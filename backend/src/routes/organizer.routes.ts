@@ -1,0 +1,189 @@
+import { Router } from "express";
+import { z } from "zod";
+import { prisma } from "../lib/prisma";
+import { requireAuth, requireRole, AuthedRequest } from "../middleware/auth";
+
+const router = Router();
+router.use(requireAuth, requireRole("ORGANIZER", "ADMIN"));
+
+async function getOrgOrFail(userId: string) {
+  const org = await prisma.organization.findUnique({ where: { ownerId: userId } });
+  if (!org) throw Object.assign(new Error("No organization for this user"), { status: 404 });
+  return org;
+}
+
+/** Organization profile of the logged-in organizer. */
+router.get("/me", async (req: AuthedRequest, res) => {
+  const org = await getOrgOrFail(req.user!.userId).catch((e) => null);
+  if (!org) return res.status(404).json({ error: "No organization found for this account" });
+  res.json(org);
+});
+
+const eventSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().optional(),
+  type: z.enum(["TRAIN", "CONCERT", "SPORT", "THEATRE", "OTHER"]),
+  imageUrl: z.string().optional(),
+  venue: z.string().optional(),
+  departureStation: z.string().optional(),
+  arrivalStation: z.string().optional(),
+  startDateTime: z.string(), // ISO string
+  endDateTime: z.string().optional(),
+  ticketTypes: z
+    .array(
+      z.object({
+        name: z.string().min(1),
+        description: z.string().optional(),
+        price: z.number().min(0),
+        currency: z.string().default("EUR"),
+        quota: z.number().int().min(1),
+        seated: z.boolean().default(false),
+      })
+    )
+    .min(1),
+});
+
+/** List this organizer's events (any status). */
+router.get("/events", async (req: AuthedRequest, res) => {
+  const org = await getOrgOrFail(req.user!.userId);
+  const events = await prisma.event.findMany({
+    where: { organizationId: org.id },
+    include: { ticketTypes: true },
+    orderBy: { createdAt: "desc" },
+  });
+  res.json(events);
+});
+
+/** Create an event with its ticket types (tiers/zones/wagons...). */
+router.post("/events", async (req: AuthedRequest, res) => {
+  const parsed = eventSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+  const org = await getOrgOrFail(req.user!.userId);
+  const { ticketTypes, ...data } = parsed.data;
+
+  const event = await prisma.event.create({
+    data: {
+      ...data,
+      startDateTime: new Date(data.startDateTime),
+      endDateTime: data.endDateTime ? new Date(data.endDateTime) : undefined,
+      organizationId: org.id,
+      ticketTypes: { create: ticketTypes },
+    },
+    include: { ticketTypes: true },
+  });
+  res.status(201).json(event);
+});
+
+/** Update event status (DRAFT -> PUBLISHED -> CANCELLED) or details. */
+router.patch("/events/:id", async (req: AuthedRequest, res) => {
+  const org = await getOrgOrFail(req.user!.userId);
+  const event = await prisma.event.findUnique({ where: { id: req.params.id } });
+  if (!event || event.organizationId !== org.id) return res.status(404).json({ error: "Not found" });
+
+  const patchSchema = eventSchema.partial().omit({ ticketTypes: true }).extend({
+    status: z.enum(["DRAFT", "PUBLISHED", "CANCELLED"]).optional(),
+  });
+  const parsed = patchSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const { startDateTime, endDateTime, ...rest } = parsed.data;
+  const updated = await prisma.event.update({
+    where: { id: event.id },
+    data: {
+      ...rest,
+      ...(startDateTime ? { startDateTime: new Date(startDateTime) } : {}),
+      ...(endDateTime ? { endDateTime: new Date(endDateTime) } : {}),
+    },
+  });
+  res.json(updated);
+});
+
+/** Sales dashboard for one event: revenue, tickets sold per tier, check-in rate. */
+router.get("/events/:id/stats", async (req: AuthedRequest, res) => {
+  const org = await getOrgOrFail(req.user!.userId);
+  const event = await prisma.event.findUnique({
+    where: { id: req.params.id },
+    include: { ticketTypes: true, orders: { where: { status: "PAID" } }, tickets: true },
+  });
+  if (!event || event.organizationId !== org.id) return res.status(404).json({ error: "Not found" });
+
+  const revenue = event.orders.reduce((sum, o) => sum + o.totalAmount, 0);
+  const ticketsSold = event.ticketTypes.reduce((sum, t) => sum + t.sold, 0);
+  const checkedIn = event.tickets.filter((t) => t.status === "USED").length;
+
+  res.json({
+    eventId: event.id,
+    title: event.title,
+    revenue,
+    currency: event.ticketTypes[0]?.currency || "EUR",
+    ticketsSold,
+    checkedIn,
+    perTier: event.ticketTypes.map((t) => ({ name: t.name, sold: t.sold, quota: t.quota, price: t.price })),
+  });
+});
+
+/** Promo codes management. */
+router.post("/promo-codes", async (req: AuthedRequest, res) => {
+  const org = await getOrgOrFail(req.user!.userId);
+  const schema = z.object({
+    code: z.string().min(3),
+    discountType: z.enum(["PERCENT", "FIXED"]),
+    discountValue: z.number().min(0),
+    eventId: z.string().optional(),
+    maxUses: z.number().int().optional(),
+    expiresAt: z.string().optional(),
+  });
+  const parsed = schema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const promo = await prisma.promoCode.create({
+    data: {
+      ...parsed.data,
+      expiresAt: parsed.data.expiresAt ? new Date(parsed.data.expiresAt) : undefined,
+      organizationId: org.id,
+    },
+  });
+  res.status(201).json(promo);
+});
+
+/** Scan / validate a ticket at the entrance (used by the organizer scan screen). */
+router.post("/scan", async (req: AuthedRequest, res) => {
+  const schema = z.object({ qrToken: z.string() });
+  const parsed = schema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const org = await getOrgOrFail(req.user!.userId);
+  const ticket = await prisma.ticket.findUnique({
+    where: { qrToken: parsed.data.qrToken },
+    include: { event: true, ticketType: true, owner: { select: { name: true, email: true } } },
+  });
+
+  if (!ticket || ticket.event.organizationId !== org.id) {
+    return res.status(404).json({ valid: false, reason: "Ticket introuvable pour cet organisateur" });
+  }
+  if (ticket.status === "USED") {
+    return res.status(409).json({ valid: false, reason: "Billet déjà scanné", checkedInAt: ticket.checkedInAt });
+  }
+  if (ticket.status === "CANCELLED") {
+    return res.status(409).json({ valid: false, reason: "Billet annulé" });
+  }
+
+  const updated = await prisma.ticket.update({
+    where: { id: ticket.id },
+    data: { status: "USED", checkedInAt: new Date() },
+  });
+
+  res.json({
+    valid: true,
+    ticket: {
+      id: updated.id,
+      event: ticket.event.title,
+      tier: ticket.ticketType.name,
+      seatInfo: ticket.seatInfo,
+      owner: ticket.owner.name,
+      checkedInAt: updated.checkedInAt,
+    },
+  });
+});
+
+export default router;
