@@ -30,43 +30,6 @@ async function main() {
     create: { email: "client@demo.com", passwordHash: buyerPassword, name: "Demo Client", role: "BUYER" },
   });
 
-  const concert = await prisma.event.create({
-    data: {
-      organizationId: org.id,
-      title: "Nuit Électro — Warehouse Paris",
-      description: "Une soirée électro avec les meilleurs DJs de la scène parisienne.",
-      type: "CONCERT",
-      venue: "Warehouse, Paris",
-      startDateTime: new Date(Date.now() + 30 * 24 * 3600 * 1000),
-      status: "PUBLISHED",
-      ticketTypes: {
-        create: [
-          { name: "Fosse", price: 35, quota: 500, seated: false },
-          { name: "Carré Or", price: 75, quota: 100, seated: false },
-        ],
-      },
-    },
-  });
-
-  const train = await prisma.event.create({
-    data: {
-      organizationId: org.id,
-      title: "Paris → Lyon Express",
-      description: "Trajet direct, départ matinal.",
-      type: "TRAIN",
-      departureStation: "Paris Gare de Lyon",
-      arrivalStation: "Lyon Part-Dieu",
-      startDateTime: new Date(Date.now() + 7 * 24 * 3600 * 1000),
-      status: "PUBLISHED",
-      ticketTypes: {
-        create: [
-          { name: "2nde classe", price: 45, quota: 300, seated: true },
-          { name: "1ère classe", price: 89, quota: 80, seated: true },
-        ],
-      },
-    },
-  });
-
   const tamilConcert1 = await prisma.event.create({
     data: {
       organizationId: org.id,
@@ -142,7 +105,7 @@ async function main() {
   await prisma.promoCode.create({
     data: {
       organizationId: org.id,
-      eventId: concert.id,
+      eventId: tamilConcert1.id,
       code: "BIENVENUE10",
       discountType: "PERCENT",
       discountValue: 10,
@@ -154,7 +117,7 @@ async function main() {
   console.log("  Organizer login -> organisateur@demo.com / password123");
   console.log("  Buyer login     -> client@demo.com / password123");
   console.log(
-    `  Events created  -> "${concert.title}", "${train.title}", "${tamilConcert1.title}", "${tamilConcert2.title}", "${soiree1.title}", "${soiree2.title}"`
+    `  Events created  -> "${tamilConcert1.title}", "${tamilConcert2.title}", "${soiree1.title}", "${soiree2.title}"`
   );
 }
 

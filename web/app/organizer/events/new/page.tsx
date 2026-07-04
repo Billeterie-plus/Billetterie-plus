@@ -9,10 +9,6 @@ const EMPTY_TIER = { name: "", price: 0, quota: 100, seated: false };
 const TYPE_OPTIONS = [
   { value: "CONCERT", label: "Concert", emoji: "🎵" },
   { value: "SOIREE", label: "Soirée tamoule", emoji: "🎉" },
-  { value: "TRAIN", label: "Train", emoji: "🚆" },
-  { value: "SPORT", label: "Sport", emoji: "🏟️" },
-  { value: "THEATRE", label: "Théâtre", emoji: "🎭" },
-  { value: "OTHER", label: "Autre", emoji: "🎟️" },
 ];
 
 export default function NewEventPage() {
@@ -23,8 +19,6 @@ export default function NewEventPage() {
     type: "CONCERT",
     imageUrl: "",
     venue: "",
-    departureStation: "",
-    arrivalStation: "",
     startDateTime: "",
   });
   const [tiers, setTiers] = useState([{ ...EMPTY_TIER }]);
@@ -63,7 +57,6 @@ export default function NewEventPage() {
     }
   }
 
-  const isTrain = form.type === "TRAIN";
   const selectedType = TYPE_OPTIONS.find((t) => t.value === form.type)!;
   const minPrice = tiers.length ? Math.min(...tiers.map((t) => Number(t.price) || 0)) : 0;
   const previewDate = form.startDateTime
@@ -74,7 +67,7 @@ export default function NewEventPage() {
     <div className="mx-auto max-w-5xl">
       <h1 className="mb-1 text-2xl font-bold">Nouvel événement</h1>
       <p className="mb-6 text-sm text-slate-500">
-        Concert d'artiste tamoul, soirée tamoule ou autre — remplissez le formulaire, l'aperçu à droite se met à jour en direct.
+        Concert d'artiste tamoul ou soirée tamoule — remplissez le formulaire, l'aperçu à droite se met à jour en direct.
       </p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.4fr_1fr]">
@@ -129,32 +122,13 @@ export default function NewEventPage() {
                 </p>
               </div>
 
-              {isTrain ? (
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    required
-                    placeholder="Gare de départ"
-                    value={form.departureStation}
-                    onChange={(e) => updateForm("departureStation", e.target.value)}
-                    className="rounded-lg border px-3 py-2"
-                  />
-                  <input
-                    required
-                    placeholder="Gare d'arrivée"
-                    value={form.arrivalStation}
-                    onChange={(e) => updateForm("arrivalStation", e.target.value)}
-                    className="rounded-lg border px-3 py-2"
-                  />
-                </div>
-              ) : (
-                <input
-                  required
-                  placeholder="Lieu (salle, stade...)"
-                  value={form.venue}
-                  onChange={(e) => updateForm("venue", e.target.value)}
-                  className="w-full rounded-lg border px-3 py-2"
-                />
-              )}
+              <input
+                required
+                placeholder="Lieu (salle, club, stade...)"
+                value={form.venue}
+                onChange={(e) => updateForm("venue", e.target.value)}
+                className="w-full rounded-lg border px-3 py-2"
+              />
 
               <input
                 required
@@ -241,13 +215,7 @@ export default function NewEventPage() {
                 {selectedType.emoji} {selectedType.label}
               </div>
               <h3 className="mt-1 text-lg font-semibold">{form.title || "Titre de votre événement"}</h3>
-              <p className="mt-1 text-sm text-slate-500">
-                {isTrain
-                  ? form.departureStation && form.arrivalStation
-                    ? `${form.departureStation} → ${form.arrivalStation}`
-                    : "Gare de départ → Gare d'arrivée"
-                  : form.venue || "Lieu de l'événement"}
-              </p>
+              <p className="mt-1 text-sm text-slate-500">{form.venue || "Lieu de l'événement"}</p>
               <div className="mt-3 flex items-center justify-between text-sm">
                 <span className="text-slate-500">{previewDate || "Date à définir"}</span>
                 <span className="font-semibold">

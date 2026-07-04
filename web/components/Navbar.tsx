@@ -21,7 +21,7 @@ export default function Navbar() {
   }
 
   function handleSearch() {
-    router.push(search.trim() ? `/artistes?q=${encodeURIComponent(search.trim())}` : "/artistes");
+    router.push(search.trim() ? `/?q=${encodeURIComponent(search.trim())}#evenements` : "/#evenements");
   }
 
   return (
@@ -36,7 +36,7 @@ export default function Navbar() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            placeholder="Rechercher un artiste tamoul..."
+            placeholder="Rechercher un concert ou une soirée..."
             className="w-full rounded-full border px-4 py-1.5 text-sm"
           />
         </div>

@@ -6,14 +6,12 @@ import { api } from "../lib/api";
 
 type Props = NativeStackScreenProps<RootStackParamList, "OrganizerNewEvent">;
 
-const TYPES = ["CONCERT", "SOIREE", "TRAIN", "SPORT", "THEATRE", "OTHER"];
+const TYPES = ["CONCERT", "SOIREE"];
 
 export default function OrganizerNewEventScreen({ navigation }: Props) {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("CONCERT");
   const [venue, setVenue] = useState("");
-  const [departureStation, setDepartureStation] = useState("");
-  const [arrivalStation, setArrivalStation] = useState("");
   const [startDateTime, setStartDateTime] = useState(""); // e.g. 2026-08-20T20:00
   const [tierName, setTierName] = useState("");
   const [tierPrice, setTierPrice] = useState("");
@@ -28,9 +26,7 @@ export default function OrganizerNewEventScreen({ navigation }: Props) {
         body: {
           title,
           type,
-          venue: type !== "TRAIN" ? venue : undefined,
-          departureStation: type === "TRAIN" ? departureStation : undefined,
-          arrivalStation: type === "TRAIN" ? arrivalStation : undefined,
+          venue,
           startDateTime: new Date(startDateTime).toISOString(),
           ticketTypes: [{ name: tierName, price: Number(tierPrice), quota: Number(tierQuota) }],
         },
@@ -57,14 +53,7 @@ export default function OrganizerNewEventScreen({ navigation }: Props) {
         ))}
       </View>
 
-      {type === "TRAIN" ? (
-        <>
-          <TextInput placeholder="Gare de départ" value={departureStation} onChangeText={setDepartureStation} style={styles.input} />
-          <TextInput placeholder="Gare d'arrivée" value={arrivalStation} onChangeText={setArrivalStation} style={styles.input} />
-        </>
-      ) : (
-        <TextInput placeholder="Lieu" value={venue} onChangeText={setVenue} style={styles.input} />
-      )}
+      <TextInput placeholder="Lieu (salle, club...)" value={venue} onChangeText={setVenue} style={styles.input} />
 
       <TextInput
         placeholder="Date/heure (AAAA-MM-JJTHH:mm, ex: 2026-08-20T20:00)"

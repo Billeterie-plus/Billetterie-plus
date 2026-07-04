@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { api } from "../lib/api";
 import EventCard from "../components/EventCard";
 import ArtistSpotlight from "../components/ArtistSpotlight";
@@ -12,18 +13,22 @@ const TYPES = [
   { value: "", label: "Tous" },
   { value: "CONCERT", label: "Concert" },
   { value: "SOIREE", label: "Soirée tamoule" },
-  { value: "TRAIN", label: "Train" },
-  { value: "SPORT", label: "Sport" },
-  { value: "THEATRE", label: "Théâtre" },
-  { value: "OTHER", label: "Autre" },
 ];
 
-export default function HomePage() {
+function HomeContent() {
+  const searchParams = useSearchParams();
   const [events, setEvents] = useState<any[]>([]);
   const [type, setType] = useState("");
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState(searchParams.get("q") || "");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (searchParams.get("q")) {
+      document.getElementById("evenements")?.scrollIntoView({ behavior: "smooth" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -89,5 +94,13 @@ export default function HomePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
+      <HomeContent />
+    </Suspense>
   );
 }
