@@ -199,13 +199,13 @@ export default function EditEventPage() {
         <div className="lg:sticky lg:top-20 lg:self-start">
           <h2 className="mb-2 font-semibold text-slate-800">Aperçu pour les acheteurs</h2>
           <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
-            <div className="flex h-36 items-center justify-center bg-gradient-to-br from-brand to-brand-light text-white">
+            <div className="flex h-48 items-center justify-center bg-gradient-to-br from-brand to-brand-light text-white">
               {form.imageUrl && !imageError ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={form.imageUrl}
                   alt=""
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover object-[center_20%]"
                   onError={() => setImageError(true)}
                 />
               ) : (

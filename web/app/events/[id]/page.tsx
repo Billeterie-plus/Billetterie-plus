@@ -60,7 +60,11 @@ export default function EventDetailPage() {
       <div className="lg:col-span-2">
         {event.imageUrl && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={event.imageUrl} alt={event.title} className="mb-4 h-56 w-full rounded-xl object-cover sm:h-72" />
+          <img
+            src={event.imageUrl}
+            alt={event.title}
+            className="mb-4 h-72 w-full rounded-xl object-cover object-[center_20%] sm:h-96"
+          />
         )}
         <p className="text-sm font-medium text-brand">{event.type}</p>
         <h1 className="mt-1 text-3xl font-bold">{event.title}</h1>

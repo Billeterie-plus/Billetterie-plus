@@ -2,6 +2,44 @@
 
 import { useRef, useState } from "react";
 
+const MAX_DIMENSION = 1600; // px, côté le plus long
+const JPEG_QUALITY = 0.92;
+
+/** Redimensionne et recompresse proprement l'image (meilleure netteté qu'un encodage brut). */
+function resizeImage(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Lecture du fichier impossible."));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error("Image invalide."));
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+          if (width >= height) {
+            height = Math.round((height * MAX_DIMENSION) / width);
+            width = MAX_DIMENSION;
+          } else {
+            width = Math.round((width * MAX_DIMENSION) / height);
+            height = MAX_DIMENSION;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return reject(new Error("Impossible de traiter l'image."));
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", JPEG_QUALITY));
+      };
+      img.src = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function ImageUploadField({
   value,
   onChange,
@@ -11,9 +49,10 @@ export default function ImageUploadField({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
+  const [processing, setProcessing] = useState(false);
   const isUpload = value.startsWith("data:");
 
-  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
@@ -21,14 +60,20 @@ export default function ImageUploadField({
       setError("Merci de choisir un fichier image (JPG, PNG...).");
       return;
     }
-    if (file.size > 4 * 1024 * 1024) {
-      setError("Image trop lourde (4 Mo maximum).");
+    if (file.size > 8 * 1024 * 1024) {
+      setError("Image trop lourde (8 Mo maximum).");
       return;
     }
     setError("");
-    const reader = new FileReader();
-    reader.onload = () => onChange(reader.result as string);
-    reader.readAsDataURL(file);
+    setProcessing(true);
+    try {
+      const resized = await resizeImage(file);
+      onChange(resized);
+    } catch (err: any) {
+      setError(err.message || "Impossible de traiter cette image.");
+    } finally {
+      setProcessing(false);
+    }
   }
 
   return (
@@ -44,10 +89,11 @@ export default function ImageUploadField({
         )}
         <button
           type="button"
+          disabled={processing}
           onClick={() => inputRef.current?.click()}
-          className="whitespace-nowrap rounded-lg border border-brand px-3 py-2 text-sm font-medium text-brand transition hover:bg-brand/5"
+          className="whitespace-nowrap rounded-lg border border-brand px-3 py-2 text-sm font-medium text-brand transition hover:bg-brand/5 disabled:opacity-50"
         >
-          📁 Choisir une photo depuis mon ordinateur
+          {processing ? "Optimisation…" : "📁 Choisir une photo depuis mon ordinateur"}
         </button>
         <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
       </div>
@@ -57,7 +103,11 @@ export default function ImageUploadField({
       {value && (
         <div className="mt-2 flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="" className="h-14 w-14 rounded-lg border object-cover" />
+          <img
+            src={value}
+            alt=""
+            className="h-20 w-20 rounded-lg border object-cover object-[center_20%]"
+          />
           <button
             type="button"
             onClick={() => onChange("")}
@@ -69,7 +119,8 @@ export default function ImageUploadField({
       )}
 
       <p className="mt-1 text-xs text-slate-400">
-        Collez le lien d'une image, ou importez directement une photo depuis votre ordinateur (JPG/PNG, 4 Mo max).
+        Collez le lien d'une image, ou importez directement une photo depuis votre ordinateur. Elle est automatiquement
+        recadrée en haute qualité (jusqu'à {MAX_DIMENSION}px) pour bien s'afficher sur les cartes.
       </p>
     </div>
   );

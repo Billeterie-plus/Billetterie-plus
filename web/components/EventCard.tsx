@@ -20,7 +20,11 @@ export default function EventCard({ event }: { event: any }) {
     >
       {event.imageUrl && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={event.imageUrl} alt={event.title} className="h-36 w-full object-cover" />
+        <img
+          src={event.imageUrl}
+          alt={event.title}
+          className="h-52 w-full object-cover object-[center_20%]"
+        />
       )}
       <div className="p-4">
         <div className="text-xs font-medium text-brand">{TYPE_LABELS[event.type] || event.type}</div>
