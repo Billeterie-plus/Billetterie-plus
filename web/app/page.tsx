@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "../lib/api";
 import EventCard from "../components/EventCard";
 import ArtistSpotlight from "../components/ArtistSpotlight";
-import TamilArtistSearch from "../components/TamilArtistSearch";
+import ArtistSearchBox from "../components/ArtistSearchBox";
 
 const TYPES = [
   { value: "", label: "Tous" },
@@ -48,7 +48,7 @@ export default function HomePage() {
 
       <ArtistSpotlight />
 
-      <TamilArtistSearch />
+      <ArtistSearchBox />
 
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <input

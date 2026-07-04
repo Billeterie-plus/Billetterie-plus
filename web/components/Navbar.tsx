@@ -27,6 +27,7 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center gap-4 text-sm">
           <Link href="/" className="hover:text-brand">Événements</Link>
+          <Link href="/artistes" className="hover:text-brand">Artistes</Link>
           {user ? (
             <>
               <Link href="/my-tickets" className="hover:text-brand">Mes billets</Link>
