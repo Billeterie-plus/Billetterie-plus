@@ -77,6 +77,12 @@ export default function OrganizerDashboard() {
                   {e.status === "PUBLISHED" ? "Dépublier" : "Publier"}
                 </button>
                 <Link
+                  href={`/organizer/events/${e.id}/edit`}
+                  className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm hover:bg-slate-200"
+                >
+                  Modifier
+                </Link>
+                <Link
                   href={`/organizer/events/${e.id}`}
                   className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm hover:bg-slate-200"
                 >

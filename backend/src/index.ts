@@ -16,7 +16,7 @@ app.use(cors());
 // Stripe webhook needs the raw body, so it's mounted before express.json().
 app.use("/webhooks", webhookRoutes);
 
-app.use(express.json());
+app.use(express.json({ limit: "8mb" }));
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
 

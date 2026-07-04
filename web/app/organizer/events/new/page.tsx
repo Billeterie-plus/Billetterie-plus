@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../../../../lib/api";
+import ImageUploadField from "../../../../components/ImageUploadField";
 
 const EMPTY_TIER = { name: "", price: 0, quota: 100, seated: false };
 
@@ -110,17 +111,7 @@ export default function NewEventPage() {
                 className="w-full rounded-lg border px-3 py-2"
               />
 
-              <div>
-                <input
-                  placeholder="URL d'une photo/affiche (optionnel) — ex: https://..."
-                  value={form.imageUrl}
-                  onChange={(e) => updateForm("imageUrl", e.target.value)}
-                  className="w-full rounded-lg border px-3 py-2"
-                />
-                <p className="mt-1 text-xs text-slate-400">
-                  Collez le lien d'une image (affiche du concert, photo de la soirée...). Elle apparaîtra sur la carte et l'aperçu à droite.
-                </p>
-              </div>
+              <ImageUploadField value={form.imageUrl} onChange={(v) => updateForm("imageUrl", v)} />
 
               <input
                 required
