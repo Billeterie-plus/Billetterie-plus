@@ -1,4 +1,8 @@
-// Icônes thématiques (pas de photos réelles, pour des raisons de droits d'image).
+"use client";
+
+import { useState } from "react";
+
+// Icônes thématiques utilisées tant qu'aucune photo n'a été ajoutée dans /public/artists.
 function IconKeys() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7" stroke="currentColor" strokeWidth="1.6">
@@ -45,6 +49,7 @@ function IconNote() {
 
 const ARTICLES = [
   {
+    image: "/artists/ar-rahman.jpg",
     Icon: IconHeadphones,
     color: "from-blue-600 to-blue-400",
     name: "A.R. Rahman",
@@ -52,6 +57,7 @@ const ARTICLES = [
     text: "Compositeur oscarisé (Slumdog Millionaire), surnommé le « Mozart de Madras ». Ses concerts mêlent orchestre symphonique, musique électronique et sonorités traditionnelles indiennes.",
   },
   {
+    image: "/artists/arijit-singh.jpg",
     Icon: IconMic,
     color: "from-indigo-600 to-indigo-400",
     name: "Arijit Singh",
@@ -59,6 +65,7 @@ const ARTICLES = [
     text: "L'une des voix les plus streamées d'Asie. Connu pour ses ballades romantiques dans le cinéma hindi, il remplit les plus grandes salles dès l'annonce d'une tournée.",
   },
   {
+    image: "/artists/shreya-ghoshal.jpg",
     Icon: IconMic,
     color: "from-sky-600 to-sky-400",
     name: "Shreya Ghoshal",
@@ -66,6 +73,7 @@ const ARTICLES = [
     text: "Voix emblématique du cinéma indien depuis plus de 20 ans, elle allie technique classique carnatique et pop moderne sur scène.",
   },
   {
+    image: "/artists/zakir-hussain.jpg",
     Icon: IconDrum,
     color: "from-amber-600 to-amber-400",
     name: "Zakir Hussain",
@@ -73,6 +81,7 @@ const ARTICLES = [
     text: "Maître du tabla reconnu mondialement, il a collaboré avec des artistes de jazz et de musique du monde tout en portant la tradition indienne sur les plus grandes scènes.",
   },
   {
+    image: "/artists/anirudh-ravichander.jpg",
     Icon: IconHeadphones,
     color: "from-teal-600 to-teal-400",
     name: "Anirudh Ravichander",
@@ -80,6 +89,7 @@ const ARTICLES = [
     text: "Figure incontournable du cinéma tamoul (Kollywood), connu pour ses bandes originales énergiques et ses concerts électrisants qui remplissent les stades en Inde du Sud.",
   },
   {
+    image: "/artists/harris-jayaraj.jpg",
     Icon: IconNote,
     color: "from-violet-600 to-violet-400",
     name: "Harris Jayaraj",
@@ -87,6 +97,7 @@ const ARTICLES = [
     text: "Compositeur emblématique du cinéma tamoul depuis les années 2000, réputé pour ses mélodies romantiques et ses orchestrations soignées.",
   },
   {
+    image: "/artists/yuvan-shankar-raja.jpg",
     Icon: IconKeys,
     color: "from-rose-600 to-rose-400",
     name: "Yuvan Shankar Raja",
@@ -94,6 +105,28 @@ const ARTICLES = [
     text: "Compositeur prolifique et polyvalent du cinéma tamoul, entre bandes originales pop, folk et musique de film, avec une large base de fans.",
   },
 ];
+
+function Avatar({ image, Icon, color, name }: { image: string; Icon: () => JSX.Element; color: string; name: string }) {
+  const [errored, setErrored] = useState(false);
+
+  if (!errored) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={image}
+        alt={name}
+        onError={() => setErrored(true)}
+        className="h-14 w-14 rounded-full border object-cover"
+      />
+    );
+  }
+
+  return (
+    <div className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${color} text-white`}>
+      <Icon />
+    </div>
+  );
+}
 
 export default function ArtistSpotlight() {
   return (
@@ -105,11 +138,7 @@ export default function ArtistSpotlight() {
             key={a.name}
             className="rounded-xl border bg-white p-4 shadow-sm transition hover:shadow-md"
           >
-            <div
-              className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${a.color} text-white`}
-            >
-              <a.Icon />
-            </div>
+            <Avatar image={a.image} Icon={a.Icon} color={a.color} name={a.name} />
             <h3 className="mt-3 font-semibold text-slate-900">{a.name}</h3>
             <div className="text-xs font-medium text-brand">{a.tag}</div>
             <p className="mt-2 text-sm text-slate-600">{a.text}</p>
