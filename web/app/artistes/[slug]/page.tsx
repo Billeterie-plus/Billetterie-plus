@@ -30,6 +30,26 @@ export default function ArtistPage({ params }: { params: { slug: string } }) {
           </p>
         ))}
       </div>
+
+      <div className="mt-8 rounded-xl border bg-white p-5">
+        <h2 className="font-semibold text-slate-900">Dates clés dans le cinéma indien</h2>
+        <ul className="mt-3 space-y-2 text-sm text-slate-600">
+          {artist.keyDates.map((d, i) => (
+            <li key={i} className="flex gap-2">
+              <span className="text-brand">•</span>
+              <span>{d}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-4 rounded-xl border bg-white p-5">
+        <h2 className="font-semibold text-slate-900">Actualité / dernier concert</h2>
+        <p className="mt-2 text-sm text-slate-600">{artist.latest}</p>
+        <p className="mt-3 text-xs text-slate-400">
+          Informations vérifiées début juillet 2026, susceptibles d'évoluer selon les annonces des artistes.
+        </p>
+      </div>
     </div>
   );
 }
