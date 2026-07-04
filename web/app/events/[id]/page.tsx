@@ -103,25 +103,26 @@ export default function EventDetailPage() {
         ← Retour aux {event.type === "SOIREE" ? "soirées" : "concerts"}
       </Link>
 
-      {/* Bannière poster avec titre incrusté */}
-      <div className="relative mb-8 h-72 w-full overflow-hidden rounded-2xl shadow-lg sm:h-[26rem] animate-fadeInUp">
-        {event.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={event.imageUrl}
-            alt={event.title}
-            className="h-full w-full object-cover object-[center_20%]"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand via-brand-light to-brand-dark bg-200 animate-gradientMove">
-            <span className="text-7xl">{emoji}</span>
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+      {/* En-tête : affiche portrait + informations */}
+      <div className="mb-8 flex flex-col gap-6 sm:flex-row animate-fadeInUp">
+        <div className="mx-auto w-56 shrink-0 overflow-hidden rounded-2xl shadow-lg sm:mx-0 sm:w-64">
+          {event.imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={event.imageUrl}
+              alt={event.title}
+              className="aspect-[3/4] w-full object-cover"
+            />
+          ) : (
+            <div className="flex aspect-[3/4] w-full items-center justify-center bg-gradient-to-br from-brand via-brand-light to-brand-dark bg-200 animate-gradientMove">
+              <span className="text-6xl">{emoji}</span>
+            </div>
+          )}
+        </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
+        <div className="flex flex-col justify-center">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-semibold tracking-wide text-white backdrop-blur">
+            <span className="inline-block rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold tracking-wide text-brand">
               {TYPE_LABELS[event.type] || event.type}
             </span>
             {daysUntil >= 0 && daysUntil <= 30 && (
@@ -130,10 +131,10 @@ export default function EventDetailPage() {
               </span>
             )}
           </div>
-          <h1 className="mt-3 text-2xl font-extrabold leading-tight text-white drop-shadow-sm sm:text-4xl">
+          <h1 className="mt-3 text-2xl font-extrabold leading-tight text-slate-900 sm:text-4xl">
             {event.title}
           </h1>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-white/90">
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-600">
             {venue && (
               <span className="flex items-center gap-1.5">
                 <span aria-hidden>📍</span> {venue}
