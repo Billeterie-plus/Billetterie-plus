@@ -58,6 +58,10 @@ export default function EventDetailPage() {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div className="lg:col-span-2">
+        {event.imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={event.imageUrl} alt={event.title} className="mb-4 h-56 w-full rounded-xl object-cover sm:h-72" />
+        )}
         <p className="text-sm font-medium text-brand">{event.type}</p>
         <h1 className="mt-1 text-3xl font-bold">{event.title}</h1>
         <p className="mt-2 text-slate-500">
