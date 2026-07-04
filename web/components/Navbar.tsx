@@ -43,6 +43,8 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4 text-sm">
           <Link href="/" className="hover:text-brand">Événements</Link>
+          <Link href="/evenements/concerts-tamouls" className="hover:text-brand">Concerts</Link>
+          <Link href="/evenements/soirees-tamoules" className="hover:text-brand">Soirées</Link>
           <Link href="/artistes" className="hover:text-brand">Artistes</Link>
           {user ? (
             <>

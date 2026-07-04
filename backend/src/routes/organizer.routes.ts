@@ -22,7 +22,7 @@ router.get("/me", async (req: AuthedRequest, res) => {
 const eventSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
-  type: z.enum(["TRAIN", "CONCERT", "SPORT", "THEATRE", "OTHER"]),
+  type: z.enum(["TRAIN", "CONCERT", "SOIREE", "SPORT", "THEATRE", "OTHER"]),
   imageUrl: z.string().optional(),
   venue: z.string().optional(),
   departureStation: z.string().optional(),

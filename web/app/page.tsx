@@ -10,8 +10,9 @@ import ArtistMarquee from "../components/ArtistMarquee";
 
 const TYPES = [
   { value: "", label: "Tous" },
-  { value: "TRAIN", label: "Train" },
   { value: "CONCERT", label: "Concert" },
+  { value: "SOIREE", label: "Soirée tamoule" },
+  { value: "TRAIN", label: "Train" },
   { value: "SPORT", label: "Sport" },
   { value: "THEATRE", label: "Théâtre" },
   { value: "OTHER", label: "Autre" },
@@ -42,9 +43,9 @@ export default function HomePage() {
       <ArtistSearchBox />
 
       <p className="mb-8 max-w-2xl text-slate-600">
-        My Ticket réunit tous vos billets au même endroit : trains, concerts, sport et spectacles.
-        Achetez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des
-        événements, gérez-les depuis votre propre espace organisateur.
+        My Ticket est la billetterie dédiée aux concerts d'artistes indiens tamouls et aux soirées tamoules
+        (Kollywood nights, soirées Pongal...) en France. Achetez en quelques clics, retrouvez vos e-billets
+        à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.
       </p>
 
       <ArtistMarquee />

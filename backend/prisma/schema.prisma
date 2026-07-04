@@ -20,6 +20,7 @@ enum Role {
 enum EventType {
   TRAIN
   CONCERT
+  SOIREE
   SPORT
   THEATRE
   OTHER

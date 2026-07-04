@@ -6,7 +6,7 @@ import { api } from "../lib/api";
 
 type Props = NativeStackScreenProps<RootStackParamList, "OrganizerNewEvent">;
 
-const TYPES = ["CONCERT", "TRAIN", "SPORT", "THEATRE", "OTHER"];
+const TYPES = ["CONCERT", "SOIREE", "TRAIN", "SPORT", "THEATRE", "OTHER"];
 
 export default function OrganizerNewEventScreen({ navigation }: Props) {
   const [title, setTitle] = useState("");

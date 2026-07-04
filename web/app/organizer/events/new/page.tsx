@@ -75,6 +75,7 @@ export default function NewEventPage() {
           className="w-full rounded-lg border px-3 py-2"
         >
           <option value="CONCERT">Concert</option>
+          <option value="SOIREE">Soirée tamoule</option>
           <option value="TRAIN">Train</option>
           <option value="SPORT">Sport</option>
           <option value="THEATRE">Théâtre</option>

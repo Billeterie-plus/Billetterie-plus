@@ -38,13 +38,13 @@ export default function HeroBanner() {
 
       <div className="relative z-10 p-8 sm:p-12">
         <p className="mb-2 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-medium tracking-wide animate-fadeInUp">
-          🎟️ Billets en quelques secondes
+          🎉 Concerts & soirées tamoules
         </p>
         <h1 className="max-w-xl text-3xl font-bold drop-shadow-sm sm:text-4xl animate-fadeInUp" style={{ animationDelay: "0.1s" }}>
-          Votre prochain événement vous attend
+          Votre prochain concert tamoul vous attend
         </h1>
         <p className="mt-3 max-w-xl text-white/90 animate-fadeInUp" style={{ animationDelay: "0.2s" }}>
-          Trains, concerts, spectacles — réservez vos billets en quelques secondes.
+          Concerts d'artistes tamouls et soirées tamoules (Kollywood nights, Pongal party...) — réservez vos billets en quelques secondes.
         </p>
         <div className="mt-6 flex flex-wrap gap-3 animate-fadeInUp" style={{ animationDelay: "0.3s" }}>
           <button

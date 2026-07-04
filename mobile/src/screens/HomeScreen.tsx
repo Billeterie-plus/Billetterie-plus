@@ -8,8 +8,9 @@ type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const TYPES = [
   { value: "", label: "Tous" },
-  { value: "TRAIN", label: "Train" },
   { value: "CONCERT", label: "Concert" },
+  { value: "SOIREE", label: "Soirée" },
+  { value: "TRAIN", label: "Train" },
   { value: "SPORT", label: "Sport" },
   { value: "THEATRE", label: "Théâtre" },
 ];
