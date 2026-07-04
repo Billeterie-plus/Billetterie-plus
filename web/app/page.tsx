@@ -45,18 +45,6 @@ function HomeContent() {
     <div>
       <HeroBanner />
 
-      <ArtistSearchBox />
-
-      <p className="mb-8 max-w-2xl text-slate-600">
-        My Ticket est la billetterie dédiée aux concerts d'artistes indiens tamouls et aux soirées tamoules
-        (Kollywood nights, soirées Pongal...) en France. Achetez en quelques clics, retrouvez vos e-billets
-        à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.
-      </p>
-
-      <ArtistMarquee />
-
-      <ArtistSpotlight />
-
       <div id="evenements" className="mb-6 flex flex-wrap items-center gap-3 scroll-mt-20">
         <input
           value={q}
@@ -85,7 +73,7 @@ function HomeContent() {
       ) : events.length === 0 ? (
         <p className="text-slate-500">Aucun événement trouvé.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {events.map((e, i) => (
             <div key={e.id} style={{ animationDelay: `${Math.min(i, 6) * 60}ms` }}>
               <EventCard event={e} />
@@ -93,6 +81,18 @@ function HomeContent() {
           ))}
         </div>
       )}
+
+      <p className="mb-8 max-w-2xl text-slate-600">
+        My Ticket est la billetterie dédiée aux concerts d'artistes indiens tamouls et aux soirées tamoules
+        (Kollywood nights, soirées Pongal...) en France. Achetez en quelques clics, retrouvez vos e-billets
+        à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.
+      </p>
+
+      <ArtistSearchBox />
+
+      <ArtistMarquee />
+
+      <ArtistSpotlight />
     </div>
   );
 }
