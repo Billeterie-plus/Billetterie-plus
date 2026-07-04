@@ -23,6 +23,24 @@ const ARTICLES = [
     tag: "Percussions classiques",
     text: "Maître du tabla reconnu mondialement, il a collaboré avec des artistes de jazz et de musique du monde tout en portant la tradition indienne sur les plus grandes scènes.",
   },
+  {
+    emoji: "🎧",
+    name: "Anirudh Ravichander",
+    tag: "Compositeur tamoul",
+    text: "Figure incontournable du cinéma tamoul (Kollywood), connu pour ses bandes originales énergiques et ses concerts électrisants qui remplissent les stades en Inde du Sud.",
+  },
+  {
+    emoji: "🎼",
+    name: "Harris Jayaraj",
+    tag: "Compositeur tamoul",
+    text: "Compositeur emblématique du cinéma tamoul depuis les années 2000, réputé pour ses mélodies romantiques et ses orchestrations soignées.",
+  },
+  {
+    emoji: "🎹",
+    name: "Yuvan Shankar Raja",
+    tag: "Compositeur tamoul",
+    text: "Compositeur prolifique et polyvalent du cinéma tamoul, entre bandes originales pop, folk et musique de film, avec une large base de fans.",
+  },
 ];
 
 export default function ArtistSpotlight() {
