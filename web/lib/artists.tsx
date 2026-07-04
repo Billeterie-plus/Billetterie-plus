@@ -1,4 +1,5 @@
 export type IconKey = "keys" | "mic" | "drum" | "headphones" | "note";
+export type Region = "tamoul" | "hindi" | "classique";
 
 export type Artist = {
   slug: string;
@@ -7,6 +8,8 @@ export type Artist = {
   color: string;
   name: string;
   tag: string;
+  region: Region;
+  featured: boolean;
   short: string;
   bio: string[];
   keyDates: string[];
@@ -21,6 +24,8 @@ export const ARTISTS: Artist[] = [
     color: "from-blue-600 to-blue-400",
     name: "A.R. Rahman",
     tag: "Musique de film",
+    region: "tamoul",
+    featured: true,
     short:
       "Compositeur oscarisé (Slumdog Millionaire), surnommé le « Mozart de Madras ». Ses concerts mêlent orchestre symphonique, musique électronique et sonorités traditionnelles indiennes.",
     bio: [
@@ -42,6 +47,8 @@ export const ARTISTS: Artist[] = [
     color: "from-indigo-600 to-indigo-400",
     name: "Arijit Singh",
     tag: "Playback Bollywood",
+    region: "hindi",
+    featured: true,
     short:
       "L'une des voix les plus streamées d'Asie. Connu pour ses ballades romantiques dans le cinéma hindi, il remplit les plus grandes salles dès l'annonce d'une tournée.",
     bio: [
@@ -62,6 +69,8 @@ export const ARTISTS: Artist[] = [
     color: "from-sky-600 to-sky-400",
     name: "Shreya Ghoshal",
     tag: "Chant classique & Bollywood",
+    region: "hindi",
+    featured: true,
     short:
       "Voix emblématique du cinéma indien depuis plus de 20 ans, elle allie technique classique carnatique et pop moderne sur scène.",
     bio: [
@@ -82,6 +91,8 @@ export const ARTISTS: Artist[] = [
     color: "from-amber-600 to-amber-400",
     name: "Zakir Hussain",
     tag: "Percussions classiques",
+    region: "classique",
+    featured: true,
     short:
       "Maître du tabla reconnu mondialement, il a collaboré avec des artistes de jazz et de musique du monde tout en portant la tradition indienne sur les plus grandes scènes.",
     bio: [
@@ -102,6 +113,8 @@ export const ARTISTS: Artist[] = [
     color: "from-teal-600 to-teal-400",
     name: "Anirudh Ravichander",
     tag: "Compositeur tamoul",
+    region: "tamoul",
+    featured: true,
     short:
       "Figure incontournable du cinéma tamoul (Kollywood), connu pour ses bandes originales énergiques et ses concerts électrisants qui remplissent les stades en Inde du Sud.",
     bio: [
@@ -122,6 +135,8 @@ export const ARTISTS: Artist[] = [
     color: "from-violet-600 to-violet-400",
     name: "Harris Jayaraj",
     tag: "Compositeur tamoul",
+    region: "tamoul",
+    featured: true,
     short:
       "Compositeur emblématique du cinéma tamoul depuis les années 2000, réputé pour ses mélodies romantiques et ses orchestrations soignées.",
     bio: [
@@ -142,6 +157,8 @@ export const ARTISTS: Artist[] = [
     color: "from-rose-600 to-rose-400",
     name: "Yuvan Shankar Raja",
     tag: "Compositeur tamoul",
+    region: "tamoul",
+    featured: true,
     short:
       "Compositeur prolifique et polyvalent du cinéma tamoul, entre bandes originales pop, folk et musique de film, avec une large base de fans.",
     bio: [
@@ -154,5 +171,181 @@ export const ARTISTS: Artist[] = [
     ],
     latest:
       "Concert prévu le 4 juillet 2026 à l'Expo Ground de Pondichéry, après une tournée en Australie en 2025 (Sydney, Melbourne) et la sortie de l'album Jayam Ravi Hits le 8 septembre 2025.",
+  },
+  {
+    slug: "ilaiyaraaja",
+    image: "/artists/ilaiyaraaja.jpg",
+    icon: "keys",
+    color: "from-emerald-600 to-emerald-400",
+    name: "Ilaiyaraaja",
+    tag: "Compositeur tamoul",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Surnommé « l'Isai Gnani » (le sage de la musique), il a composé plus de 4 500 chansons et la musique de plus de 1 000 films en cinq décennies de carrière.",
+    bio: [
+      "Figure fondatrice de la musique de film tamoule moderne, Ilaiyaraaja a introduit dès la fin des années 1970 l'usage de l'orchestration occidentale mêlée aux ragas classiques indiens et aux mélodies folkloriques du Tamil Nadu.",
+      "Père du compositeur Yuvan Shankar Raja, il reste actif sur scène avec de grandes tournées symphoniques rendant hommage à son répertoire, y compris à l'international.",
+    ],
+    keyDates: [
+      "1976 — Débute comme compositeur avec le film Annakkili.",
+      "Record du monde — Seul compositeur de l'histoire du cinéma à avoir signé la musique de plus de 1 000 films.",
+    ],
+    latest:
+      "Tournée « Ilaiyaraaja Live 2026 » : concert à Chennai après une étape à Londres, puis dates au Royaume-Uni (OVO Arena Wembley le 10 juillet) et aux États-Unis (EagleBank Arena) dans le cadre du « Raja 50 USA Tour ».",
+  },
+  {
+    slug: "gv-prakash-kumar",
+    image: "/artists/gv-prakash-kumar.jpg",
+    icon: "note",
+    color: "from-cyan-600 to-cyan-400",
+    name: "G.V. Prakash Kumar",
+    tag: "Compositeur tamoul",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Neveu d'A.R. Rahman, il s'est imposé comme l'un des compositeurs les plus prolifiques du cinéma tamoul, avant de devenir aussi acteur.",
+    bio: [
+      "G.V. Prakash Kumar débute très jeune dans l'industrie du cinéma tamoul et se forge rapidement une identité musicale mêlant mélodies populaires et sonorités contemporaines.",
+      "En parallèle de sa carrière de compositeur, il s'est également imposé comme acteur dans plusieurs films tamouls à succès.",
+    ],
+    keyDates: [
+      "2006 — Débute comme compositeur avec le film Veyyil.",
+      "Janvier 2026 — Compose la musique de Parasakthi, son 100e film en tant que compositeur.",
+    ],
+    latest:
+      "A composé la musique de Parasakthi (sorti le 10 janvier 2026) et apparaît en tant qu'acteur dans Happy Raj, sorti le 27 mars 2026.",
+  },
+  {
+    slug: "santhosh-narayanan",
+    image: "/artists/santhosh-narayanan.jpg",
+    icon: "headphones",
+    color: "from-orange-600 to-orange-400",
+    name: "Santhosh Narayanan",
+    tag: "Compositeur tamoul",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Compositeur tamoul à l'univers sonore singulier, mêlant folk du Tamil Nadu, hip-hop et musique électronique indépendante.",
+    bio: [
+      "Repéré grâce à sa collaboration avec le réalisateur Pa. Ranjith, Santhosh Narayanan s'est distingué par des bandes originales ancrées dans les musiques populaires et folkloriques tamoules, avec une touche résolument moderne.",
+      "Il collabore aussi régulièrement avec des artistes internationaux, contribuant à faire connaître la scène musicale tamoule indépendante hors d'Inde.",
+    ],
+    keyDates: [
+      "2012 — Révélé par la bande originale du film Attakathi.",
+      "Octobre 2025 — Collabore avec Ed Sheeran sur l'EP Play (The Remixes).",
+    ],
+    latest:
+      "A composé la musique du film Vaa Vaathiyaar, sorti le 14 janvier 2026, et a produit le single « Vari Vari » de la chanteuse Dhee en 2026.",
+  },
+  {
+    slug: "sid-sriram",
+    image: "/artists/sid-sriram.jpg",
+    icon: "mic",
+    color: "from-fuchsia-600 to-fuchsia-400",
+    name: "Sid Sriram",
+    tag: "Chanteur tamoul",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Chanteur né en Inde et formé aux États-Unis, il marie musique carnatique traditionnelle et pop/R&B contemporains, aussi bien dans le cinéma tamoul qu'en tant qu'artiste solo.",
+    bio: [
+      "Formé dès l'enfance à la musique carnatique puis élevé en Californie, Sid Sriram développe un style unique mêlant tradition indienne et influences R&B et hip-hop américaines.",
+      "Très demandé comme chanteur playback dans le cinéma tamoul, il mène en parallèle une carrière solo internationale, avec des collaborations remarquées dans l'industrie musicale américaine.",
+    ],
+    keyDates: [
+      "2012 — Débute comme chanteur playback dans le cinéma tamoul.",
+      "2023 — Sort Sidharth, son premier album entièrement en anglais, chez Def Jam.",
+    ],
+    latest:
+      "Tournée nord-américaine à l'automne 2026, avec des dates en septembre (Illinois, New Jersey, Virginie, Washington, Californie) et des concerts au Blue Note de New York et Los Angeles en novembre 2026.",
+  },
+  {
+    slug: "d-imman",
+    image: "/artists/d-imman.jpg",
+    icon: "note",
+    color: "from-lime-600 to-lime-400",
+    name: "D. Imman",
+    tag: "Compositeur tamoul",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Compositeur tamoul réputé pour ses mélodies mélodieuses et ses bandes originales rurales, récompensé à plusieurs reprises pour son travail dans le cinéma tamoul.",
+    bio: [
+      "D. Imman se distingue par des compositions mélodiques marquées par des sonorités folkloriques et rurales, très appréciées dans le cinéma tamoul populaire.",
+      "Il a composé la musique de nombreux films à succès et reste l'un des compositeurs les plus actifs de l'industrie, avec plusieurs sorties chaque année.",
+    ],
+    keyDates: [
+      "2008 — Débute avec la bande originale du film Vil Ambu.",
+      "2010s — Multiplie les récompenses pour ses bandes originales dans le cinéma tamoul.",
+    ],
+    latest:
+      "A composé la musique du film Vadam, sorti le 6 mars 2026, ainsi que celle de plusieurs autres sorties tamoules de l'année.",
+  },
+  {
+    slug: "hiphop-tamizha",
+    image: "/artists/hiphop-tamizha.jpg",
+    icon: "headphones",
+    color: "from-red-600 to-red-400",
+    name: "Hiphop Tamizha (Adhi)",
+    tag: "Duo hip-hop tamoul",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Duo formé d'Adhi et Jeeva, pionnier du hip-hop en langue tamoule, connu pour ses titres énergiques et ses concerts très suivis en Inde du Sud.",
+    bio: [
+      "Basé à Chennai, le duo Hiphop Tamizha est considéré comme le pionnier du hip-hop en tamoul, mêlant rap, pop et sonorités traditionnelles dans des morceaux devenus des hymnes populaires.",
+      "Adhi, la voix et le compositeur principal du duo, s'est aussi imposé comme acteur et réalisateur dans le cinéma tamoul.",
+    ],
+    keyDates: [
+      "2014 — Premier album qui installe le duo comme pionnier du hip-hop tamoul.",
+      "Plusieurs titres devenus viraux, dont « Ethir Neechal » et « Sakkarakatti ».",
+    ],
+    latest:
+      "Concert prévu le 7 mars 2026 au YMCA Ground de Chennai ; pas de tournée internationale annoncée pour le moment.",
+  },
+  {
+    slug: "dhee",
+    image: "/artists/dhee.jpg",
+    icon: "mic",
+    color: "from-pink-600 to-pink-400",
+    name: "Dhee",
+    tag: "Chanteuse tamoule",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Révélée par le titre viral « Rowdy Baby », elle s'impose depuis comme l'une des voix montantes de la pop tamoule contemporaine.",
+    bio: [
+      "Dhee se fait connaître en 2018 avec « Rowdy Baby » (film Maari 2, avec Yuvan Shankar Raja), devenu l'une des vidéos musicales indiennes les plus vues au monde.",
+      "Depuis, elle poursuit une carrière solo entre pop tamoule et collaborations internationales, en explorant des sonorités plus électroniques et personnelles.",
+    ],
+    keyDates: [
+      "2018 — Explose avec « Rowdy Baby », plus d'1,5 milliard de vues sur YouTube.",
+      "Octobre 2025 — Apparaît sur l'EP Play (The Remixes) d'Ed Sheeran.",
+    ],
+    latest:
+      "A sorti plusieurs nouveaux titres en 2026, dont « Like I Want You » (13 mars 2026) et le single « Vari Vari », produit par Santhosh Narayanan.",
+  },
+  {
+    slug: "chinmayi-sripada",
+    image: "/artists/chinmayi-sripada.jpg",
+    icon: "mic",
+    color: "from-purple-600 to-purple-400",
+    name: "Chinmayi Sripada",
+    tag: "Chanteuse tamoule",
+    region: "tamoul",
+    featured: false,
+    short:
+      "Chanteuse et actrice de doublage prolifique, active dans le cinéma tamoul, télougou, kannada, malayalam et hindi depuis plus de 20 ans.",
+    bio: [
+      "Chinmayi Sripada s'est imposée dès les années 2000 comme l'une des chanteuses de playback les plus polyvalentes du sud de l'Inde, avant de développer également une importante carrière de doublage.",
+      "Elle poursuit aujourd'hui ses activités de chanteuse et de doubleuse dans plusieurs langues, tout en étant également entrepreneuse.",
+    ],
+    keyDates: [
+      "2001 — Débute comme chanteuse playback dans le cinéma tamoul.",
+      "2023 — Fait son retour au doublage dans le cinéma tamoul après plusieurs années d'absence.",
+    ],
+    latest:
+      "A prêté sa voix dans le film Karuppu (2026) et a doublé pour le film télougou Dacoit: A Love Story en 2026.",
   },
 ];
