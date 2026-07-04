@@ -5,6 +5,8 @@ import { api } from "../lib/api";
 import EventCard from "../components/EventCard";
 import ArtistSpotlight from "../components/ArtistSpotlight";
 import ArtistSearchBox from "../components/ArtistSearchBox";
+import HeroBanner from "../components/HeroBanner";
+import ArtistMarquee from "../components/ArtistMarquee";
 
 const TYPES = [
   { value: "", label: "Tous" },
@@ -35,10 +37,9 @@ export default function HomePage() {
 
   return (
     <div>
-      <div className="mb-8 rounded-2xl bg-gradient-to-r from-brand to-brand-light p-8 text-white">
-        <h1 className="text-3xl font-bold">Votre prochain événement vous attend</h1>
-        <p className="mt-2 text-white/90">Trains, concerts, spectacles — réservez vos billets en quelques secondes.</p>
-      </div>
+      <HeroBanner />
+
+      <ArtistSearchBox />
 
       <p className="mb-8 max-w-2xl text-slate-600">
         My Ticket réunit tous vos billets au même endroit : trains, concerts, sport et spectacles.
@@ -46,11 +47,11 @@ export default function HomePage() {
         événements, gérez-les depuis votre propre espace organisateur.
       </p>
 
+      <ArtistMarquee />
+
       <ArtistSpotlight />
 
-      <ArtistSearchBox />
-
-      <div className="mb-6 flex flex-wrap items-center gap-3">
+      <div id="evenements" className="mb-6 flex flex-wrap items-center gap-3 scroll-mt-20">
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -62,7 +63,7 @@ export default function HomePage() {
             <button
               key={t.value}
               onClick={() => setType(t.value)}
-              className={`rounded-full px-3 py-1.5 text-sm ${
+              className={`rounded-full px-3 py-1.5 text-sm transition hover:scale-105 ${
                 type === t.value ? "bg-brand text-white" : "bg-slate-100 hover:bg-slate-200"
               }`}
             >
@@ -79,8 +80,10 @@ export default function HomePage() {
         <p className="text-slate-500">Aucun événement trouvé.</p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {events.map((e) => (
-            <EventCard key={e.id} event={e} />
+          {events.map((e, i) => (
+            <div key={e.id} style={{ animationDelay: `${Math.min(i, 6) * 60}ms` }}>
+              <EventCard event={e} />
+            </div>
           ))}
         </div>
       )}

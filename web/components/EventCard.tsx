@@ -19,7 +19,7 @@ export default function EventCard({ event }: { event: any }) {
   return (
     <Link
       href={`/events/${event.id}`}
-      className="block rounded-xl border bg-white p-4 shadow-sm transition hover:shadow-md"
+      className="block rounded-xl border bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl animate-fadeInUp"
     >
       <div className="text-xs font-medium text-brand">{TYPE_LABELS[event.type] || event.type}</div>
       <h3 className="mt-1 text-lg font-semibold">{event.title}</h3>

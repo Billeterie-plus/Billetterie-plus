@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [user, setUser] = useState<{ name: string; role: string } | null>(null);
+  const [search, setSearch] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -19,12 +20,27 @@ export default function Navbar() {
     router.push("/");
   }
 
+  function handleSearch() {
+    router.push(search.trim() ? `/artistes?q=${encodeURIComponent(search.trim())}` : "/artistes");
+  }
+
   return (
-    <nav className="border-b bg-white sticky top-0 z-10">
-      <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+    <nav className="sticky top-0 z-10 border-b bg-white">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <Link href="/" className="text-xl font-bold text-brand">
           My Ticket
         </Link>
+
+        <div className="order-3 w-full sm:order-none sm:w-auto sm:flex-1 sm:max-w-xs">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            placeholder="Rechercher un artiste tamoul..."
+            className="w-full rounded-full border px-4 py-1.5 text-sm"
+          />
+        </div>
+
         <div className="flex items-center gap-4 text-sm">
           <Link href="/" className="hover:text-brand">Événements</Link>
           <Link href="/artistes" className="hover:text-brand">Artistes</Link>
