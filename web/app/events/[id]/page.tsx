@@ -103,9 +103,9 @@ export default function EventDetailPage() {
         ← Retour aux {event.type === "SOIREE" ? "soirées" : "concerts"}
       </Link>
 
-      {/* En-tête : affiche portrait + informations */}
-      <div className="mb-8 flex flex-col gap-6 sm:flex-row animate-fadeInUp">
-        <div className="mx-auto w-56 shrink-0 overflow-hidden rounded-2xl shadow-lg sm:mx-0 sm:w-64">
+      {/* En-tête : affiche portrait centrée + informations */}
+      <div className="mb-8 flex flex-col items-center text-center animate-fadeInUp">
+        <div className="w-64 shrink-0 overflow-hidden rounded-2xl shadow-lg sm:w-80">
           {event.imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -115,13 +115,13 @@ export default function EventDetailPage() {
             />
           ) : (
             <div className="flex aspect-[3/4] w-full items-center justify-center bg-gradient-to-br from-brand via-brand-light to-brand-dark bg-200 animate-gradientMove">
-              <span className="text-6xl">{emoji}</span>
+              <span className="text-7xl">{emoji}</span>
             </div>
           )}
         </div>
 
-        <div className="flex flex-col justify-center">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="mt-5 flex max-w-2xl flex-col items-center">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="inline-block rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold tracking-wide text-brand">
               {TYPE_LABELS[event.type] || event.type}
             </span>
@@ -134,7 +134,7 @@ export default function EventDetailPage() {
           <h1 className="mt-3 text-2xl font-extrabold leading-tight text-slate-900 sm:text-4xl">
             {event.title}
           </h1>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-600">
+          <div className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-1.5 text-sm text-slate-600">
             {venue && (
               <span className="flex items-center gap-1.5">
                 <span aria-hidden>📍</span> {venue}
