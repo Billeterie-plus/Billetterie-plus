@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../lib/api";
 import EventCard from "../components/EventCard";
+import ArtistSpotlight from "../components/ArtistSpotlight";
 
 const TYPES = [
   { value: "", label: "Tous" },
@@ -43,6 +44,8 @@ export default function HomePage() {
         Achetez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des
         événements, gérez-les depuis votre propre espace organisateur.
       </p>
+
+      <ArtistSpotlight />
 
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <input
