@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 body {
-  background-color: #f8fafc;
   color: #0f172a;
+  background-color: #eef2ff;
+  background-image:
+    radial-gradient(60rem 40rem at 8% -10%, rgba(29, 78, 216, 0.14), transparent 60%),
+    radial-gradient(50rem 35rem at 105% 15%, rgba(59, 130, 246, 0.16), transparent 55%),
+    radial-gradient(60rem 45rem at 50% 110%, rgba(30, 58, 138, 0.12), transparent 60%),
+    linear-gradient(180deg, #eef2ff 0%, #f4f6fb 45%, #eef2ff 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
