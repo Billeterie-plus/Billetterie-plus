@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARTISTS } from "../../../lib/artists";
 import ArtistAvatar from "../../../components/ArtistAvatar";
+import ArtistAudioPlayer from "../../../components/ArtistAudioPlayer";
 
 export function generateStaticParams() {
   return ARTISTS.map((a) => ({ slug: a.slug }));
@@ -21,6 +22,10 @@ export default function ArtistPage({ params }: { params: { slug: string } }) {
         <ArtistAvatar image={artist.image} icon={artist.icon} color={artist.color} name={artist.name} size="lg" />
         <h1 className="mt-4 text-2xl font-bold text-slate-900">{artist.name}</h1>
         <div className="mt-1 text-sm font-medium text-brand">{artist.tag}</div>
+      </div>
+
+      <div className="mt-6">
+        <ArtistAudioPlayer slug={artist.slug} name={artist.name} />
       </div>
 
       <div className="mt-8 space-y-4 text-slate-700">
