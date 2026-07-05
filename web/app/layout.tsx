@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr">
       <body>
-        {/* Formes flottantes décoratives fixes, en fond sur tout le site */}
+        {/* Décor de fond fixe, sur tout le site : formes floutées + icônes + filigrane texte */}
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
           <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand/10 blur-3xl animate-floaty" />
           <div
@@ -22,6 +22,52 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             className="absolute bottom-[-6rem] left-1/3 h-96 w-96 rounded-full bg-brand-dark/10 blur-3xl animate-floaty"
             style={{ animationDelay: "3s" }}
           />
+
+          {/* Filigrane texte répété en diagonale */}
+          <div className="absolute inset-0 flex -rotate-6 select-none flex-col justify-around opacity-[0.035]">
+            {Array.from({ length: 6 }).map((_, row) => (
+              <div key={row} className="flex whitespace-nowrap text-5xl font-extrabold tracking-widest text-brand-dark sm:text-7xl">
+                {Array.from({ length: 6 }).map((_, col) => (
+                  <span key={col} className="mx-8">
+                    MY TICKET · தமிழ் ·
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Icônes musicales/festives flottantes */}
+          <span className="absolute left-[6%] top-[12%] animate-floaty text-4xl opacity-[0.09] sm:text-5xl">🎵</span>
+          <span
+            className="absolute left-[85%] top-[8%] animate-floaty text-3xl opacity-[0.08] sm:text-4xl"
+            style={{ animationDelay: "0.8s" }}
+          >
+            🎶
+          </span>
+          <span
+            className="absolute left-[12%] top-[55%] animate-floaty text-4xl opacity-[0.08] sm:text-5xl"
+            style={{ animationDelay: "2.2s" }}
+          >
+            🎤
+          </span>
+          <span
+            className="absolute left-[78%] top-[42%] animate-floaty text-3xl opacity-[0.08] sm:text-4xl"
+            style={{ animationDelay: "1.4s" }}
+          >
+            🎉
+          </span>
+          <span
+            className="absolute left-[92%] top-[75%] animate-floaty text-4xl opacity-[0.09] sm:text-5xl"
+            style={{ animationDelay: "3.4s" }}
+          >
+            🎫
+          </span>
+          <span
+            className="absolute left-[20%] top-[85%] animate-floaty text-3xl opacity-[0.08] sm:text-4xl"
+            style={{ animationDelay: "0.4s" }}
+          >
+            🥁
+          </span>
         </div>
 
         <Navbar />
