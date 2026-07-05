@@ -27,12 +27,17 @@ module.exports = {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-14px)" },
         },
+        kenBurns: {
+          "0%": { transform: "scale(1) translate(0, 0)" },
+          "100%": { transform: "scale(1.12) translate(-1%, -1%)" },
+        },
       },
       animation: {
         gradientMove: "gradientMove 8s ease infinite",
         marquee: "marquee 28s linear infinite",
         fadeInUp: "fadeInUp 0.6s ease-out both",
         floaty: "floaty 5s ease-in-out infinite",
+        kenBurns: "kenBurns 18s ease-in-out infinite alternate",
       },
       backgroundSize: {
         200: "200% 200%",
