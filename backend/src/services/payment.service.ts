@@ -26,12 +26,38 @@ export async function createCheckoutSession(orderId: string) {
     return { mode: "demo" as const, redirectUrl: `${WEB_APP_URL}/my-tickets?order=${orderId}` };
   }
 
+  // Infos pratiques de l'événement (adresse, transport, parking) affichées
+  // directement sur la page de paiement Stripe, pour que l'acheteur les ait
+  // sous les yeux au moment de payer.
+  const eventDateStr = new Date(order.event.startDateTime).toLocaleString("fr-FR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const practicalParts: string[] = [`${eventDateStr}`];
+  if (order.event.venue) practicalParts.push(`Adresse : ${order.event.venue}`);
+  if (order.event.transportInfo) practicalParts.push(`Transport : ${order.event.transportInfo}`);
+  if (order.event.parkingInfo || order.event.parkingFree !== null) {
+    const label =
+      order.event.parkingFree === true ? "Parking gratuit" : order.event.parkingFree === false ? "Parking payant" : "Parking";
+    practicalParts.push(order.event.parkingInfo ? `${label} : ${order.event.parkingInfo}` : label);
+  }
+  // Stripe limite ce message à 499 caractères.
+  const practicalInfo = practicalParts.join(" — ").slice(0, 499);
+
   const lineItems = order.items.map((item: any) => ({
     quantity: item.quantity,
     price_data: {
       currency: order.currency.toLowerCase(),
       unit_amount: Math.round(item.unitPrice * 100),
-      product_data: { name: `${order.event.title} — ${item.ticketType.name}` },
+      product_data: {
+        name: `${order.event.title} — ${item.ticketType.name}`,
+        // Repris aussi ici (sous le nom du billet), au cas où le client ne
+        // remarque pas le message près du bouton de paiement.
+        description: practicalInfo.slice(0, 300) || undefined,
+      },
     },
   }));
 
@@ -41,6 +67,9 @@ export async function createCheckoutSession(orderId: string) {
     success_url: `${WEB_APP_URL}/my-tickets?order=${orderId}&success=true`,
     cancel_url: `${WEB_APP_URL}/checkout?cancelled=true`,
     metadata: { orderId },
+    custom_text: practicalInfo
+      ? { submit: { message: practicalInfo } }
+      : undefined,
   };
 
   let session;
