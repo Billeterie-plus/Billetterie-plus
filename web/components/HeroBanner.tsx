@@ -38,15 +38,33 @@ export default function HeroBanner() {
 
       <div className="relative z-10 p-8 sm:p-12">
         <p className="mb-2 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-medium tracking-wide animate-fadeInUp">
-          🎉 Concerts & soirées tamoules
+          🎉 La plateforme n°1 des concerts & soirées tamoules
         </p>
         <h1 className="max-w-xl text-3xl font-bold drop-shadow-sm sm:text-4xl animate-fadeInUp" style={{ animationDelay: "0.1s" }}>
-          Votre prochain concert tamoul vous attend
+          My Ticket, la scène tamoule à portée de clic
         </h1>
         <p className="mt-3 max-w-xl text-white/90 animate-fadeInUp" style={{ animationDelay: "0.2s" }}>
-          Concerts d'artistes tamouls et soirées tamoules (Kollywood nights, Pongal party...) — réservez vos billets en quelques secondes.
+          Concerts d'artistes tamouls, soirées Kollywood, Pongal party... découvrez, réservez et vivez les meilleurs événements
+          de la scène tamoule, en quelques secondes et sans commission cachée.
         </p>
-        <div className="mt-6 flex flex-wrap gap-3 animate-fadeInUp" style={{ animationDelay: "0.3s" }}>
+
+        {/* Mini pitch : pourquoi choisir My Ticket */}
+        <div className="mt-5 flex flex-wrap gap-2 animate-fadeInUp" style={{ animationDelay: "0.25s" }}>
+          <span className="flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium backdrop-blur">
+            🎤 37+ artistes tamouls référencés
+          </span>
+          <span className="flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium backdrop-blur">
+            ⚡ Billets instantanés, sans file d'attente
+          </span>
+          <span className="flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium backdrop-blur">
+            🔒 Paiement 100% sécurisé
+          </span>
+          <span className="flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium backdrop-blur">
+            📲 Billet directement sur votre téléphone
+          </span>
+        </div>
+
+        <div className="mt-6 flex flex-wrap gap-3 animate-fadeInUp" style={{ animationDelay: "0.35s" }}>
           <button
             onClick={scrollToEvents}
             className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95"
