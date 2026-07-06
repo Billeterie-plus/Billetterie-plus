@@ -21,10 +21,33 @@ export default function EventDetailPage() {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
+
+  useEffect(() => {
+    setLoggedIn(!!getToken());
+  }, []);
 
   useEffect(() => {
     api(`/events/${id}`, { auth: false }).then(setEvent).catch((e) => setError(e.message));
   }, [id]);
+
+  // Restaure le panier si la personne vient de se connecter/s'inscrire après avoir choisi ses billets
+  useEffect(() => {
+    if (!event || typeof window === "undefined") return;
+    const raw = sessionStorage.getItem("pendingPurchase");
+    if (!raw) return;
+    try {
+      const pending = JSON.parse(raw);
+      if (pending.eventId === event.id) {
+        setQuantities(pending.quantities || {});
+        setPromoCode(pending.promoCode || "");
+      }
+    } catch {
+      // ignore
+    } finally {
+      sessionStorage.removeItem("pendingPurchase");
+    }
+  }, [event]);
 
   if (error) return <p className="text-red-600">{error}</p>;
   if (!event) {
@@ -52,7 +75,12 @@ export default function EventDetailPage() {
 
   async function handleBuy() {
     if (!getToken()) {
-      router.push("/login");
+      sessionStorage.setItem(
+        "pendingPurchase",
+        JSON.stringify({ eventId: event.id, quantities, promoCode })
+      );
+      const redirect = encodeURIComponent(`/events/${event.id}`);
+      router.push(`/login?redirect=${redirect}`);
       return;
     }
     setSubmitting(true);
@@ -271,8 +299,19 @@ export default function EventDetailPage() {
             disabled={totalQty === 0 || submitting}
             className="mt-4 w-full rounded-lg bg-brand py-2.5 font-medium text-white transition hover:scale-[1.01] hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           >
-            {submitting ? "Traitement…" : totalQty === 0 ? "Sélectionnez vos billets" : `Acheter (${total.toFixed(2)}€)`}
+            {submitting
+              ? "Traitement…"
+              : totalQty === 0
+              ? "Sélectionnez vos billets"
+              : !loggedIn
+              ? `Se connecter et acheter (${total.toFixed(2)}€)`
+              : `Acheter (${total.toFixed(2)}€)`}
           </button>
+          {totalQty > 0 && !loggedIn && (
+            <p className="mt-2 text-center text-xs text-slate-400">
+              Vos billets restent sélectionnés — connectez-vous ou créez un compte pour finaliser.
+            </p>
+          )}
         </div>
       </div>
 

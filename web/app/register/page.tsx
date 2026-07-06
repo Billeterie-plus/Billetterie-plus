@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { api, setSession } from "../../lib/api";
 
 const ROLES = [
@@ -19,11 +20,13 @@ const ROLES = [
   },
 ] as const;
 
-export default function RegisterPage() {
+function RegisterForm() {
   const [form, setForm] = useState({ name: "", email: "", password: "", role: "BUYER" as string, organizationName: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   function update(key: string, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -36,7 +39,7 @@ export default function RegisterPage() {
     try {
       const res = await api("/auth/register", { method: "POST", body: form, auth: false });
       setSession(res.token, res.user);
-      router.push(res.user.role === "ORGANIZER" ? "/organizer" : "/");
+      router.push(redirect || (res.user.role === "ORGANIZER" ? "/organizer" : "/"));
       router.refresh();
     } catch (e: any) {
       setError(e.message);
@@ -50,7 +53,11 @@ export default function RegisterPage() {
   return (
     <div className="mx-auto max-w-2xl">
       <h1 className="mb-1 text-2xl font-bold">Créer un compte</h1>
-      <p className="mb-6 text-sm text-slate-500">Commencez par choisir le profil qui vous correspond.</p>
+      <p className="mb-6 text-sm text-slate-500">
+        {redirect
+          ? "Créez votre compte pour finaliser votre achat — vos billets sélectionnés vous attendent."
+          : "Commencez par choisir le profil qui vous correspond."}
+      </p>
 
       {/* Choix du profil : deux interfaces distinctes */}
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -127,6 +134,21 @@ export default function RegisterPage() {
           {loading ? "Création…" : `Créer mon compte ${selectedRole.title.replace("Je suis ", "")}`}
         </button>
       </form>
+
+      <p className="mx-auto mt-4 max-w-sm text-center text-sm text-slate-500">
+        Déjà un compte ?{" "}
+        <Link href={redirect ? `/login?redirect=${encodeURIComponent(redirect)}` : "/login"} className="text-brand">
+          Se connecter
+        </Link>
+      </p>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
+      <RegisterForm />
+    </Suspense>
   );
 }
