@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 const TYPE_LABELS: Record<string, string> = {
-  CONCERT: "🎵 Concert",
-  SOIREE: "🎉 Soirée tamoule",
+  CONCERT: "Concert",
+  SOIREE: "Soirée tamoule",
 };
 
 export default function EventCard({ event }: { event: any }) {
