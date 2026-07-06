@@ -26,21 +26,46 @@ export async function createCheckoutSession(orderId: string) {
     return { mode: "demo" as const, redirectUrl: `${WEB_APP_URL}/my-tickets?order=${orderId}` };
   }
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    payment_method_types: ["card"],
-    line_items: order.items.map((item: any) => ({
-      quantity: item.quantity,
-      price_data: {
-        currency: order.currency.toLowerCase(),
-        unit_amount: Math.round(item.unitPrice * 100),
-        product_data: { name: `${order.event.title} — ${item.ticketType.name}` },
-      },
-    })),
+  const lineItems = order.items.map((item: any) => ({
+    quantity: item.quantity,
+    price_data: {
+      currency: order.currency.toLowerCase(),
+      unit_amount: Math.round(item.unitPrice * 100),
+      product_data: { name: `${order.event.title} — ${item.ticketType.name}` },
+    },
+  }));
+
+  const baseParams = {
+    mode: "payment" as const,
+    line_items: lineItems,
     success_url: `${WEB_APP_URL}/my-tickets?order=${orderId}&success=true`,
     cancel_url: `${WEB_APP_URL}/checkout?cancelled=true`,
     metadata: { orderId },
-  });
+  };
+
+  let session;
+  try {
+    // "card" fait apparaître automatiquement Google Pay / Apple Pay comme
+    // wallets natifs selon l'appareil du client (rien à configurer en plus).
+    // "paypal" doit être activé dans Stripe Dashboard → Paramètres → Moyens
+    // de paiement pour être proposé.
+    session = await stripe.checkout.sessions.create({
+      ...baseParams,
+      payment_method_types: ["card", "paypal"],
+    });
+  } catch (err: any) {
+    // Si PayPal n'est pas encore activé sur le compte Stripe, on ne bloque pas
+    // le paiement : on retombe sur carte bancaire seule (qui fonctionne toujours).
+    if (err?.code === "parameter_invalid_enum" || /paypal/i.test(err?.message || "")) {
+      console.warn("PayPal indisponible sur ce compte Stripe, retour à carte bancaire seule:", err.message);
+      session = await stripe.checkout.sessions.create({
+        ...baseParams,
+        payment_method_types: ["card"],
+      });
+    } else {
+      throw err;
+    }
+  }
 
   await prisma.order.update({ where: { id: orderId }, data: { stripeSessionId: session.id } });
 

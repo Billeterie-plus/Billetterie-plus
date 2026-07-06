@@ -34,6 +34,9 @@ export default function EditEventPage() {
     venue: string;
     startDateTime: string;
     status: string;
+    transportInfo: string;
+    parkingInfo: string;
+    parkingFree: string;
   } | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -56,6 +59,9 @@ export default function EditEventPage() {
           venue: event.venue || "",
           startDateTime: toLocalInputValue(event.startDateTime),
           status: event.status,
+          transportInfo: event.transportInfo || "",
+          parkingInfo: event.parkingInfo || "",
+          parkingFree: event.parkingFree === true ? "true" : event.parkingFree === false ? "false" : "",
         });
       })
       .catch((e) => setError(e.message))
@@ -83,6 +89,9 @@ export default function EditEventPage() {
           venue: form.venue,
           startDateTime: new Date(form.startDateTime).toISOString(),
           status: form.status,
+          transportInfo: form.transportInfo || undefined,
+          parkingInfo: form.parkingInfo || undefined,
+          parkingFree: form.parkingFree === "" ? null : form.parkingFree === "true",
         },
       });
       router.push("/organizer");
@@ -170,6 +179,33 @@ export default function EditEventPage() {
                     {s.label}
                   </option>
                 ))}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="mb-2 font-semibold text-slate-800">Infos pratiques (transport, parking)</h2>
+            <div className="space-y-3">
+              <input
+                placeholder="Transport (ex: Métro ligne 4, arrêt Château d'Eau — 5 min à pied)"
+                value={form.transportInfo}
+                onChange={(e) => updateForm("transportInfo", e.target.value)}
+                className="w-full rounded-lg border px-3 py-2"
+              />
+              <input
+                placeholder="Parking (ex: Parking Vinci Château d'Eau, à 200m de l'entrée)"
+                value={form.parkingInfo}
+                onChange={(e) => updateForm("parkingInfo", e.target.value)}
+                className="w-full rounded-lg border px-3 py-2"
+              />
+              <select
+                value={form.parkingFree}
+                onChange={(e) => updateForm("parkingFree", e.target.value)}
+                className="w-full rounded-lg border px-3 py-2"
+              >
+                <option value="">Parking : non précisé</option>
+                <option value="true">Parking gratuit</option>
+                <option value="false">Parking payant</option>
               </select>
             </div>
           </div>

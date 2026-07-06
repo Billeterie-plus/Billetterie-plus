@@ -161,6 +161,57 @@ export default function EventDetailPage() {
         </div>
       </div>
 
+      {/* Récap infos pratiques : nom, heure, adresse, transport, parking */}
+      <section className="mb-8 rounded-xl border bg-white p-5">
+        <h2 className="mb-3 text-lg font-bold text-slate-900">Infos pratiques</h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Événement</p>
+            <p className="mt-1 text-sm text-slate-700">{event.title}</p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Date &amp; heure</p>
+            <p className="mt-1 text-sm text-slate-700">
+              {eventDate.toLocaleString("fr-FR", {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Adresse</p>
+            <p className="mt-1 text-sm text-slate-700">{venue || "À confirmer par l'organisateur"}</p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Transport</p>
+            <p className="mt-1 text-sm text-slate-700">
+              {event.transportInfo || "Non précisé — voir les liens ci-dessous"}
+            </p>
+          </div>
+        </div>
+
+        {(event.parkingInfo || event.parkingFree === true || event.parkingFree === false) && (
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t pt-4">
+            <span
+              className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
+                event.parkingFree === true
+                  ? "bg-green-100 text-green-700"
+                  : event.parkingFree === false
+                  ? "bg-amber-100 text-amber-700"
+                  : "bg-slate-100 text-slate-600"
+              }`}
+            >
+              {event.parkingFree === true ? "Parking gratuit" : event.parkingFree === false ? "Parking payant" : "Parking"}
+            </span>
+            {event.parkingInfo && <span className="text-sm text-slate-600">{event.parkingInfo}</span>}
+          </div>
+        )}
+      </section>
+
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           {event.description && (
@@ -291,7 +342,7 @@ export default function EventDetailPage() {
           <p className="mt-2 text-center text-xs text-slate-400">
             {totalQty > 0 && !loggedIn
               ? "Vos billets restent sélectionnés — connectez-vous ou créez un compte pour finaliser."
-              : "Paiement sécurisé sur la page suivante."}
+              : "Paiement sécurisé — carte bancaire, PayPal, Google Pay, Apple Pay."}
           </p>
         </div>
       </div>
@@ -356,6 +407,24 @@ export default function EventDetailPage() {
         {venue && (
           <section className="rounded-xl border bg-white p-5 lg:col-span-2">
             <h2 className="mb-3 text-lg font-bold text-slate-900">Comment s'y rendre</h2>
+            {(event.transportInfo || event.parkingInfo) && (
+              <div className="mb-3 space-y-1 text-sm text-slate-600">
+                {event.transportInfo && (
+                  <p>
+                    <span className="font-medium text-slate-800">Transport : </span>
+                    {event.transportInfo}
+                  </p>
+                )}
+                {event.parkingInfo && (
+                  <p>
+                    <span className="font-medium text-slate-800">
+                      Parking {event.parkingFree === true ? "(gratuit)" : event.parkingFree === false ? "(payant)" : ""} :{" "}
+                    </span>
+                    {event.parkingInfo}
+                  </p>
+                )}
+              </div>
+            )}
             <div className="flex flex-wrap gap-3">
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${mapQuery}&travelmode=transit`}

@@ -168,6 +168,10 @@ function CheckoutContent() {
               </li>
               <li className="flex gap-2">
                 <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                Carte bancaire, PayPal, Google Pay ou Apple Pay selon votre appareil.
+              </li>
+              <li className="flex gap-2">
+                <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
                 Connexion chiffrée de bout en bout (SSL/TLS).
               </li>
               <li className="flex gap-2">

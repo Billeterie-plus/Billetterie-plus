@@ -28,6 +28,9 @@ const eventSchema = z.object({
   venue: z.string().optional(),
   departureStation: z.string().optional(),
   arrivalStation: z.string().optional(),
+  transportInfo: z.string().optional(),
+  parkingInfo: z.string().optional(),
+  parkingFree: z.boolean().nullable().optional(),
   startDateTime: z.string(), // ISO string
   endDateTime: z.string().optional(),
   ticketTypes: z

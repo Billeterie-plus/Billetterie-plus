@@ -88,6 +88,9 @@ model Event {
   venue             String?      // concert hall, stadium, etc.
   departureStation   String?     // for TRAIN events
   arrivalStation     String?     // for TRAIN events
+  transportInfo     String?      // ex: "Métro ligne 4, arrêt Château d'Eau — 5 min à pied"
+  parkingInfo       String?      // ex: "Parking Vinci Château d'Eau, 200m de l'entrée"
+  parkingFree       Boolean?     // true = gratuit, false = payant, null = non précisé
   startDateTime     DateTime
   endDateTime       DateTime?
   status            EventStatus @default(DRAFT)

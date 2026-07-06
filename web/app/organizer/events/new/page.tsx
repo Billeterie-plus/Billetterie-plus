@@ -21,6 +21,9 @@ export default function NewEventPage() {
     imageUrl: "",
     venue: "",
     startDateTime: "",
+    transportInfo: "",
+    parkingInfo: "",
+    parkingFree: "",
   });
   const [tiers, setTiers] = useState([{ ...EMPTY_TIER }]);
   const [error, setError] = useState("");
@@ -46,6 +49,9 @@ export default function NewEventPage() {
         body: {
           ...form,
           imageUrl: form.imageUrl || undefined,
+          transportInfo: form.transportInfo || undefined,
+          parkingInfo: form.parkingInfo || undefined,
+          parkingFree: form.parkingFree === "" ? undefined : form.parkingFree === "true",
           startDateTime: new Date(form.startDateTime).toISOString(),
           ticketTypes: tiers.map((t) => ({ ...t, price: Number(t.price), quota: Number(t.quota) })),
         },
@@ -131,9 +137,40 @@ export default function NewEventPage() {
             </div>
           </div>
 
+          {/* Infos pratiques : transport / parking */}
+          <div>
+            <h2 className="mb-2 font-semibold text-slate-800">3. Infos pratiques (transport, parking)</h2>
+            <p className="mb-2 text-xs text-slate-400">
+              Affichées sur la page de l'événement pour aider les acheteurs à s'organiser.
+            </p>
+            <div className="space-y-3">
+              <input
+                placeholder="Transport (ex: Métro ligne 4, arrêt Château d'Eau — 5 min à pied)"
+                value={form.transportInfo}
+                onChange={(e) => updateForm("transportInfo", e.target.value)}
+                className="w-full rounded-lg border px-3 py-2"
+              />
+              <input
+                placeholder="Parking (ex: Parking Vinci Château d'Eau, à 200m de l'entrée)"
+                value={form.parkingInfo}
+                onChange={(e) => updateForm("parkingInfo", e.target.value)}
+                className="w-full rounded-lg border px-3 py-2"
+              />
+              <select
+                value={form.parkingFree}
+                onChange={(e) => updateForm("parkingFree", e.target.value)}
+                className="w-full rounded-lg border px-3 py-2"
+              >
+                <option value="">Parking : non précisé</option>
+                <option value="true">Parking gratuit</option>
+                <option value="false">Parking payant</option>
+              </select>
+            </div>
+          </div>
+
           {/* Tarifs */}
           <div>
-            <h2 className="mb-2 font-semibold text-slate-800">3. Tarifs / catégories de billets</h2>
+            <h2 className="mb-2 font-semibold text-slate-800">4. Tarifs / catégories de billets</h2>
             <div className="space-y-2">
               {tiers.map((t, i) => (
                 <div key={i} className="grid grid-cols-4 gap-2">
