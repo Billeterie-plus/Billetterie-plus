@@ -19,7 +19,6 @@ export default function EventDetailPage() {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [promoCode, setPromoCode] = useState("");
   const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
 
@@ -73,7 +72,7 @@ export default function EventDetailPage() {
   const eventDate = new Date(event.startDateTime);
   const daysUntil = Math.ceil((eventDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
 
-  async function handleBuy() {
+  function handleBuy() {
     if (!getToken()) {
       sessionStorage.setItem(
         "pendingPurchase",
@@ -83,28 +82,12 @@ export default function EventDetailPage() {
       router.push(`/login?redirect=${redirect}`);
       return;
     }
-    setSubmitting(true);
-    setError("");
-    try {
-      const items = Object.entries(quantities)
-        .filter(([, qty]) => qty > 0)
-        .map(([ticketTypeId, quantity]) => ({ ticketTypeId, quantity }));
-
-      const res = await api("/orders", {
-        method: "POST",
-        body: { eventId: event.id, items, promoCode: promoCode || undefined },
-      });
-
-      if (res.mode === "demo") {
-        router.push(`/my-tickets?order=${res.orderId}`);
-      } else {
-        window.location.href = res.redirectUrl;
-      }
-    } catch (e: any) {
-      setError(e.message);
-    } finally {
-      setSubmitting(false);
-    }
+    // On passe par une page de paiement dédiée (récapitulatif, CGV/RGPD, paiement sécurisé)
+    sessionStorage.setItem(
+      "checkoutDraft",
+      JSON.stringify({ eventId: event.id, quantities, promoCode })
+    );
+    router.push("/checkout");
   }
 
   function handleShare() {
@@ -296,22 +279,20 @@ export default function EventDetailPage() {
 
           <button
             onClick={handleBuy}
-            disabled={totalQty === 0 || submitting}
+            disabled={totalQty === 0}
             className="mt-4 w-full rounded-lg bg-brand py-2.5 font-medium text-white transition hover:scale-[1.01] hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           >
-            {submitting
-              ? "Traitement…"
-              : totalQty === 0
+            {totalQty === 0
               ? "Sélectionnez vos billets"
               : !loggedIn
-              ? `Se connecter et acheter (${total.toFixed(2)}€)`
-              : `Acheter (${total.toFixed(2)}€)`}
+              ? `Se connecter et continuer (${total.toFixed(2)}€)`
+              : `Continuer vers le paiement (${total.toFixed(2)}€)`}
           </button>
-          {totalQty > 0 && !loggedIn && (
-            <p className="mt-2 text-center text-xs text-slate-400">
-              Vos billets restent sélectionnés — connectez-vous ou créez un compte pour finaliser.
-            </p>
-          )}
+          <p className="mt-2 text-center text-xs text-slate-400">
+            {totalQty > 0 && !loggedIn
+              ? "Vos billets restent sélectionnés — connectez-vous ou créez un compte pour finaliser."
+              : "Paiement sécurisé sur la page suivante."}
+          </p>
         </div>
       </div>
 

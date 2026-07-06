@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "My Ticket — La billetterie de la scène tamoule",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body>
+      <body className="flex min-h-screen flex-col">
         {/* Fond discret, fixe sur tout le site */}
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
           <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand/[0.06] blur-3xl" />
@@ -20,7 +21,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <Navbar />
-        <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
+        <Footer />
       </body>
     </html>
   );
