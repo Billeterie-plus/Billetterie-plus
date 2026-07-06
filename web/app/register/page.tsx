@@ -4,8 +4,23 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, setSession } from "../../lib/api";
 
+const ROLES = [
+  {
+    value: "BUYER",
+    title: "Je suis acheteur",
+    tagline: "Je veux réserver des billets",
+    points: ["Achetez vos billets en quelques clics", "Retrouvez vos e-billets à tout moment", "Recevez votre QR code d'entrée"],
+  },
+  {
+    value: "ORGANIZER",
+    title: "Je suis organisateur",
+    tagline: "Je veux vendre des billets",
+    points: ["Créez concerts et soirées en quelques minutes", "Suivez vos ventes et votre trésorerie en direct", "Scannez les billets à l'entrée"],
+  },
+] as const;
+
 export default function RegisterPage() {
-  const [form, setForm] = useState({ name: "", email: "", password: "", role: "BUYER", organizationName: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "BUYER" as string, organizationName: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -30,10 +45,46 @@ export default function RegisterPage() {
     }
   }
 
+  const selectedRole = ROLES.find((r) => r.value === form.role)!;
+
   return (
-    <div className="mx-auto max-w-sm">
-      <h1 className="mb-6 text-2xl font-bold">Créer un compte</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="mx-auto max-w-2xl">
+      <h1 className="mb-1 text-2xl font-bold">Créer un compte</h1>
+      <p className="mb-6 text-sm text-slate-500">Commencez par choisir le profil qui vous correspond.</p>
+
+      {/* Choix du profil : deux interfaces distinctes */}
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {ROLES.map((r) => {
+          const active = form.role === r.value;
+          return (
+            <button
+              key={r.value}
+              type="button"
+              onClick={() => update("role", r.value)}
+              className={`rounded-2xl border p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md ${
+                active ? "border-brand bg-brand/5 ring-2 ring-brand" : "border-slate-200 bg-white"
+              }`}
+            >
+              <p className="font-semibold text-slate-900">{r.title}</p>
+              <p className="mt-0.5 text-sm text-slate-500">{r.tagline}</p>
+              <ul className="mt-3 space-y-1.5">
+                {r.points.map((p, i) => (
+                  <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                    <span className={active ? "text-brand" : "text-slate-300"}>•</span>
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </button>
+          );
+        })}
+      </div>
+
+      <form onSubmit={handleSubmit} className="mx-auto max-w-sm space-y-4">
+        <div className="rounded-lg bg-brand/5 px-3 py-2 text-xs font-medium text-brand">
+          Inscription en tant que {selectedRole.title.replace("Je suis ", "")}
+        </div>
+
         <input
           required
           placeholder="Nom"
@@ -59,25 +110,6 @@ export default function RegisterPage() {
           className="w-full rounded-lg border px-3 py-2"
         />
 
-        <div className="flex gap-3 text-sm">
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              checked={form.role === "BUYER"}
-              onChange={() => update("role", "BUYER")}
-            />
-            Acheteur
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              checked={form.role === "ORGANIZER"}
-              onChange={() => update("role", "ORGANIZER")}
-            />
-            Organisateur
-          </label>
-        </div>
-
         {form.role === "ORGANIZER" && (
           <input
             placeholder="Nom de votre organisation"
@@ -90,9 +122,9 @@ export default function RegisterPage() {
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button
           disabled={loading}
-          className="w-full rounded-lg bg-brand py-2 text-white hover:bg-brand-dark disabled:opacity-50"
+          className="w-full rounded-lg bg-brand py-2.5 font-medium text-white transition hover:bg-brand-dark disabled:opacity-50"
         >
-          {loading ? "Création…" : "Créer mon compte"}
+          {loading ? "Création…" : `Créer mon compte ${selectedRole.title.replace("Je suis ", "")}`}
         </button>
       </form>
     </div>

@@ -29,6 +29,21 @@ export default function OrganizerDashboard() {
     setEvents((evts) => evts.map((e) => (e.id === event.id ? updated : e)));
   }
 
+  const totalTicketsSold = events.reduce(
+    (sum, e) => sum + (e.ticketTypes?.reduce((s: number, t: any) => s + t.sold, 0) || 0),
+    0
+  );
+  const totalQuota = events.reduce(
+    (sum, e) => sum + (e.ticketTypes?.reduce((s: number, t: any) => s + t.quota, 0) || 0),
+    0
+  );
+  const totalRevenue = events.reduce(
+    (sum, e) => sum + (e.ticketTypes?.reduce((s: number, t: any) => s + t.sold * t.price, 0) || 0),
+    0
+  );
+  const publishedCount = events.filter((e) => e.status === "PUBLISHED").length;
+  const fillRate = totalQuota > 0 ? Math.round((totalTicketsSold / totalQuota) * 100) : 0;
+
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
@@ -42,6 +57,28 @@ export default function OrganizerDashboard() {
           </Link>
         </div>
       </div>
+
+      {/* Flux des billets : vue d'ensemble */}
+      {!loading && events.length > 0 && (
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="rounded-xl border bg-white p-4">
+            <p className="text-xs text-slate-500">Événements publiés</p>
+            <p className="mt-1 text-2xl font-bold text-slate-900">{publishedCount}<span className="text-sm font-normal text-slate-400">/{events.length}</span></p>
+          </div>
+          <div className="rounded-xl border bg-white p-4">
+            <p className="text-xs text-slate-500">Billets vendus</p>
+            <p className="mt-1 text-2xl font-bold text-slate-900">{totalTicketsSold}</p>
+          </div>
+          <div className="rounded-xl border bg-white p-4">
+            <p className="text-xs text-slate-500">Revenu estimé</p>
+            <p className="mt-1 text-2xl font-bold text-brand">{totalRevenue.toFixed(0)}€</p>
+          </div>
+          <div className="rounded-xl border bg-white p-4">
+            <p className="text-xs text-slate-500">Taux de remplissage</p>
+            <p className="mt-1 text-2xl font-bold text-slate-900">{fillRate}%</p>
+          </div>
+        </div>
+      )}
 
       {error && <p className="text-red-600">{error}</p>}
       {loading ? (
