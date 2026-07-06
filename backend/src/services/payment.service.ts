@@ -38,7 +38,7 @@ export async function createCheckoutSession(orderId: string) {
       },
     })),
     success_url: `${WEB_APP_URL}/my-tickets?order=${orderId}&success=true`,
-    cancel_url: `${WEB_APP_URL}/checkout/${order.eventId}?cancelled=true`,
+    cancel_url: `${WEB_APP_URL}/checkout?cancelled=true`,
     metadata: { orderId },
   });
 

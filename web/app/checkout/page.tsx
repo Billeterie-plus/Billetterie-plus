@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { api, getToken, getUser } from "../../lib/api";
 
 type Draft = { eventId: string; quantities: Record<string, number>; promoCode?: string };
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const cancelled = searchParams.get("cancelled") === "true";
   const [draft, setDraft] = useState<Draft | null>(null);
   const [event, setEvent] = useState<any>(null);
   const [promoCode, setPromoCode] = useState("");
@@ -62,16 +64,17 @@ export default function CheckoutPage() {
         body: { eventId: draft.eventId, items, promoCode: promoCode || undefined },
       });
 
-      sessionStorage.removeItem("checkoutDraft");
-
       if (res.mode === "demo") {
-        router.push(`/my-tickets?order=${res.orderId}`);
+        // Paiement démo confirmé immédiatement : le panier a servi, on peut le vider.
+        sessionStorage.removeItem("checkoutDraft");
+        router.push(`/my-tickets?order=${res.orderId}&success=true`);
       } else {
+        // On part sur la page de paiement Stripe : on garde le panier en cas d'annulation,
+        // il sera nettoyé au retour en cas de succès (page "Mes billets").
         window.location.href = res.redirectUrl;
       }
     } catch (e: any) {
       setError(e.message);
-    } finally {
       setSubmitting(false);
     }
   }
@@ -83,7 +86,13 @@ export default function CheckoutPage() {
       </Link>
 
       <h1 className="mb-1 text-2xl font-bold text-slate-900">Finaliser votre commande</h1>
-      <p className="mb-8 text-sm text-slate-500">Vérifiez votre récapitulatif avant de procéder au paiement sécurisé.</p>
+      <p className="mb-4 text-sm text-slate-500">Vérifiez votre récapitulatif avant de procéder au paiement sécurisé.</p>
+
+      {cancelled && (
+        <div className="mb-6 rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800">
+          Le paiement a été annulé. Vos billets sont toujours sélectionnés, vous pouvez réessayer ci-dessous.
+        </div>
+      )}
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.5fr_1fr]">
         <div className="space-y-6">
@@ -199,5 +208,13 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
+      <CheckoutContent />
+    </Suspense>
   );
 }
