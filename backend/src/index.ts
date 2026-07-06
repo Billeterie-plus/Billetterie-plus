@@ -9,6 +9,17 @@ import ticketsRoutes from "./routes/tickets.routes";
 import organizerRoutes from "./routes/organizer.routes";
 import webhookRoutes from "./routes/webhook.routes";
 
+// Filet de sécurité : une erreur async non rattrapée ne doit jamais tuer le
+// process (ce qui coupait TOUTES les requêtes en cours — login, checkout,
+// liste d'événements — pendant le redémarrage sur Railway). On journalise et
+// on continue plutôt que de crasher.
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled promise rejection:", reason);
+});
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+});
+
 const app = express();
 
 app.use(cors());

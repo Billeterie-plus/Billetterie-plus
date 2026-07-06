@@ -33,7 +33,7 @@ export async function fulfillOrder(orderId: string) {
   await prisma.$transaction([
     prisma.ticket.createMany({ data: tickets }),
     prisma.order.update({ where: { id: order.id }, data: { status: "PAID" } }),
-    ...order.items.map((item) =>
+    ...order.items.map((item: any) =>
       prisma.ticketType.update({
         where: { id: item.ticketTypeId },
         data: { sold: { increment: item.quantity } },

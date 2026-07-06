@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { stripe, handleStripeWebhookEvent } from "../services/payment.service";
+import { asyncHandler } from "../lib/asyncHandler";
 
 const router = Router();
 
 // NOTE: this route must be mounted with express.raw() (see src/index.ts),
 // not express.json(), because Stripe signature verification needs the raw body.
-router.post("/stripe", async (req, res) => {
+router.post("/stripe", asyncHandler(async (req, res) => {
   if (!stripe) return res.status(400).send("Stripe not configured");
 
   const sig = req.headers["stripe-signature"];
@@ -21,6 +22,6 @@ router.post("/stripe", async (req, res) => {
 
   await handleStripeWebhookEvent(event);
   res.json({ received: true });
-});
+}));
 
 export default router;

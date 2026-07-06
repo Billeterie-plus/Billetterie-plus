@@ -2,6 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { hashPassword, comparePassword, signToken } from "../lib/auth";
+import { asyncHandler } from "../lib/asyncHandler";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ const registerSchema = z.object({
   organizationName: z.string().optional(), // required when role === ORGANIZER
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", asyncHandler(async (req, res) => {
   const parsed = registerSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
   const { email, password, name, role, organizationName } = parsed.data;
@@ -32,11 +33,11 @@ router.post("/register", async (req, res) => {
 
   const token = signToken({ userId: user.id, role: user.role });
   res.status(201).json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
-});
+}));
 
 const loginSchema = z.object({ email: z.string().email(), password: z.string() });
 
-router.post("/login", async (req, res) => {
+router.post("/login", asyncHandler(async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
 
@@ -47,6 +48,6 @@ router.post("/login", async (req, res) => {
 
   const token = signToken({ userId: user.id, role: user.role });
   res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
-});
+}));
 
 export default router;

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { requireAuth, requireRole, AuthedRequest } from "../middleware/auth";
+import { asyncHandler } from "../lib/asyncHandler";
 
 const router = Router();
 router.use(requireAuth, requireRole("ORGANIZER", "ADMIN"));
@@ -13,11 +14,11 @@ async function getOrgOrFail(userId: string) {
 }
 
 /** Organization profile of the logged-in organizer. */
-router.get("/me", async (req: AuthedRequest, res) => {
+router.get("/me", asyncHandler(async (req: AuthedRequest, res) => {
   const org = await getOrgOrFail(req.user!.userId).catch((e) => null);
   if (!org) return res.status(404).json({ error: "No organization found for this account" });
   res.json(org);
-});
+}));
 
 const eventSchema = z.object({
   title: z.string().min(1),
@@ -44,7 +45,7 @@ const eventSchema = z.object({
 });
 
 /** List this organizer's events (any status). */
-router.get("/events", async (req: AuthedRequest, res) => {
+router.get("/events", asyncHandler(async (req: AuthedRequest, res) => {
   const org = await getOrgOrFail(req.user!.userId);
   const events = await prisma.event.findMany({
     where: { organizationId: org.id },
@@ -52,10 +53,10 @@ router.get("/events", async (req: AuthedRequest, res) => {
     orderBy: { createdAt: "desc" },
   });
   res.json(events);
-});
+}));
 
 /** Create an event with its ticket types (tiers/zones/wagons...). */
-router.post("/events", async (req: AuthedRequest, res) => {
+router.post("/events", asyncHandler(async (req: AuthedRequest, res) => {
   const parsed = eventSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
   const org = await getOrgOrFail(req.user!.userId);
@@ -72,10 +73,10 @@ router.post("/events", async (req: AuthedRequest, res) => {
     include: { ticketTypes: true },
   });
   res.status(201).json(event);
-});
+}));
 
 /** Update event status (DRAFT -> PUBLISHED -> CANCELLED) or details. */
-router.patch("/events/:id", async (req: AuthedRequest, res) => {
+router.patch("/events/:id", asyncHandler(async (req: AuthedRequest, res) => {
   const org = await getOrgOrFail(req.user!.userId);
   const event = await prisma.event.findUnique({ where: { id: req.params.id } });
   if (!event || event.organizationId !== org.id) return res.status(404).json({ error: "Not found" });
@@ -96,10 +97,10 @@ router.patch("/events/:id", async (req: AuthedRequest, res) => {
     },
   });
   res.json(updated);
-});
+}));
 
 /** Sales dashboard for one event: revenue, tickets sold per tier, check-in rate. */
-router.get("/events/:id/stats", async (req: AuthedRequest, res) => {
+router.get("/events/:id/stats", asyncHandler(async (req: AuthedRequest, res) => {
   const org = await getOrgOrFail(req.user!.userId);
   const event = await prisma.event.findUnique({
     where: { id: req.params.id },
@@ -107,9 +108,9 @@ router.get("/events/:id/stats", async (req: AuthedRequest, res) => {
   });
   if (!event || event.organizationId !== org.id) return res.status(404).json({ error: "Not found" });
 
-  const revenue = event.orders.reduce((sum, o) => sum + o.totalAmount, 0);
-  const ticketsSold = event.ticketTypes.reduce((sum, t) => sum + t.sold, 0);
-  const checkedIn = event.tickets.filter((t) => t.status === "USED").length;
+  const revenue = event.orders.reduce((sum: number, o: any) => sum + o.totalAmount, 0);
+  const ticketsSold = event.ticketTypes.reduce((sum: number, t: any) => sum + t.sold, 0);
+  const checkedIn = event.tickets.filter((t: any) => t.status === "USED").length;
 
   res.json({
     eventId: event.id,
@@ -118,12 +119,12 @@ router.get("/events/:id/stats", async (req: AuthedRequest, res) => {
     currency: event.ticketTypes[0]?.currency || "EUR",
     ticketsSold,
     checkedIn,
-    perTier: event.ticketTypes.map((t) => ({ name: t.name, sold: t.sold, quota: t.quota, price: t.price })),
+    perTier: event.ticketTypes.map((t: any) => ({ name: t.name, sold: t.sold, quota: t.quota, price: t.price })),
   });
-});
+}));
 
 /** Promo codes management. */
-router.post("/promo-codes", async (req: AuthedRequest, res) => {
+router.post("/promo-codes", asyncHandler(async (req: AuthedRequest, res) => {
   const org = await getOrgOrFail(req.user!.userId);
   const schema = z.object({
     code: z.string().min(3),
@@ -144,10 +145,10 @@ router.post("/promo-codes", async (req: AuthedRequest, res) => {
     },
   });
   res.status(201).json(promo);
-});
+}));
 
 /** Scan / validate a ticket at the entrance (used by the organizer scan screen). */
-router.post("/scan", async (req: AuthedRequest, res) => {
+router.post("/scan", asyncHandler(async (req: AuthedRequest, res) => {
   const schema = z.object({ qrToken: z.string() });
   const parsed = schema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
@@ -184,6 +185,6 @@ router.post("/scan", async (req: AuthedRequest, res) => {
       checkedInAt: updated.checkedInAt,
     },
   });
-});
+}));
 
 export default router;

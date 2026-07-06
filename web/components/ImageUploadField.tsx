@@ -2,8 +2,12 @@
 
 import { useRef, useState } from "react";
 
-const MAX_DIMENSION = 1600; // px, côté le plus long
-const JPEG_QUALITY = 0.92;
+const MAX_DIMENSION = 1000; // px, côté le plus long
+const JPEG_QUALITY = 0.78;
+// Taille max visée pour le texte base64 stocké en base (les images stockées en
+// base64 directement dans Postgres surchargent la mémoire du backend si elles
+// sont trop lourdes — on retente avec une qualité plus basse si besoin).
+const MAX_OUTPUT_BYTES = 350 * 1024;
 
 /** Redimensionne et recompresse proprement l'image (meilleure netteté qu'un encodage brut). */
 function resizeImage(file: File): Promise<string> {
@@ -32,7 +36,18 @@ function resizeImage(file: File): Promise<string> {
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = "high";
         ctx.drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL("image/jpeg", JPEG_QUALITY));
+
+        // Compression progressive : si le résultat reste trop lourd, on baisse
+        // la qualité par paliers plutôt que de stocker un fichier énorme.
+        let quality = JPEG_QUALITY;
+        let dataUrl = canvas.toDataURL("image/jpeg", quality);
+        let attempts = 0;
+        while (dataUrl.length > MAX_OUTPUT_BYTES && quality > 0.4 && attempts < 5) {
+          quality -= 0.12;
+          dataUrl = canvas.toDataURL("image/jpeg", quality);
+          attempts++;
+        }
+        resolve(dataUrl);
       };
       img.src = reader.result as string;
     };

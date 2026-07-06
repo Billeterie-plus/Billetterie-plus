@@ -3,6 +3,7 @@ import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { requireAuth, AuthedRequest } from "../middleware/auth";
 import { createCheckoutSession } from "../services/payment.service";
+import { asyncHandler } from "../lib/asyncHandler";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ const createOrderSchema = z.object({
 });
 
 /** Creates a PENDING order, validates stock, applies promo code, returns a checkout redirect URL. */
-router.post("/", requireAuth, async (req: AuthedRequest, res) => {
+router.post("/", requireAuth, asyncHandler(async (req: AuthedRequest, res) => {
   const parsed = createOrderSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
   const { eventId, items, promoCode } = parsed.data;
@@ -23,7 +24,7 @@ router.post("/", requireAuth, async (req: AuthedRequest, res) => {
   });
 
   for (const item of items) {
-    const tt = ticketTypes.find((t) => t.id === item.ticketTypeId);
+    const tt = ticketTypes.find((t: any) => t.id === item.ticketTypeId);
     if (!tt) return res.status(400).json({ error: `Unknown ticket type ${item.ticketTypeId}` });
     if (tt.sold + item.quantity > tt.quota) {
       return res.status(409).json({ error: `Not enough availability for "${tt.name}"` });
@@ -32,7 +33,7 @@ router.post("/", requireAuth, async (req: AuthedRequest, res) => {
 
   let subtotal = 0;
   for (const item of items) {
-    const tt = ticketTypes.find((t) => t.id === item.ticketTypeId)!;
+    const tt = ticketTypes.find((t: any) => t.id === item.ticketTypeId)!;
     subtotal += tt.price * item.quantity;
   }
 
@@ -65,7 +66,7 @@ router.post("/", requireAuth, async (req: AuthedRequest, res) => {
         create: items.map((item) => ({
           ticketTypeId: item.ticketTypeId,
           quantity: item.quantity,
-          unitPrice: ticketTypes.find((t) => t.id === item.ticketTypeId)!.price,
+          unitPrice: ticketTypes.find((t: any) => t.id === item.ticketTypeId)!.price,
         })),
       },
     },
@@ -76,17 +77,26 @@ router.post("/", requireAuth, async (req: AuthedRequest, res) => {
     await prisma.promoCode.update({ where: { id: promo.id }, data: { usedCount: { increment: 1 } } });
   }
 
-  const checkout = await createCheckoutSession(order.id);
+  let checkout;
+  try {
+    checkout = await createCheckoutSession(order.id);
+  } catch (err: any) {
+    console.error("createCheckoutSession failed for order", order.id, err);
+    return res.status(502).json({
+      error:
+        "Le service de paiement n'a pas répondu correctement. Votre commande a été enregistrée mais aucun paiement n'a été lancé — réessayez dans un instant.",
+    });
+  }
   res.status(201).json({ orderId: order.id, ...checkout });
-});
+}));
 
-router.get("/:id", requireAuth, async (req: AuthedRequest, res) => {
+router.get("/:id", requireAuth, asyncHandler(async (req: AuthedRequest, res) => {
   const order = await prisma.order.findUnique({
     where: { id: req.params.id },
     include: { items: { include: { ticketType: true } }, tickets: true, event: true },
   });
   if (!order || order.userId !== req.user!.userId) return res.status(404).json({ error: "Not found" });
   res.json(order);
-});
+}));
 
 export default router;
