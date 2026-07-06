@@ -87,8 +87,8 @@ async function main() {
   const soiree2 = await prisma.event.create({
     data: {
       organizationId: org.id,
-      title: "Pongal Party — Soirée Tamoule",
-      description: "Grande soirée tamoule pour célébrer Pongal : musique, danse et ambiance festive toute la nuit.",
+      title: "Chennai Nights — Soirée Tamoule",
+      description: "Grande soirée tamoule : musique, danse et ambiance festive toute la nuit.",
       type: "SOIREE",
       venue: "La Bellevilloise, Paris",
       startDateTime: new Date(Date.now() + 90 * 24 * 3600 * 1000),

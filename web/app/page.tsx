@@ -83,9 +83,9 @@ function HomeContent() {
       )}
 
       <p className="mb-8 max-w-2xl text-slate-600">
-        My Ticket est la billetterie dédiée aux concerts d'artistes indiens tamouls et aux soirées tamoules
-        (Kollywood nights, soirées Pongal...) en France. Achetez en quelques clics, retrouvez vos e-billets
-        à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.
+        <span className="font-semibold text-brand">My Ticket</span> est la billetterie de référence pour les concerts
+        d'artistes tamouls et les soirées de la scène tamoule en France. Réservez en quelques clics, retrouvez vos
+        e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.
       </p>
 
       <ArtistSearchBox />

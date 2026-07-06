@@ -30,14 +30,14 @@ export default function HeroBanner() {
       />
 
       <div className="relative z-10 p-8 sm:p-12">
-        <p className="mb-2 text-sm font-medium text-white/80 animate-fadeInUp">
-          Concerts & soirées tamoules
+        <p className="mb-2 text-sm font-medium uppercase tracking-widest text-gold-light animate-fadeInUp">
+          My Ticket
         </p>
         <h1 className="max-w-xl text-3xl font-bold drop-shadow-sm sm:text-4xl animate-fadeInUp" style={{ animationDelay: "0.1s" }}>
           La scène tamoule, à portée de main
         </h1>
         <p className="mt-3 max-w-xl text-white/90 animate-fadeInUp" style={{ animationDelay: "0.2s" }}>
-          Concerts d'artistes tamouls, soirées Kollywood, Pongal party... trouvez votre prochain événement et réservez vos
+          Concerts et soirées d'artistes tamouls, sélectionnés avec soin — trouvez votre prochain événement et réservez vos
           billets en quelques secondes, en toute sécurité.
         </p>
 

@@ -3,8 +3,9 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 
 export const metadata: Metadata = {
-  title: "My Ticket — Trains, concerts & événements",
-  description: "Achetez vos billets de train, concert et spectacle en quelques clics.",
+  title: "My Ticket — La billetterie de la scène tamoule",
+  description:
+    "My Ticket est la billetterie de référence pour les concerts d'artistes tamouls et les soirées de la scène tamoule en France. Réservation simple, sécurisée et instantanée.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
