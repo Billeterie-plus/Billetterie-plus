@@ -1,12 +1,15 @@
-export const metadata = {
-  title: "Conditions générales de vente — My Ticket",
-};
+"use client";
+
+import { useT } from "../../lib/i18n/LanguageContext";
 
 export default function CgvPage() {
+  const t = useT();
+  const notice = t("legal.frenchOnlyNotice");
   return (
     <div className="mx-auto max-w-3xl">
       <h1 className="mb-2 text-2xl font-bold text-slate-900">Conditions générales de vente</h1>
-      <p className="mb-8 text-sm text-slate-400">Dernière mise à jour : juillet 2026</p>
+      <p className="mb-2 text-sm text-slate-400">Dernière mise à jour : juillet 2026</p>
+      {notice && <p className="mb-6 rounded-lg bg-slate-50 p-3 text-xs text-slate-500">{notice}</p>}
 
       <div className="space-y-8 text-sm leading-relaxed text-slate-700">
         <section>

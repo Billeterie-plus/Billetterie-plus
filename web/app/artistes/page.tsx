@@ -4,8 +4,10 @@ import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ARTISTS } from "../../lib/artists";
 import ArtistCard from "../../components/ArtistCard";
+import { useT } from "../../lib/i18n/LanguageContext";
 
 function ArtistsCatalog() {
+  const t = useT();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
 
@@ -17,21 +19,21 @@ function ArtistsCatalog() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-slate-900">Tous les artistes tamouls</h1>
-      <p className="mt-1 text-sm text-slate-500">{ARTISTS.length} artistes référencés — recherchez un nom.</p>
+      <h1 className="text-2xl font-bold text-slate-900">{t("artists.title")}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t("artists.count", { n: ARTISTS.length })}</p>
 
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Rechercher un artiste (ex: Anirudh, Sid Sriram, Ilaiyaraaja...)"
+        placeholder={t("artists.searchPlaceholder")}
         className="mt-4 w-full max-w-md rounded-lg border px-3 py-2"
         autoFocus
       />
 
-      <p className="mt-3 text-sm text-slate-500">{results.length} résultat(s)</p>
+      <p className="mt-3 text-sm text-slate-500">{t("artists.results", { n: results.length })}</p>
 
       {results.length === 0 ? (
-        <p className="mt-6 text-slate-500">Aucun artiste ne correspond à votre recherche.</p>
+        <p className="mt-6 text-slate-500">{t("artists.noResults")}</p>
       ) : (
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {results.map((a) => (

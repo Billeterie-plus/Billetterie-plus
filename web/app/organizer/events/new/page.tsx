@@ -4,16 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../../../../lib/api";
 import ImageUploadField from "../../../../components/ImageUploadField";
+import { useT } from "../../../../lib/i18n/LanguageContext";
 
 const EMPTY_TIER = { name: "", price: 0, quota: 100, seated: false };
 
-const TYPE_OPTIONS = [
-  { value: "CONCERT", label: "Concert", emoji: "🎵" },
-  { value: "SOIREE", label: "Soirée tamoule", emoji: "🎉" },
-];
-
 export default function NewEventPage() {
+  const t = useT();
   const router = useRouter();
+  const TYPE_OPTIONS = [
+    { value: "CONCERT", label: t("event.type.CONCERT"), emoji: "🎵" },
+    { value: "SOIREE", label: t("event.type.SOIREE"), emoji: "🎉" },
+  ];
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -36,7 +37,7 @@ export default function NewEventPage() {
   }
 
   function updateTier(i: number, key: string, value: any) {
-    setTiers((ts) => ts.map((t, idx) => (idx === i ? { ...t, [key]: value } : t)));
+    setTiers((ts) => ts.map((tier, idx) => (idx === i ? { ...tier, [key]: value } : tier)));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -53,7 +54,7 @@ export default function NewEventPage() {
           parkingInfo: form.parkingInfo || undefined,
           parkingFree: form.parkingFree === "" ? undefined : form.parkingFree === "true",
           startDateTime: new Date(form.startDateTime).toISOString(),
-          ticketTypes: tiers.map((t) => ({ ...t, price: Number(t.price), quota: Number(t.quota) })),
+          ticketTypes: tiers.map((tier) => ({ ...tier, price: Number(tier.price), quota: Number(tier.quota) })),
         },
       });
       router.push(`/organizer/events/${event.id}`);
@@ -64,36 +65,34 @@ export default function NewEventPage() {
     }
   }
 
-  const selectedType = TYPE_OPTIONS.find((t) => t.value === form.type)!;
-  const minPrice = tiers.length ? Math.min(...tiers.map((t) => Number(t.price) || 0)) : 0;
+  const selectedType = TYPE_OPTIONS.find((opt) => opt.value === form.type)!;
+  const minPrice = tiers.length ? Math.min(...tiers.map((tier) => Number(tier.price) || 0)) : 0;
   const previewDate = form.startDateTime
     ? new Date(form.startDateTime).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })
     : null;
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="mb-1 text-2xl font-bold">Nouvel événement</h1>
-      <p className="mb-6 text-sm text-slate-500">
-        Concert d'artiste tamoul ou soirée tamoule — remplissez le formulaire, l'aperçu à droite se met à jour en direct.
-      </p>
+      <h1 className="mb-1 text-2xl font-bold">{t("organizerForm.newTitle")}</h1>
+      <p className="mb-6 text-sm text-slate-500">{t("organizerForm.newSubtitle")}</p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.4fr_1fr]">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Type d'événement en cartes visuelles */}
           <div>
-            <h2 className="mb-2 font-semibold text-slate-800">1. Type d'événement</h2>
+            <h2 className="mb-2 font-semibold text-slate-800">{t("organizerForm.step1Type")}</h2>
             <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-              {TYPE_OPTIONS.map((t) => (
+              {TYPE_OPTIONS.map((opt) => (
                 <button
-                  key={t.value}
+                  key={opt.value}
                   type="button"
-                  onClick={() => updateForm("type", t.value)}
+                  onClick={() => updateForm("type", opt.value)}
                   className={`flex flex-col items-center gap-1 rounded-xl border p-3 text-center transition hover:-translate-y-0.5 hover:shadow-md ${
-                    form.type === t.value ? "border-brand bg-brand/5 ring-2 ring-brand" : "border-slate-200 bg-white"
+                    form.type === opt.value ? "border-brand bg-brand/5 ring-2 ring-brand" : "border-slate-200 bg-white"
                   }`}
                 >
-                  <span className="text-2xl">{t.emoji}</span>
-                  <span className="text-xs font-medium text-slate-700">{t.label}</span>
+                  <span className="text-2xl">{opt.emoji}</span>
+                  <span className="text-xs font-medium text-slate-700">{opt.label}</span>
                 </button>
               ))}
             </div>
@@ -101,17 +100,17 @@ export default function NewEventPage() {
 
           {/* Infos principales */}
           <div>
-            <h2 className="mb-2 font-semibold text-slate-800">2. Informations</h2>
+            <h2 className="mb-2 font-semibold text-slate-800">{t("organizerForm.step2Info")}</h2>
             <div className="space-y-3">
               <input
                 required
-                placeholder="Titre de l'événement (ex: Anirudh Ravichander Live à Paris)"
+                placeholder={t("organizerForm.titlePlaceholder")}
                 value={form.title}
                 onChange={(e) => updateForm("title", e.target.value)}
                 className="w-full rounded-lg border px-3 py-2"
               />
               <textarea
-                placeholder="Description"
+                placeholder={t("organizerForm.descriptionPlaceholder")}
                 value={form.description}
                 onChange={(e) => updateForm("description", e.target.value)}
                 className="w-full rounded-lg border px-3 py-2"
@@ -121,7 +120,7 @@ export default function NewEventPage() {
 
               <input
                 required
-                placeholder="Lieu (salle, club, stade...)"
+                placeholder={t("organizerForm.venuePlaceholder")}
                 value={form.venue}
                 onChange={(e) => updateForm("venue", e.target.value)}
                 className="w-full rounded-lg border px-3 py-2"
@@ -139,19 +138,17 @@ export default function NewEventPage() {
 
           {/* Infos pratiques : transport / parking */}
           <div>
-            <h2 className="mb-2 font-semibold text-slate-800">3. Infos pratiques (transport, parking)</h2>
-            <p className="mb-2 text-xs text-slate-400">
-              Affichées sur la page de l'événement pour aider les acheteurs à s'organiser.
-            </p>
+            <h2 className="mb-2 font-semibold text-slate-800">{t("organizerForm.step3Practical")}</h2>
+            <p className="mb-2 text-xs text-slate-400">{t("organizerForm.practicalHint")}</p>
             <div className="space-y-3">
               <input
-                placeholder="Transport (ex: Métro ligne 4, arrêt Château d'Eau — 5 min à pied)"
+                placeholder={t("organizerForm.transportPlaceholder")}
                 value={form.transportInfo}
                 onChange={(e) => updateForm("transportInfo", e.target.value)}
                 className="w-full rounded-lg border px-3 py-2"
               />
               <input
-                placeholder="Parking (ex: Parking Vinci Château d'Eau, à 200m de l'entrée)"
+                placeholder={t("organizerForm.parkingPlaceholder")}
                 value={form.parkingInfo}
                 onChange={(e) => updateForm("parkingInfo", e.target.value)}
                 className="w-full rounded-lg border px-3 py-2"
@@ -161,23 +158,23 @@ export default function NewEventPage() {
                 onChange={(e) => updateForm("parkingFree", e.target.value)}
                 className="w-full rounded-lg border px-3 py-2"
               >
-                <option value="">Parking : non précisé</option>
-                <option value="true">Parking gratuit</option>
-                <option value="false">Parking payant</option>
+                <option value="">{t("organizerForm.parkingUnspecified")}</option>
+                <option value="true">{t("organizerForm.parkingFree")}</option>
+                <option value="false">{t("organizerForm.parkingPaid")}</option>
               </select>
             </div>
           </div>
 
           {/* Tarifs */}
           <div>
-            <h2 className="mb-2 font-semibold text-slate-800">4. Tarifs / catégories de billets</h2>
+            <h2 className="mb-2 font-semibold text-slate-800">{t("organizerForm.step4Tiers")}</h2>
             <div className="space-y-2">
-              {tiers.map((t, i) => (
+              {tiers.map((tier, i) => (
                 <div key={i} className="grid grid-cols-4 gap-2">
                   <input
                     required
-                    placeholder="Nom (ex: Fosse, 1ère classe)"
-                    value={t.name}
+                    placeholder={t("organizerForm.tierNamePlaceholder")}
+                    value={tier.name}
                     onChange={(e) => updateTier(i, "name", e.target.value)}
                     className="col-span-2 rounded-lg border px-3 py-2"
                   />
@@ -186,8 +183,8 @@ export default function NewEventPage() {
                     type="number"
                     min={0}
                     step="0.01"
-                    placeholder="Prix €"
-                    value={t.price}
+                    placeholder={t("organizerForm.tierPricePlaceholder")}
+                    value={tier.price}
                     onChange={(e) => updateTier(i, "price", e.target.value)}
                     className="rounded-lg border px-3 py-2"
                   />
@@ -195,8 +192,8 @@ export default function NewEventPage() {
                     required
                     type="number"
                     min={1}
-                    placeholder="Quota"
-                    value={t.quota}
+                    placeholder={t("organizerForm.tierQuotaPlaceholder")}
+                    value={tier.quota}
                     onChange={(e) => updateTier(i, "quota", e.target.value)}
                     className="rounded-lg border px-3 py-2"
                   />
@@ -208,7 +205,7 @@ export default function NewEventPage() {
               onClick={() => setTiers((ts) => [...ts, { ...EMPTY_TIER }])}
               className="mt-2 text-sm text-brand hover:underline"
             >
-              + Ajouter un tarif
+              {t("organizerForm.addTier")}
             </button>
           </div>
 
@@ -217,13 +214,13 @@ export default function NewEventPage() {
             disabled={loading}
             className="w-full rounded-lg bg-brand py-2.5 text-white transition hover:scale-[1.01] hover:bg-brand-dark disabled:opacity-50"
           >
-            {loading ? "Création…" : "Créer l'événement (brouillon)"}
+            {loading ? t("common.creating") : t("organizerForm.createDraft")}
           </button>
         </form>
 
         {/* Aperçu en direct */}
         <div className="lg:sticky lg:top-20 lg:self-start">
-          <h2 className="mb-2 font-semibold text-slate-800">Aperçu pour les acheteurs</h2>
+          <h2 className="mb-2 font-semibold text-slate-800">{t("organizerForm.preview")}</h2>
           <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
             <div className="flex h-48 items-center justify-center bg-gradient-to-br from-brand to-brand-light text-white">
               {form.imageUrl && !imageError ? (
@@ -242,19 +239,17 @@ export default function NewEventPage() {
               <div className="text-xs font-medium text-brand">
                 {selectedType.emoji} {selectedType.label}
               </div>
-              <h3 className="mt-1 text-lg font-semibold">{form.title || "Titre de votre événement"}</h3>
-              <p className="mt-1 text-sm text-slate-500">{form.venue || "Lieu de l'événement"}</p>
+              <h3 className="mt-1 text-lg font-semibold">{form.title || t("organizerForm.eventTitlePreview")}</h3>
+              <p className="mt-1 text-sm text-slate-500">{form.venue || t("organizerForm.venuePreview")}</p>
               <div className="mt-3 flex items-center justify-between text-sm">
-                <span className="text-slate-500">{previewDate || "Date à définir"}</span>
+                <span className="text-slate-500">{previewDate || t("organizerForm.dateUndefined")}</span>
                 <span className="font-semibold">
-                  {tiers.length && tiers.some((t) => t.name) ? `à partir de ${minPrice}€` : "Prix à définir"}
+                  {tiers.length && tiers.some((tier) => tier.name) ? t("event.from", { price: minPrice }) : t("organizerForm.priceUndefined")}
                 </span>
               </div>
             </div>
           </div>
-          <p className="mt-3 text-xs text-slate-400">
-            C'est exactement ainsi que la carte apparaîtra sur la page d'accueil et dans les listes d'événements une fois publié.
-          </p>
+          <p className="mt-3 text-xs text-slate-400">{t("organizerForm.previewHint")}</p>
         </div>
       </div>
     </div>

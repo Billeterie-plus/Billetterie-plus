@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api, getToken, getUser } from "../../lib/api";
+import { useT } from "../../lib/i18n/LanguageContext";
 
 export default function OrganizerDashboard() {
+  const t = useT();
   const router = useRouter();
   const [events, setEvents] = useState<any[]>([]);
   const [error, setError] = useState("");
@@ -47,13 +49,13 @@ export default function OrganizerDashboard() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Espace organisateur</h1>
+        <h1 className="text-2xl font-bold">{t("organizer.title")}</h1>
         <div className="flex gap-2">
           <Link href="/organizer/scan" className="rounded-lg bg-slate-100 px-4 py-2 hover:bg-slate-200">
-            Scanner un billet
+            {t("organizer.scanTicket")}
           </Link>
           <Link href="/organizer/events/new" className="rounded-lg bg-brand px-4 py-2 text-white hover:bg-brand-dark">
-            + Nouvel événement
+            {t("organizer.newEvent")}
           </Link>
         </div>
       </div>
@@ -62,19 +64,19 @@ export default function OrganizerDashboard() {
       {!loading && events.length > 0 && (
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <div className="rounded-xl border bg-white p-4">
-            <p className="text-xs text-slate-500">Événements publiés</p>
+            <p className="text-xs text-slate-500">{t("organizer.publishedEvents")}</p>
             <p className="mt-1 text-2xl font-bold text-slate-900">{publishedCount}<span className="text-sm font-normal text-slate-400">/{events.length}</span></p>
           </div>
           <div className="rounded-xl border bg-white p-4">
-            <p className="text-xs text-slate-500">Billets vendus</p>
+            <p className="text-xs text-slate-500">{t("organizer.ticketsSold")}</p>
             <p className="mt-1 text-2xl font-bold text-slate-900">{totalTicketsSold}</p>
           </div>
           <div className="rounded-xl border bg-white p-4">
-            <p className="text-xs text-slate-500">Revenu estimé</p>
+            <p className="text-xs text-slate-500">{t("organizer.estimatedRevenue")}</p>
             <p className="mt-1 text-2xl font-bold text-brand">{totalRevenue.toFixed(0)}€</p>
           </div>
           <div className="rounded-xl border bg-white p-4">
-            <p className="text-xs text-slate-500">Taux de remplissage</p>
+            <p className="text-xs text-slate-500">{t("organizer.fillRate")}</p>
             <p className="mt-1 text-2xl font-bold text-slate-900">{fillRate}%</p>
           </div>
         </div>
@@ -82,9 +84,9 @@ export default function OrganizerDashboard() {
 
       {error && <p className="text-red-600">{error}</p>}
       {loading ? (
-        <p className="text-slate-500">Chargement…</p>
+        <p className="text-slate-500">{t("common.loading")}</p>
       ) : events.length === 0 ? (
-        <p className="text-slate-500">Aucun événement pour l'instant. Créez-en un !</p>
+        <p className="text-slate-500">{t("organizer.noEvents")}</p>
       ) : (
         <div className="space-y-3">
           {events.map((e) => (
@@ -111,19 +113,19 @@ export default function OrganizerDashboard() {
                   onClick={() => togglePublish(e)}
                   className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm hover:bg-slate-200"
                 >
-                  {e.status === "PUBLISHED" ? "Dépublier" : "Publier"}
+                  {e.status === "PUBLISHED" ? t("organizer.unpublish") : t("organizer.publish")}
                 </button>
                 <Link
                   href={`/organizer/events/${e.id}/edit`}
                   className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm hover:bg-slate-200"
                 >
-                  Modifier
+                  {t("common.edit")}
                 </Link>
                 <Link
                   href={`/organizer/events/${e.id}`}
                   className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm hover:bg-slate-200"
                 >
-                  Statistiques
+                  {t("organizer.statistics")}
                 </Link>
               </div>
             </div>

@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { api } from "../../../lib/api";
+import { useT } from "../../../lib/i18n/LanguageContext";
 
 const SCANNER_ELEMENT_ID = "qr-reader";
 
 export default function ScanPage() {
+  const t = useT();
   const [token, setToken] = useState("");
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
@@ -48,9 +50,7 @@ export default function ScanPage() {
       );
       setCameraActive(true);
     } catch (e: any) {
-      setCameraError(
-        "Impossible d'accéder à la caméra (autorisation refusée ou aucune caméra détectée). Utilisez la saisie manuelle ci-dessous."
-      );
+      setCameraError(t("scan.cameraError"));
       setCameraActive(false);
     } finally {
       setCameraStarting(false);
@@ -93,10 +93,8 @@ export default function ScanPage() {
 
   return (
     <div className="mx-auto max-w-md">
-      <h1 className="mb-1 text-2xl font-bold">Scanner un billet</h1>
-      <p className="mb-6 text-sm text-slate-500">
-        Utilisez la caméra pour scanner le QR code à l'entrée, ou saisissez le code manuellement.
-      </p>
+      <h1 className="mb-1 text-2xl font-bold">{t("scan.title")}</h1>
+      <p className="mb-6 text-sm text-slate-500">{t("scan.subtitle")}</p>
 
       <div className="rounded-xl border bg-white p-4">
         {!cameraActive ? (
@@ -105,35 +103,33 @@ export default function ScanPage() {
             disabled={cameraStarting}
             className="w-full rounded-lg bg-brand py-2.5 font-medium text-white transition hover:bg-brand-dark disabled:opacity-50"
           >
-            {cameraStarting ? "Activation…" : "Activer la caméra"}
+            {cameraStarting ? t("scan.activating") : t("scan.activateCamera")}
           </button>
         ) : (
           <button onClick={stopCamera} className="w-full rounded-lg border py-2 text-sm font-medium hover:bg-slate-50">
-            Arrêter la caméra
+            {t("scan.stopCamera")}
           </button>
         )}
 
         <div id={SCANNER_ELEMENT_ID} className={cameraActive ? "mt-3 overflow-hidden rounded-lg" : "hidden"} />
 
-        {cameraActive && (
-          <p className="mt-2 text-center text-xs text-slate-400">Placez le QR code du billet dans le cadre.</p>
-        )}
+        {cameraActive && <p className="mt-2 text-center text-xs text-slate-400">{t("scan.frameHint")}</p>}
         {cameraError && <p className="mt-2 text-xs text-red-600">{cameraError}</p>}
       </div>
 
       <form onSubmit={handleManualSubmit} className="mt-4 space-y-2">
-        <p className="text-xs font-medium text-slate-500">Ou saisie manuelle</p>
+        <p className="text-xs font-medium text-slate-500">{t("scan.manualEntry")}</p>
         <input
           value={token}
           onChange={(e) => setToken(e.target.value)}
-          placeholder="Coller le code du billet (TKT-...)"
+          placeholder={t("scan.manualPlaceholder")}
           className="w-full rounded-lg border px-3 py-2"
         />
         <button
           disabled={loading}
           className="w-full rounded-lg border py-2 text-sm font-medium transition hover:bg-slate-50 disabled:opacity-50"
         >
-          {loading ? "Vérification…" : "Valider manuellement"}
+          {loading ? t("scan.checking") : t("scan.validate")}
         </button>
       </form>
 
@@ -141,11 +137,11 @@ export default function ScanPage() {
         <div className={`mt-4 rounded-lg p-4 ${result.valid ? "bg-green-50 text-green-800" : "bg-yellow-50 text-yellow-800"}`}>
           {result.valid ? (
             <>
-              <p className="font-semibold">Billet valide</p>
+              <p className="font-semibold">{t("scan.valid")}</p>
               <p className="text-sm">
                 {result.ticket.event} — {result.ticket.tier}
               </p>
-              <p className="text-sm">Titulaire : {result.ticket.owner}</p>
+              <p className="text-sm">{t("scan.holder", { name: result.ticket.owner })}</p>
             </>
           ) : (
             <p className="font-semibold">{result.reason}</p>

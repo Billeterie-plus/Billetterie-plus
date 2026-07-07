@@ -4,18 +4,23 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "../lib/api";
 import EventCard from "./EventCard";
+import { useT } from "../lib/i18n/LanguageContext";
 
 export default function EventTypeListing({
   type,
-  title,
-  intro,
-  emptyMessage,
+  titleKey,
+  introKey,
+  emptyKey,
 }: {
   type: string;
-  title: string;
-  intro: string;
-  emptyMessage: string;
+  titleKey: string;
+  introKey: string;
+  emptyKey: string;
 }) {
+  const t = useT();
+  const title = t(titleKey);
+  const intro = t(introKey);
+  const emptyMessage = t(emptyKey);
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -37,7 +42,7 @@ export default function EventTypeListing({
 
       {error && <p className="text-red-600">{error}</p>}
       {loading ? (
-        <p className="text-slate-500">Chargement…</p>
+        <p className="text-slate-500">{t("common.loading")}</p>
       ) : events.length === 0 ? (
         <div className="rounded-xl border bg-white p-6 text-center">
           <p className="text-slate-500">{emptyMessage}</p>
@@ -45,7 +50,7 @@ export default function EventTypeListing({
             href="/organizer"
             className="mt-3 inline-block rounded-full bg-brand px-5 py-2 text-sm font-medium text-white hover:bg-brand-dark"
           >
-            Organiser un événement
+            {t("listing.organize")}
           </Link>
         </div>
       ) : (
@@ -58,7 +63,7 @@ export default function EventTypeListing({
 
       <div className="mt-10 text-center">
         <Link href="/artistes" className="text-sm font-medium text-brand hover:underline">
-          Découvrir les artistes tamouls →
+          {t("listing.discoverArtists")}
         </Link>
       </div>
     </div>

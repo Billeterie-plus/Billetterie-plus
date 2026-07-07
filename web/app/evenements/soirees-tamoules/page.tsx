@@ -4,9 +4,9 @@ export default function SoireesTamoulesPage() {
   return (
     <EventTypeListing
       type="SOIREE"
-      title="Soirées tamoules"
-      intro="Trouvez la prochaine grande soirée tamoule près de chez vous et réservez votre entrée."
-      emptyMessage="Aucune soirée tamoule n'est publiée pour le moment. Revenez bientôt !"
+      titleKey="listing.soirees.title"
+      introKey="listing.soirees.intro"
+      emptyKey="listing.soirees.empty"
     />
   );
 }

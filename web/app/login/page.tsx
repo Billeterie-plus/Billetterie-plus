@@ -4,8 +4,10 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { api, setSession } from "../../lib/api";
 import Link from "next/link";
+import { useT } from "../../lib/i18n/LanguageContext";
 
 function LoginForm() {
+  const t = useT();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -32,18 +34,14 @@ function LoginForm() {
 
   return (
     <div className="mx-auto max-w-sm">
-      <h1 className="mb-1 text-2xl font-bold">Connexion</h1>
-      {redirect && (
-        <p className="mb-5 text-sm text-slate-500">
-          Connectez-vous pour finaliser votre achat — vos billets sélectionnés vous attendent.
-        </p>
-      )}
+      <h1 className="mb-1 text-2xl font-bold">{t("login.title")}</h1>
+      {redirect && <p className="mb-5 text-sm text-slate-500">{t("login.redirectHint")}</p>}
       {!redirect && <div className="mb-6" />}
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
           required
-          placeholder="Email"
+          placeholder={t("login.email")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full rounded-lg border px-3 py-2"
@@ -51,7 +49,7 @@ function LoginForm() {
         <input
           type="password"
           required
-          placeholder="Mot de passe"
+          placeholder={t("login.password")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full rounded-lg border px-3 py-2"
@@ -61,18 +59,16 @@ function LoginForm() {
           disabled={loading}
           className="w-full rounded-lg bg-brand py-2 text-white hover:bg-brand-dark disabled:opacity-50"
         >
-          {loading ? "Connexion…" : "Se connecter"}
+          {loading ? t("login.submitting") : t("login.submit")}
         </button>
       </form>
       <p className="mt-4 text-sm text-slate-500">
-        Pas de compte ?{" "}
+        {t("login.noAccount")}{" "}
         <Link href={redirect ? `/register?redirect=${encodeURIComponent(redirect)}` : "/register"} className="text-brand">
-          Créer un compte
+          {t("login.createAccount")}
         </Link>
       </p>
-      <p className="mt-2 text-xs text-slate-400">
-        Démo : organisateur@demo.com / password123 (organisateur) — client@demo.com / password123 (acheteur)
-      </p>
+      <p className="mt-2 text-xs text-slate-400">{t("login.demo")}</p>
     </div>
   );
 }

@@ -8,14 +8,15 @@ import ArtistSpotlight from "../components/ArtistSpotlight";
 import ArtistSearchBox from "../components/ArtistSearchBox";
 import HeroBanner from "../components/HeroBanner";
 import ArtistMarquee from "../components/ArtistMarquee";
-
-const TYPES = [
-  { value: "", label: "Tous" },
-  { value: "CONCERT", label: "Concert" },
-  { value: "SOIREE", label: "Soirée tamoule" },
-];
+import { useT } from "../lib/i18n/LanguageContext";
 
 function HomeContent() {
+  const t = useT();
+  const TYPES = [
+    { value: "", label: t("home.typeAll") },
+    { value: "CONCERT", label: t("home.typeConcert") },
+    { value: "SOIREE", label: t("home.typeSoiree") },
+  ];
   const searchParams = useSearchParams();
   const [events, setEvents] = useState<any[]>([]);
   const [type, setType] = useState("");
@@ -49,7 +50,7 @@ function HomeContent() {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Rechercher un événement..."
+          placeholder={t("home.searchPlaceholder")}
           className="w-full max-w-sm rounded-lg border px-3 py-2 sm:w-auto"
         />
         <div className="flex flex-wrap gap-2">
@@ -69,9 +70,9 @@ function HomeContent() {
 
       {error && <p className="text-red-600">{error}</p>}
       {loading ? (
-        <p className="text-slate-500">Chargement…</p>
+        <p className="text-slate-500">{t("common.loading")}</p>
       ) : events.length === 0 ? (
-        <p className="text-slate-500">Aucun événement trouvé.</p>
+        <p className="text-slate-500">{t("home.noEvents")}</p>
       ) : (
         <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {events.map((e, i) => (
@@ -83,9 +84,7 @@ function HomeContent() {
       )}
 
       <p className="mb-8 max-w-2xl text-slate-600">
-        <span className="font-semibold text-brand">My Ticket</span> est la billetterie de référence pour les concerts
-        d'artistes tamouls et les soirées de la scène tamoule en France. Réservez en quelques clics, retrouvez vos
-        e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.
+        <span className="font-semibold text-brand">My Ticket</span> {t("home.about")}
       </p>
 
       <ArtistSearchBox />

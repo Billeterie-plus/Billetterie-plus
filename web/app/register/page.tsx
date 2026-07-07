@@ -4,23 +4,24 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { api, setSession } from "../../lib/api";
-
-const ROLES = [
-  {
-    value: "BUYER",
-    title: "Je suis acheteur",
-    tagline: "Je veux réserver des billets",
-    points: ["Achetez vos billets en quelques clics", "Retrouvez vos e-billets à tout moment", "Recevez votre QR code d'entrée"],
-  },
-  {
-    value: "ORGANIZER",
-    title: "Je suis organisateur",
-    tagline: "Je veux vendre des billets",
-    points: ["Créez concerts et soirées en quelques minutes", "Suivez vos ventes et votre trésorerie en direct", "Scannez les billets à l'entrée"],
-  },
-] as const;
+import { useT } from "../../lib/i18n/LanguageContext";
 
 function RegisterForm() {
+  const t = useT();
+  const ROLES = [
+    {
+      value: "BUYER",
+      title: t("register.buyerTitle"),
+      tagline: t("register.buyerTagline"),
+      points: [t("register.buyerPoint1"), t("register.buyerPoint2"), t("register.buyerPoint3")],
+    },
+    {
+      value: "ORGANIZER",
+      title: t("register.organizerTitle"),
+      tagline: t("register.organizerTagline"),
+      points: [t("register.organizerPoint1"), t("register.organizerPoint2"), t("register.organizerPoint3")],
+    },
+  ] as const;
   const [form, setForm] = useState({ name: "", email: "", password: "", role: "BUYER" as string, organizationName: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,14 +50,13 @@ function RegisterForm() {
   }
 
   const selectedRole = ROLES.find((r) => r.value === form.role)!;
+  const roleShort = form.role === "ORGANIZER" ? t("register.roleShortOrganizer") : t("register.roleShortBuyer");
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="mb-1 text-2xl font-bold">Créer un compte</h1>
+      <h1 className="mb-1 text-2xl font-bold">{t("register.title")}</h1>
       <p className="mb-6 text-sm text-slate-500">
-        {redirect
-          ? "Créez votre compte pour finaliser votre achat — vos billets sélectionnés vous attendent."
-          : "Commencez par choisir le profil qui vous correspond."}
+        {redirect ? t("register.redirectHint") : t("register.chooseProfile")}
       </p>
 
       {/* Choix du profil : deux interfaces distinctes */}
@@ -89,12 +89,12 @@ function RegisterForm() {
 
       <form onSubmit={handleSubmit} className="mx-auto max-w-sm space-y-4">
         <div className="rounded-lg bg-brand/5 px-3 py-2 text-xs font-medium text-brand">
-          Inscription en tant que {selectedRole.title.replace("Je suis ", "")}
+          {t("register.registeringAs", { role: roleShort })}
         </div>
 
         <input
           required
-          placeholder="Nom"
+          placeholder={t("register.name")}
           value={form.name}
           onChange={(e) => update("name", e.target.value)}
           className="w-full rounded-lg border px-3 py-2"
@@ -102,7 +102,7 @@ function RegisterForm() {
         <input
           type="email"
           required
-          placeholder="Email"
+          placeholder={t("register.email")}
           value={form.email}
           onChange={(e) => update("email", e.target.value)}
           className="w-full rounded-lg border px-3 py-2"
@@ -111,7 +111,7 @@ function RegisterForm() {
           type="password"
           required
           minLength={8}
-          placeholder="Mot de passe (8 caractères min.)"
+          placeholder={t("register.password")}
           value={form.password}
           onChange={(e) => update("password", e.target.value)}
           className="w-full rounded-lg border px-3 py-2"
@@ -119,7 +119,7 @@ function RegisterForm() {
 
         {form.role === "ORGANIZER" && (
           <input
-            placeholder="Nom de votre organisation"
+            placeholder={t("register.orgName")}
             value={form.organizationName}
             onChange={(e) => update("organizationName", e.target.value)}
             className="w-full rounded-lg border px-3 py-2"
@@ -131,14 +131,14 @@ function RegisterForm() {
           disabled={loading}
           className="w-full rounded-lg bg-brand py-2.5 font-medium text-white transition hover:bg-brand-dark disabled:opacity-50"
         >
-          {loading ? "Création…" : `Créer mon compte ${selectedRole.title.replace("Je suis ", "")}`}
+          {loading ? t("common.creating") : t("register.submit", { role: roleShort })}
         </button>
       </form>
 
       <p className="mx-auto mt-4 max-w-sm text-center text-sm text-slate-500">
-        Déjà un compte ?{" "}
+        {t("register.alreadyAccount")}{" "}
         <Link href={redirect ? `/login?redirect=${encodeURIComponent(redirect)}` : "/login"} className="text-brand">
-          Se connecter
+          {t("register.login")}
         </Link>
       </p>
     </div>
