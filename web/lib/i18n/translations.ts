@@ -39,6 +39,12 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.cgv": "Conditions générales de vente",
     "footer.privacy": "Politique de confidentialité",
     "footer.stripe": "Paiement sécurisé par Stripe",
+    "footer.brandDescription": "La billetterie de référence pour les concerts d'artistes tamouls et les soirées de la scène tamoule en France.",
+    "footer.navTitle": "Navigation",
+    "footer.accountTitle": "Mon compte",
+    "footer.legalTitle": "Informations légales",
+    "footer.paymentMethods": "Moyens de paiement acceptés",
+    "footer.paymentList": "Carte bancaire · PayPal · Google Pay · Apple Pay",
 
     // Hero
     "hero.label": "My Ticket",
@@ -308,6 +314,12 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.cgv": "Terms & conditions",
     "footer.privacy": "Privacy policy",
     "footer.stripe": "Secure payment by Stripe",
+    "footer.brandDescription": "The go-to ticketing platform for Tamil artist concerts and Tamil scene parties in France.",
+    "footer.navTitle": "Navigation",
+    "footer.accountTitle": "My account",
+    "footer.legalTitle": "Legal information",
+    "footer.paymentMethods": "Accepted payment methods",
+    "footer.paymentList": "Card · PayPal · Google Pay · Apple Pay",
 
     "hero.label": "My Ticket",
     "hero.title": "The Tamil scene, at your fingertips",
@@ -560,6 +572,12 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.cgv": "Allgemeine Geschäftsbedingungen",
     "footer.privacy": "Datenschutzerklärung",
     "footer.stripe": "Sichere Zahlung mit Stripe",
+    "footer.brandDescription": "Die führende Ticketing-Plattform für Konzerte tamilischer Künstler und Partys der tamilischen Szene in Frankreich.",
+    "footer.navTitle": "Navigation",
+    "footer.accountTitle": "Mein Konto",
+    "footer.legalTitle": "Rechtliche Hinweise",
+    "footer.paymentMethods": "Akzeptierte Zahlungsmethoden",
+    "footer.paymentList": "Karte · PayPal · Google Pay · Apple Pay",
 
     "hero.label": "My Ticket",
     "hero.title": "Die tamilische Musikszene, immer griffbereit",
