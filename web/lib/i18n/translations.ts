@@ -27,6 +27,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.events": "Événements",
     "nav.artists": "Artistes",
     "nav.map": "Carte",
+    "nav.faq": "FAQ",
     "nav.myTickets": "Mes billets",
     "nav.organizerSpace": "Espace organisateur",
     "nav.hello": "Bonjour, {{name}}",
@@ -289,6 +290,25 @@ export const translations: Record<Locale, Record<string, string>> = {
 
     "legal.frenchOnlyNotice": "",
 
+    "faq.title": "Questions fréquentes",
+    "faq.subtitle": "Tout ce qu'il faut savoir pour acheter, recevoir et utiliser vos billets sur My Ticket.",
+    "faq.q1": "Comment acheter un billet ?",
+    "faq.a1": "Choisissez un événement, sélectionnez vos catégories de billets et la quantité, puis cliquez sur « Continuer vers le paiement ». Vous devez être connecté à votre compte pour finaliser l'achat.",
+    "faq.q2": "Quels moyens de paiement acceptez-vous ?",
+    "faq.a2": "Carte bancaire, PayPal, Google Pay et Apple Pay selon votre appareil, via notre prestataire de paiement sécurisé Stripe.",
+    "faq.q3": "Comment vais-je recevoir mon billet ?",
+    "faq.a3": "Vos e-billets sont disponibles immédiatement après paiement dans l'espace « Mes billets » de votre compte, avec un QR code unique à présenter à l'entrée. Ils sont également envoyés par email.",
+    "faq.q4": "Puis-je me faire rembourser ou annuler ma commande ?",
+    "faq.a4": "Les conditions de remboursement et d'annulation sont précisées dans nos Conditions générales de vente. En général, une fois le billet acheté, la commande est définitive sauf annulation de l'événement par l'organisateur.",
+    "faq.q5": "Je n'ai pas reçu mon email de confirmation, que faire ?",
+    "faq.a5": "Vérifiez vos courriers indésirables/spam. Vos billets restent de toute façon accessibles à tout moment depuis l'espace « Mes billets » de votre compte.",
+    "faq.q6": "Comment devenir organisateur sur My Ticket ?",
+    "faq.a6": "Créez un compte en choisissant le profil « organisateur » lors de l'inscription. Vous aurez ensuite accès à votre espace pour créer des événements, suivre vos ventes et scanner les billets à l'entrée.",
+    "faq.q7": "Comment scanner les billets à l'entrée d'un événement ?",
+    "faq.a7": "Depuis votre espace organisateur, ouvrez « Scanner un billet » : la caméra de votre téléphone ou ordinateur lit le QR code du billet, ou vous pouvez saisir le code manuellement.",
+    "faq.q8": "Mes données personnelles et bancaires sont-elles sécurisées ?",
+    "faq.a8": "Oui. Le paiement est traité par Stripe (certifié PCI-DSS) — vos coordonnées bancaires ne transitent jamais par nos serveurs. Vos données personnelles sont traitées conformément au RGPD.",
+
   },
 
   en: {
@@ -303,6 +323,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.events": "Events",
     "nav.artists": "Artists",
     "nav.map": "Map",
+    "nav.faq": "FAQ",
     "nav.myTickets": "My tickets",
     "nav.organizerSpace": "Organizer space",
     "nav.hello": "Hi, {{name}}",
@@ -547,6 +568,25 @@ export const translations: Record<Locale, Record<string, string>> = {
 
     "legal.frenchOnlyNotice": "This document is only available in French, which is the legally binding version. Use your browser's translation tool if needed.",
 
+    "faq.title": "Frequently asked questions",
+    "faq.subtitle": "Everything you need to know to buy, receive and use your tickets on My Ticket.",
+    "faq.q1": "How do I buy a ticket?",
+    "faq.a1": "Choose an event, select your ticket categories and quantity, then click \"Continue to payment\". You must be logged in to complete the purchase.",
+    "faq.q2": "What payment methods do you accept?",
+    "faq.a2": "Card, PayPal, Google Pay and Apple Pay depending on your device, via our secure payment provider Stripe.",
+    "faq.q3": "How will I receive my ticket?",
+    "faq.a3": "Your e-tickets are available immediately after payment in your account's \"My tickets\" area, with a unique QR code to show at the entrance. They are also sent by email.",
+    "faq.q4": "Can I get a refund or cancel my order?",
+    "faq.a4": "Refund and cancellation conditions are detailed in our Terms & conditions. Generally, once a ticket is purchased the order is final unless the organizer cancels the event.",
+    "faq.q5": "I haven't received my confirmation email, what should I do?",
+    "faq.a5": "Check your spam/junk folder. Your tickets remain accessible at any time from your account's \"My tickets\" area regardless.",
+    "faq.q6": "How do I become an organizer on My Ticket?",
+    "faq.a6": "Create an account and choose the \"organizer\" profile during registration. You'll then have access to your space to create events, track sales and scan tickets at the door.",
+    "faq.q7": "How do I scan tickets at the entrance of an event?",
+    "faq.a7": "From your organizer space, open \"Scan a ticket\": your phone or computer camera reads the ticket's QR code, or you can enter the code manually.",
+    "faq.q8": "Are my personal and payment details secure?",
+    "faq.a8": "Yes. Payment is processed by Stripe (PCI-DSS certified) — your card details never pass through our servers. Your personal data is processed in accordance with GDPR.",
+
   },
 
   de: {
@@ -561,6 +601,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.events": "Veranstaltungen",
     "nav.artists": "Künstler",
     "nav.map": "Karte",
+    "nav.faq": "FAQ",
     "nav.myTickets": "Meine Tickets",
     "nav.organizerSpace": "Veranstalterbereich",
     "nav.hello": "Hallo, {{name}}",
@@ -804,6 +845,25 @@ export const translations: Record<Locale, Record<string, string>> = {
     "map.viewEvent": "Veranstaltung ansehen →",
 
     "legal.frenchOnlyNotice": "Dieses Dokument liegt nur auf Französisch vor, der rechtsverbindlichen Fassung. Nutzen Sie bei Bedarf die Übersetzungsfunktion Ihres Browsers.",
+
+    "faq.title": "Häufig gestellte Fragen",
+    "faq.subtitle": "Alles, was Sie über Kauf, Erhalt und Nutzung Ihrer Tickets bei My Ticket wissen müssen.",
+    "faq.q1": "Wie kaufe ich ein Ticket?",
+    "faq.a1": "Wählen Sie eine Veranstaltung, wählen Sie Ihre Ticketkategorien und die Anzahl, und klicken Sie dann auf „Weiter zur Zahlung“. Sie müssen angemeldet sein, um den Kauf abzuschließen.",
+    "faq.q2": "Welche Zahlungsmethoden akzeptieren Sie?",
+    "faq.a2": "Karte, PayPal, Google Pay und Apple Pay je nach Gerät, über unseren sicheren Zahlungsdienstleister Stripe.",
+    "faq.q3": "Wie erhalte ich mein Ticket?",
+    "faq.a3": "Ihre E-Tickets sind sofort nach der Zahlung im Bereich „Meine Tickets“ Ihres Kontos verfügbar, mit einem eindeutigen QR-Code, den Sie am Eingang vorzeigen. Sie werden auch per E-Mail versendet.",
+    "faq.q4": "Kann ich meine Bestellung erstatten lassen oder stornieren?",
+    "faq.a4": "Die Erstattungs- und Stornierungsbedingungen sind in unseren AGB festgelegt. In der Regel ist die Bestellung nach dem Ticketkauf endgültig, es sei denn, der Veranstalter sagt die Veranstaltung ab.",
+    "faq.q5": "Ich habe meine Bestätigungs-E-Mail nicht erhalten, was soll ich tun?",
+    "faq.a5": "Prüfen Sie Ihren Spam-Ordner. Ihre Tickets sind in jedem Fall jederzeit im Bereich „Meine Tickets“ Ihres Kontos zugänglich.",
+    "faq.q6": "Wie werde ich Veranstalter bei My Ticket?",
+    "faq.a6": "Erstellen Sie ein Konto und wählen Sie bei der Registrierung das Profil „Veranstalter“. Sie erhalten dann Zugang zu Ihrem Bereich, um Veranstaltungen zu erstellen, Verkäufe zu verfolgen und Tickets am Eingang zu scannen.",
+    "faq.q7": "Wie scanne ich Tickets am Eingang einer Veranstaltung?",
+    "faq.a7": "Öffnen Sie in Ihrem Veranstalterbereich „Ticket scannen“: Die Kamera Ihres Telefons oder Computers liest den QR-Code des Tickets, oder Sie geben den Code manuell ein.",
+    "faq.q8": "Sind meine persönlichen Daten und Zahlungsdaten sicher?",
+    "faq.a8": "Ja. Die Zahlung wird von Stripe abgewickelt (PCI-DSS-zertifiziert) — Ihre Kartendaten laufen niemals über unsere Server. Ihre personenbezogenen Daten werden gemäß DSGVO verarbeitet.",
 
   },
 };

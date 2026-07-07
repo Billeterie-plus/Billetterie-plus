@@ -14,7 +14,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="mt-16 border-t bg-white/60">
+    <footer className="mt-16 bg-white">
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {/* Marque */}
@@ -32,6 +32,7 @@ export default function Footer() {
               <li><Link href="/" className="hover:text-brand">{t("nav.events")}</Link></li>
               <li><Link href="/artistes" className="hover:text-brand">{t("nav.artists")}</Link></li>
               <li><Link href="/carte" className="hover:text-brand">{t("nav.map")}</Link></li>
+              <li><Link href="/faq" className="hover:text-brand">{t("nav.faq")}</Link></li>
             </ul>
           </div>
 

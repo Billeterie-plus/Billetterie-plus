@@ -49,6 +49,7 @@ export default function Navbar() {
           <Link href="/" className="hover:text-gold-light">{t("nav.events")}</Link>
           <Link href="/artistes" className="hover:text-gold-light">{t("nav.artists")}</Link>
           <Link href="/carte" className="hover:text-gold-light">{t("nav.map")}</Link>
+          <Link href="/faq" className="hover:text-gold-light">{t("nav.faq")}</Link>
           {user ? (
             <>
               <Link href="/my-tickets" className="hover:text-gold-light">{t("nav.myTickets")}</Link>
