@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api } from "../../../../lib/api";
 import ImageUploadField from "../../../../components/ImageUploadField";
 import { useT } from "../../../../lib/i18n/LanguageContext";
+import { SEAT_MAP_TEMPLATE_LIST, SEAT_MAP_TEMPLATES, SeatMapTemplateId } from "../../../../lib/seatMapTemplates";
 
 const EMPTY_TIER = { name: "", price: 0, quota: 100, seated: false };
 
@@ -55,9 +56,29 @@ export default function NewEventPage() {
   // Plan de salle interactif (optionnel) : une image + des sièges cliquables
   // rattachés à un tarif via son index dans le tableau `tiers`.
   const [seatMapEnabled, setSeatMapEnabled] = useState(false);
+  const [seatMapMode, setSeatMapMode] = useState<"template" | "custom">("template");
+  const [selectedTemplateId, setSelectedTemplateId] = useState<SeatMapTemplateId | null>(null);
+  const [genRows, setGenRows] = useState(5);
+  const [genSeatsPerRow, setGenSeatsPerRow] = useState(8);
   const [seatMapImageUrl, setSeatMapImageUrl] = useState("");
   const [seats, setSeats] = useState<{ tierIndex: number; row: string; number: string; x: number; y: number }[]>([]);
   const [activeTierIndex, setActiveTierIndex] = useState(0);
+
+  function selectTemplate(templateId: SeatMapTemplateId) {
+    setSelectedTemplateId(templateId);
+    setSeatMapImageUrl(SEAT_MAP_TEMPLATES[templateId].svg());
+    setSeats([]);
+  }
+
+  function generateSeatsForActiveTier() {
+    if (!selectedTemplateId) return;
+    const template = SEAT_MAP_TEMPLATES[selectedTemplateId];
+    const generated = template.generateSeats(activeTierIndex, tiers.length, genRows, genSeatsPerRow);
+    setSeats((ss) => [
+      ...ss.filter((s) => s.tierIndex !== activeTierIndex),
+      ...generated.map((s) => ({ ...s, tierIndex: activeTierIndex })),
+    ]);
+  }
 
   function updateForm(key: string, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -348,11 +369,106 @@ export default function NewEventPage() {
 
             {seatMapEnabled && (
               <div className="mt-4 space-y-4">
-                <ImageUploadField value={seatMapImageUrl} onChange={setSeatMapImageUrl} />
+                {/* Choix du mode : modèle généré automatiquement, ou photo/plan personnalisé */}
+                <div className="inline-flex rounded-full bg-slate-100 p-0.5">
+                  {(["template", "custom"] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => setSeatMapMode(mode)}
+                      className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
+                        seatMapMode === mode ? "bg-white text-brand shadow-sm" : "text-slate-500 hover:text-slate-700"
+                      }`}
+                    >
+                      {mode === "template" ? t("organizerForm.seatMapModeTemplate") : t("organizerForm.seatMapModeCustom")}
+                    </button>
+                  ))}
+                </div>
+
+                {seatMapMode === "template" ? (
+                  <>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                      {SEAT_MAP_TEMPLATE_LIST.map((tpl) => (
+                        <button
+                          key={tpl.id}
+                          type="button"
+                          onClick={() => selectTemplate(tpl.id)}
+                          className={`rounded-xl border p-3 text-left transition hover:-translate-y-0.5 hover:shadow-md ${
+                            selectedTemplateId === tpl.id
+                              ? "border-brand bg-brand/5 ring-2 ring-brand"
+                              : "border-slate-200 bg-slate-50/60 hover:border-brand/30"
+                          }`}
+                        >
+                          <span className="text-2xl">{tpl.icon}</span>
+                          <p className="mt-1 text-xs font-semibold text-slate-800">{t(tpl.labelKey)}</p>
+                          <p className="mt-0.5 text-[11px] leading-snug text-slate-400">{t(tpl.descriptionKey)}</p>
+                        </button>
+                      ))}
+                    </div>
+
+                    {selectedTemplateId && (
+                      <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3">
+                        {tiers.length > 1 && (
+                          <div className="mb-2">
+                            <p className="mb-1.5 text-xs font-medium text-slate-500">{t("organizerForm.seatMapTierSelect")}</p>
+                            <div className="flex flex-wrap gap-2">
+                              {tiers.map((tier, i) => (
+                                <button
+                                  key={i}
+                                  type="button"
+                                  onClick={() => setActiveTierIndex(i)}
+                                  className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition ${
+                                    activeTierIndex === i ? "text-white shadow-sm" : "bg-white text-slate-600 hover:bg-slate-200"
+                                  }`}
+                                  style={activeTierIndex === i ? { backgroundColor: TIER_COLORS[i % TIER_COLORS.length] } : undefined}
+                                >
+                                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: TIER_COLORS[i % TIER_COLORS.length] }} />
+                                  {tier.name || `#${i + 1}`}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        <div className="flex flex-wrap items-end gap-2">
+                          <div>
+                            <p className="mb-1 text-[11px] text-slate-400">{t("organizerForm.seatMapRowsPlaceholder")}</p>
+                            <input
+                              type="number"
+                              min={1}
+                              value={genRows}
+                              onChange={(e) => setGenRows(Math.max(1, Number(e.target.value) || 1))}
+                              className="w-20 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm"
+                            />
+                          </div>
+                          <div>
+                            <p className="mb-1 text-[11px] text-slate-400">{t("organizerForm.seatMapSeatsPerRowPlaceholder")}</p>
+                            <input
+                              type="number"
+                              min={1}
+                              value={genSeatsPerRow}
+                              onChange={(e) => setGenSeatsPerRow(Math.max(1, Number(e.target.value) || 1))}
+                              className="w-24 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={generateSeatsForActiveTier}
+                            className="rounded-lg bg-brand px-4 py-1.5 text-sm font-medium text-white transition hover:bg-brand-dark"
+                          >
+                            {t("organizerForm.seatMapGenerate")}
+                          </button>
+                        </div>
+                        <p className="mt-1.5 text-[11px] text-slate-400">{t("organizerForm.seatMapRegenerateHint")}</p>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <ImageUploadField value={seatMapImageUrl} onChange={setSeatMapImageUrl} />
+                )}
 
                 {seatMapImageUrl ? (
                   <>
-                    {tiers.length > 1 && (
+                    {seatMapMode === "custom" && tiers.length > 1 && (
                       <div>
                         <p className="mb-1.5 text-xs font-medium text-slate-500">{t("organizerForm.seatMapTierSelect")}</p>
                         <div className="flex flex-wrap gap-2">
@@ -366,10 +482,7 @@ export default function NewEventPage() {
                               }`}
                               style={activeTierIndex === i ? { backgroundColor: TIER_COLORS[i % TIER_COLORS.length] } : undefined}
                             >
-                              <span
-                                className="h-2 w-2 rounded-full"
-                                style={{ backgroundColor: TIER_COLORS[i % TIER_COLORS.length] }}
-                              />
+                              <span className="h-2 w-2 rounded-full" style={{ backgroundColor: TIER_COLORS[i % TIER_COLORS.length] }} />
                               {tier.name || `#${i + 1}`}
                             </button>
                           ))}
