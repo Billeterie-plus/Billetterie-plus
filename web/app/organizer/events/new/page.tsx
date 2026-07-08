@@ -8,6 +8,8 @@ import { useT } from "../../../../lib/i18n/LanguageContext";
 
 const EMPTY_TIER = { name: "", price: 0, quota: 100, seated: false };
 
+const TIER_COLORS = ["#1e2749", "#b8912f", "#0f766e", "#be185d", "#2563eb", "#7c3aed"];
+
 const SECTION_CARD = "rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition sm:p-6";
 const FIELD =
   "w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15";
@@ -50,6 +52,13 @@ export default function NewEventPage() {
   const [loading, setLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
 
+  // Plan de salle interactif (optionnel) : une image + des sièges cliquables
+  // rattachés à un tarif via son index dans le tableau `tiers`.
+  const [seatMapEnabled, setSeatMapEnabled] = useState(false);
+  const [seatMapImageUrl, setSeatMapImageUrl] = useState("");
+  const [seats, setSeats] = useState<{ tierIndex: number; row: string; number: string; x: number; y: number }[]>([]);
+  const [activeTierIndex, setActiveTierIndex] = useState(0);
+
   function updateForm(key: string, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
     if (key === "imageUrl") setImageError(false);
@@ -61,6 +70,31 @@ export default function NewEventPage() {
 
   function removeTier(i: number) {
     setTiers((ts) => ts.filter((_, idx) => idx !== i));
+    // Les sièges de ce tarif n'ont plus de catégorie : on les retire, et on
+    // décale l'index des sièges des tarifs suivants pour rester synchronisé.
+    setSeats((ss) =>
+      ss.filter((s) => s.tierIndex !== i).map((s) => (s.tierIndex > i ? { ...s, tierIndex: s.tierIndex - 1 } : s))
+    );
+    setActiveTierIndex((idx) => Math.max(0, idx === i ? 0 : idx > i ? idx - 1 : idx));
+  }
+
+  function handleSeatMapClick(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const countForTier = seats.filter((s) => s.tierIndex === activeTierIndex).length;
+    setSeats((ss) => [
+      ...ss,
+      { tierIndex: activeTierIndex, row: "A", number: String(countForTier + 1), x, y },
+    ]);
+  }
+
+  function updateSeat(i: number, key: "row" | "number", value: string) {
+    setSeats((ss) => ss.map((s, idx) => (idx === i ? { ...s, [key]: value } : s)));
+  }
+
+  function removeSeat(i: number) {
+    setSeats((ss) => ss.filter((_, idx) => idx !== i));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -78,6 +112,10 @@ export default function NewEventPage() {
           parkingFree: form.parkingFree === "" ? undefined : form.parkingFree === "true",
           startDateTime: new Date(form.startDateTime).toISOString(),
           ticketTypes: tiers.map((tier) => ({ ...tier, price: Number(tier.price), quota: Number(tier.quota) })),
+          seatMap:
+            seatMapEnabled && seatMapImageUrl && seats.length
+              ? { enabled: true, imageUrl: seatMapImageUrl, seats }
+              : undefined,
         },
       });
       router.push(`/organizer/events/${event.id}`);
@@ -288,6 +326,124 @@ export default function NewEventPage() {
             >
               {t("organizerForm.addTier")}
             </button>
+          </div>
+
+          {/* Plan de salle interactif (optionnel) */}
+          <div className={SECTION_CARD + " animate-fadeInUp"} style={{ animationDelay: "0.25s" }}>
+            <SectionHeader icon="🗺️" title={t("organizerForm.seatMapStep")} hint={t("organizerForm.seatMapHint")} />
+
+            <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-slate-700">
+              <span
+                onClick={() => setSeatMapEnabled((v) => !v)}
+                className={`relative h-5 w-9 shrink-0 rounded-full transition ${seatMapEnabled ? "bg-brand" : "bg-slate-300"}`}
+              >
+                <span
+                  className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition ${
+                    seatMapEnabled ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </span>
+              {t("organizerForm.seatMapEnable")}
+            </label>
+
+            {seatMapEnabled && (
+              <div className="mt-4 space-y-4">
+                <ImageUploadField value={seatMapImageUrl} onChange={setSeatMapImageUrl} />
+
+                {seatMapImageUrl ? (
+                  <>
+                    {tiers.length > 1 && (
+                      <div>
+                        <p className="mb-1.5 text-xs font-medium text-slate-500">{t("organizerForm.seatMapTierSelect")}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {tiers.map((tier, i) => (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => setActiveTierIndex(i)}
+                              className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition ${
+                                activeTierIndex === i ? "text-white shadow-sm" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                              }`}
+                              style={activeTierIndex === i ? { backgroundColor: TIER_COLORS[i % TIER_COLORS.length] } : undefined}
+                            >
+                              <span
+                                className="h-2 w-2 rounded-full"
+                                style={{ backgroundColor: TIER_COLORS[i % TIER_COLORS.length] }}
+                              />
+                              {tier.name || `#${i + 1}`}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div
+                      onClick={handleSeatMapClick}
+                      className="relative cursor-crosshair overflow-hidden rounded-xl border border-slate-200 select-none"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={seatMapImageUrl} alt="" className="block w-full" draggable={false} />
+                      {seats.map((seat, i) => (
+                        <span
+                          key={i}
+                          title={`${seat.row}${seat.number}`}
+                          className="absolute flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[9px] font-bold text-white shadow ring-2 ring-white"
+                          style={{ left: `${seat.x}%`, top: `${seat.y}%`, backgroundColor: TIER_COLORS[seat.tierIndex % TIER_COLORS.length] }}
+                        >
+                          {seat.number}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-xs text-slate-400">{t("organizerForm.seatMapClickHint")}</p>
+
+                    {seats.length > 0 && (
+                      <div>
+                        <div className="mb-2 flex items-center justify-between">
+                          <p className="text-xs font-medium text-slate-500">{t("organizerForm.seatMapCount", { n: seats.length })}</p>
+                          <button type="button" onClick={() => setSeats([])} className="text-xs font-medium text-red-500 hover:underline">
+                            {t("organizerForm.seatMapClearAll")}
+                          </button>
+                        </div>
+                        <div className="flex max-h-48 flex-wrap gap-1.5 overflow-y-auto">
+                          {seats.map((seat, i) => (
+                            <div
+                              key={i}
+                              className="flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50/60 p-1"
+                            >
+                              <span
+                                className="h-2 w-2 shrink-0 rounded-full"
+                                style={{ backgroundColor: TIER_COLORS[seat.tierIndex % TIER_COLORS.length] }}
+                              />
+                              <input
+                                value={seat.row}
+                                onChange={(e) => updateSeat(i, "row", e.target.value)}
+                                placeholder={t("organizerForm.seatMapRowPlaceholder")}
+                                className="w-9 rounded border-0 bg-white px-1 py-0.5 text-center text-xs"
+                              />
+                              <input
+                                value={seat.number}
+                                onChange={(e) => updateSeat(i, "number", e.target.value)}
+                                placeholder={t("organizerForm.seatMapNumberPlaceholder")}
+                                className="w-9 rounded border-0 bg-white px-1 py-0.5 text-center text-xs"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeSeat(i)}
+                                className="px-1 text-xs font-bold text-red-400 hover:text-red-600"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700">{t("organizerForm.seatMapNoImage")}</p>
+                )}
+              </div>
+            )}
           </div>
 
           {error && (

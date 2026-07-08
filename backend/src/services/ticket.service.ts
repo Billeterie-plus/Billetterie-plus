@@ -10,7 +10,7 @@ import { sendNotification } from "./notification.service";
 export async function fulfillOrder(orderId: string) {
   const order = await prisma.order.findUniqueOrThrow({
     where: { id: orderId },
-    include: { items: { include: { ticketType: true } }, event: true },
+    include: { items: { include: { ticketType: true, seat: true } }, event: true },
   });
 
   if (order.status === "PAID") {
@@ -19,16 +19,31 @@ export async function fulfillOrder(orderId: string) {
 
   const tickets = [];
   for (const item of order.items) {
-    for (let i = 0; i < item.quantity; i++) {
+    if (item.seat) {
+      // Billet rattaché à un siège précis du plan de salle.
       tickets.push({
         orderId: order.id,
         eventId: order.eventId,
         ticketTypeId: item.ticketTypeId,
         ownerId: order.userId,
         qrToken: generateQrToken(),
+        seatId: item.seat.id,
+        seatInfo: `Rangée ${item.seat.row}, Place ${item.seat.number}`,
       });
+    } else {
+      for (let i = 0; i < item.quantity; i++) {
+        tickets.push({
+          orderId: order.id,
+          eventId: order.eventId,
+          ticketTypeId: item.ticketTypeId,
+          ownerId: order.userId,
+          qrToken: generateQrToken(),
+        });
+      }
     }
   }
+
+  const seatIds = order.items.filter((item: any) => item.seat).map((item: any) => item.seat.id);
 
   await prisma.$transaction([
     prisma.ticket.createMany({ data: tickets }),
@@ -39,6 +54,9 @@ export async function fulfillOrder(orderId: string) {
         data: { sold: { increment: item.quantity } },
       })
     ),
+    ...(seatIds.length
+      ? [prisma.seat.updateMany({ where: { id: { in: seatIds } }, data: { status: "SOLD" } })]
+      : []),
   ]);
 
   await sendNotification({

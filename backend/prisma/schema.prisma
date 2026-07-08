@@ -51,6 +51,12 @@ enum DiscountType {
   FIXED
 }
 
+enum SeatStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+}
+
 model User {
   id           String    @id @default(cuid())
   email        String    @unique
@@ -92,6 +98,8 @@ model Event {
   transportInfo     String?      // ex: "Métro ligne 4, arrêt Château d'Eau — 5 min à pied"
   parkingInfo       String?      // ex: "Parking Vinci Château d'Eau, 200m de l'entrée"
   parkingFree       Boolean?     // true = gratuit, false = payant, null = non précisé
+  seatMapEnabled    Boolean     @default(false) // vente avec plan de salle interactif
+  seatMapImageUrl   String?     // image de la salle sur laquelle les sièges sont positionnés
   startDateTime     DateTime
   endDateTime       DateTime?
   status            EventStatus @default(DRAFT)
@@ -102,6 +110,7 @@ model Event {
   orders            Order[]
   tickets           Ticket[]
   promoCodes        PromoCode[]
+  seats             Seat[]
 }
 
 model TicketType {
@@ -118,6 +127,26 @@ model TicketType {
 
   orderItems  OrderItem[]
   tickets     Ticket[]
+  seats       Seat[]
+}
+
+/** Un siège positionné sur le plan de salle (image) d'un événement, rattaché à une catégorie de billet. */
+model Seat {
+  id           String     @id @default(cuid())
+  event        Event      @relation(fields: [eventId], references: [id])
+  eventId      String
+  ticketType   TicketType @relation(fields: [ticketTypeId], references: [id])
+  ticketTypeId String
+  row          String     // ex: "A"
+  number       String     // ex: "12"
+  x            Float      // position en % (0-100) sur l'image du plan de salle
+  y            Float      // position en % (0-100) sur l'image du plan de salle
+  status       SeatStatus @default(AVAILABLE)
+  reservedAt   DateTime?  // utilisé pour libérer les réservations abandonnées
+  createdAt    DateTime   @default(now())
+
+  orderItems   OrderItem[]
+  ticket       Ticket?
 }
 
 model Order {
@@ -146,6 +175,8 @@ model OrderItem {
   ticketTypeId String
   quantity     Int
   unitPrice    Float
+  seat         Seat?      @relation(fields: [seatId], references: [id])
+  seatId       String?    // rempli quand ce billet correspond à un siège précis du plan de salle
 }
 
 model Ticket {
@@ -159,7 +190,9 @@ model Ticket {
   owner        User         @relation(fields: [ownerId], references: [id])
   ownerId      String
   qrToken      String       @unique // encoded in the QR code, scanned at entry
-  seatInfo     String?      // e.g. "Voiture 3, Place 42"
+  seatInfo     String?      // e.g. "Voiture 3, Place 42" or "Rangée A, Place 12"
+  seat         Seat?        @relation(fields: [seatId], references: [id])
+  seatId       String?      @unique
   status       TicketStatus @default(VALID)
   checkedInAt  DateTime?
   createdAt    DateTime     @default(now())

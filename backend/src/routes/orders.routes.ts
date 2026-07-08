@@ -9,11 +9,21 @@ const router = Router();
 
 const createOrderSchema = z.object({
   eventId: z.string(),
-  items: z.array(z.object({ ticketTypeId: z.string(), quantity: z.number().int().min(1) })).min(1),
+  items: z
+    .array(
+      z.object({
+        ticketTypeId: z.string(),
+        quantity: z.number().int().min(1),
+        // Rempli quand la catégorie fait partie d'un plan de salle : l'acheteur a
+        // choisi ses sièges précis plutôt qu'une simple quantité.
+        seatIds: z.array(z.string()).optional(),
+      })
+    )
+    .min(1),
   promoCode: z.string().optional(),
 });
 
-/** Creates a PENDING order, validates stock, applies promo code, returns a checkout redirect URL. */
+/** Creates a PENDING order, validates stock (and reserves seats if any), applies promo code, returns a checkout redirect URL. */
 router.post("/", requireAuth, asyncHandler(async (req: AuthedRequest, res) => {
   const parsed = createOrderSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
@@ -23,16 +33,24 @@ router.post("/", requireAuth, asyncHandler(async (req: AuthedRequest, res) => {
     where: { id: { in: items.map((i) => i.ticketTypeId) }, eventId },
   });
 
-  for (const item of items) {
+  // Pour les catégories avec sièges, la quantité réelle est le nombre de
+  // sièges choisis (on ignore une éventuelle quantité incohérente envoyée
+  // par le client).
+  const normalizedItems = items.map((item) => ({
+    ...item,
+    quantity: item.seatIds?.length ? item.seatIds.length : item.quantity,
+  }));
+
+  for (const item of normalizedItems) {
     const tt = ticketTypes.find((t: any) => t.id === item.ticketTypeId);
     if (!tt) return res.status(400).json({ error: `Unknown ticket type ${item.ticketTypeId}` });
-    if (tt.sold + item.quantity > tt.quota) {
+    if (!item.seatIds?.length && tt.sold + item.quantity > tt.quota) {
       return res.status(409).json({ error: `Not enough availability for "${tt.name}"` });
     }
   }
 
   let subtotal = 0;
-  for (const item of items) {
+  for (const item of normalizedItems) {
     const tt = ticketTypes.find((t: any) => t.id === item.ticketTypeId)!;
     subtotal += tt.price * item.quantity;
   }
@@ -56,22 +74,54 @@ router.post("/", requireAuth, asyncHandler(async (req: AuthedRequest, res) => {
         : Math.max(0, subtotal - promo.discountValue);
   }
 
-  const order = await prisma.order.create({
-    data: {
-      userId: req.user!.userId,
-      eventId,
-      totalAmount: total,
-      promoCodeId: promo?.id,
-      items: {
-        create: items.map((item) => ({
-          ticketTypeId: item.ticketTypeId,
-          quantity: item.quantity,
-          unitPrice: ticketTypes.find((t: any) => t.id === item.ticketTypeId)!.price,
-        })),
-      },
-    },
-    include: { items: true },
-  });
+  const allSeatIds = normalizedItems.flatMap((item) => item.seatIds || []);
+
+  let order;
+  try {
+    order = await prisma.$transaction(async (tx: any) => {
+      // Réserve atomiquement chaque siège demandé : l'update ne réussit que
+      // s'il est encore AVAILABLE, ce qui évite qu'un même siège soit vendu à
+      // deux acheteurs en même temps.
+      if (allSeatIds.length) {
+        const { count } = await tx.seat.updateMany({
+          where: { id: { in: allSeatIds }, eventId, status: "AVAILABLE" },
+          data: { status: "RESERVED", reservedAt: new Date() },
+        });
+        if (count !== allSeatIds.length) {
+          throw Object.assign(new Error("Un ou plusieurs sièges viennent d'être pris. Merci de réessayer."), {
+            status: 409,
+          });
+        }
+      }
+
+      return tx.order.create({
+        data: {
+          userId: req.user!.userId,
+          eventId,
+          totalAmount: total,
+          promoCodeId: promo?.id,
+          items: {
+            create: normalizedItems.flatMap((item) => {
+              const unitPrice = ticketTypes.find((t: any) => t.id === item.ticketTypeId)!.price;
+              if (item.seatIds?.length) {
+                return item.seatIds.map((seatId) => ({
+                  ticketTypeId: item.ticketTypeId,
+                  quantity: 1,
+                  unitPrice,
+                  seatId,
+                }));
+              }
+              return [{ ticketTypeId: item.ticketTypeId, quantity: item.quantity, unitPrice }];
+            }),
+          },
+        },
+        include: { items: true },
+      });
+    });
+  } catch (err: any) {
+    if (err.status === 409) return res.status(409).json({ error: err.message });
+    throw err;
+  }
 
   if (promo) {
     await prisma.promoCode.update({ where: { id: promo.id }, data: { usedCount: { increment: 1 } } });

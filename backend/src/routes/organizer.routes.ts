@@ -45,6 +45,26 @@ const eventSchema = z.object({
       })
     )
     .min(1),
+  // Plan de salle interactif optionnel : une image de la salle sur laquelle
+  // l'organisateur a positionné des sièges cliquables (rattachés à un tarif
+  // via son index dans le tableau ticketTypes ci-dessus).
+  seatMap: z
+    .object({
+      enabled: z.boolean(),
+      imageUrl: z.string().optional(),
+      seats: z
+        .array(
+          z.object({
+            tierIndex: z.number().int().min(0),
+            row: z.string().min(1),
+            number: z.string().min(1),
+            x: z.number().min(0).max(100),
+            y: z.number().min(0).max(100),
+          })
+        )
+        .optional(),
+    })
+    .optional(),
 });
 
 /** List this organizer's events (any status). */
@@ -58,12 +78,14 @@ router.get("/events", asyncHandler(async (req: AuthedRequest, res) => {
   res.json(events);
 }));
 
-/** Create an event with its ticket types (tiers/zones/wagons...). */
+/** Create an event with its ticket types (tiers/zones/wagons...) and, optionally, a seat map. */
 router.post("/events", asyncHandler(async (req: AuthedRequest, res) => {
   const parsed = eventSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
   const org = await getOrgOrFail(req.user!.userId);
-  const { ticketTypes, ...data } = parsed.data;
+  const { ticketTypes, seatMap, ...data } = parsed.data;
+
+  const seatMapEnabled = !!(seatMap?.enabled && seatMap.imageUrl && seatMap.seats?.length);
 
   const event = await prisma.event.create({
     data: {
@@ -71,11 +93,40 @@ router.post("/events", asyncHandler(async (req: AuthedRequest, res) => {
       startDateTime: new Date(data.startDateTime),
       endDateTime: data.endDateTime ? new Date(data.endDateTime) : undefined,
       organizationId: org.id,
-      ticketTypes: { create: ticketTypes },
+      seatMapEnabled,
+      seatMapImageUrl: seatMapEnabled ? seatMap!.imageUrl : undefined,
     },
-    include: { ticketTypes: true },
   });
-  res.status(201).json(event);
+
+  // Créés séquentiellement (plutôt qu'en createMany) pour connaître l'id de
+  // chaque catégorie créée et pouvoir y rattacher les sièges du plan de salle
+  // par index (le formulaire ne connaît que la position du tarif, pas son id
+  // définitif tant que l'événement n'existe pas encore).
+  const createdTicketTypes: any[] = [];
+  for (const tier of ticketTypes) {
+    createdTicketTypes.push(await prisma.ticketType.create({ data: { ...tier, eventId: event.id } }));
+  }
+
+  if (seatMapEnabled && seatMap!.seats?.length) {
+    await prisma.seat.createMany({
+      data: seatMap!.seats
+        .filter((s) => createdTicketTypes[s.tierIndex])
+        .map((s) => ({
+          eventId: event.id,
+          ticketTypeId: createdTicketTypes[s.tierIndex].id,
+          row: s.row,
+          number: s.number,
+          x: s.x,
+          y: s.y,
+        })),
+    });
+  }
+
+  const full = await prisma.event.findUniqueOrThrow({
+    where: { id: event.id },
+    include: { ticketTypes: true, seats: true },
+  });
+  res.status(201).json(full);
 }));
 
 /** Update event status (DRAFT -> PUBLISHED -> CANCELLED) or details. */
@@ -84,7 +135,7 @@ router.patch("/events/:id", asyncHandler(async (req: AuthedRequest, res) => {
   const event = await prisma.event.findUnique({ where: { id: req.params.id } });
   if (!event || event.organizationId !== org.id) return res.status(404).json({ error: "Not found" });
 
-  const patchSchema = eventSchema.partial().omit({ ticketTypes: true }).extend({
+  const patchSchema = eventSchema.partial().omit({ ticketTypes: true, seatMap: true }).extend({
     status: z.enum(["DRAFT", "PUBLISHED", "CANCELLED"]).optional(),
   });
   const parsed = patchSchema.safeParse(req.body);

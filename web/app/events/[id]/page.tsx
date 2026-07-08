@@ -8,6 +8,8 @@ import { ARTISTS } from "../../../lib/artists";
 import ArtistAvatar from "../../../components/ArtistAvatar";
 import { useT } from "../../../lib/i18n/LanguageContext";
 
+const SEAT_TIER_COLORS = ["#1e2749", "#b8912f", "#0f766e", "#be185d", "#2563eb", "#7c3aed"];
+
 export default function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -18,6 +20,8 @@ export default function EventDetailPage() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
+  const [seatMapData, setSeatMapData] = useState<{ seatMapEnabled: boolean; seatMapImageUrl: string | null; seats: any[] } | null>(null);
+  const [selectedSeatIds, setSelectedSeatIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setLoggedIn(!!getToken());
@@ -26,6 +30,11 @@ export default function EventDetailPage() {
   useEffect(() => {
     api(`/events/${id}`, { auth: false }).then(setEvent).catch((e) => setError(e.message));
   }, [id]);
+
+  useEffect(() => {
+    if (!event?.seatMapEnabled) return;
+    api(`/events/${event.id}/seats`, { auth: false }).then(setSeatMapData).catch(() => {});
+  }, [event?.id, event?.seatMapEnabled]);
 
   // Restaure le panier si la personne vient de se connecter/s'inscrire après avoir choisi ses billets
   useEffect(() => {
@@ -37,6 +46,7 @@ export default function EventDetailPage() {
       if (pending.eventId === event.id) {
         setQuantities(pending.quantities || {});
         setPromoCode(pending.promoCode || "");
+        setSelectedSeatIds(new Set(pending.selectedSeatIds || []));
       }
     } catch {
       // ignore
@@ -44,6 +54,16 @@ export default function EventDetailPage() {
       sessionStorage.removeItem("pendingPurchase");
     }
   }, [event]);
+
+  function toggleSeat(seat: any) {
+    if (seat.status !== "AVAILABLE" && !selectedSeatIds.has(seat.id)) return;
+    setSelectedSeatIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(seat.id)) next.delete(seat.id);
+      else next.add(seat.id);
+      return next;
+    });
+  }
 
   if (error) return <p className="text-red-600">{error}</p>;
   if (!event) {
@@ -56,11 +76,18 @@ export default function EventDetailPage() {
     );
   }
 
-  const total = event.ticketTypes.reduce(
-    (sum: number, t: any) => sum + (quantities[t.id] || 0) * t.price,
-    0
-  );
-  const totalQty = Object.values(quantities).reduce((a, b) => a + b, 0);
+  const allSeats: any[] = seatMapData?.seats || [];
+  const seatedTierIds = new Set(allSeats.map((s) => s.ticketTypeId));
+  const selectedSeats = allSeats.filter((s) => selectedSeatIds.has(s.id));
+  const seatQuantitiesByTier: Record<string, number> = {};
+  for (const s of selectedSeats) seatQuantitiesByTier[s.ticketTypeId] = (seatQuantitiesByTier[s.ticketTypeId] || 0) + 1;
+
+  const total = event.ticketTypes.reduce((sum: number, tt: any) => {
+    const qty = seatedTierIds.has(tt.id) ? seatQuantitiesByTier[tt.id] || 0 : quantities[tt.id] || 0;
+    return sum + qty * tt.price;
+  }, 0);
+  const totalQty =
+    Object.values(quantities).reduce((a: number, b: number) => a + b, 0) + selectedSeats.length;
 
   const matchedArtist = ARTISTS.find((a) => event.title.toLowerCase().includes(a.name.toLowerCase()));
   const venue = event.type === "TRAIN" ? null : event.venue;
@@ -71,10 +98,11 @@ export default function EventDetailPage() {
   const isPast = new Date(event.endDateTime || event.startDateTime).getTime() < Date.now();
 
   function handleBuy() {
+    const seatIds = Array.from(selectedSeatIds);
     if (!getToken()) {
       sessionStorage.setItem(
         "pendingPurchase",
-        JSON.stringify({ eventId: event.id, quantities, promoCode })
+        JSON.stringify({ eventId: event.id, quantities, promoCode, selectedSeatIds: seatIds })
       );
       const redirect = encodeURIComponent(`/events/${event.id}`);
       router.push(`/login?redirect=${redirect}`);
@@ -83,7 +111,7 @@ export default function EventDetailPage() {
     // On passe par une page de paiement dédiée (récapitulatif, CGV/RGPD, paiement sécurisé)
     sessionStorage.setItem(
       "checkoutDraft",
-      JSON.stringify({ eventId: event.id, quantities, promoCode })
+      JSON.stringify({ eventId: event.id, quantities, promoCode, selectedSeatIds: seatIds })
     );
     router.push("/checkout");
   }
@@ -256,6 +284,7 @@ export default function EventDetailPage() {
 
           <div className="space-y-3">
             {event.ticketTypes.map((tt: any) => {
+              if (seatedTierIds.has(tt.id)) return null; // affiché dans le plan de salle ci-dessous
               const remaining = tt.quota - tt.sold;
               const soldOut = remaining <= 0;
               const percentSold = tt.quota > 0 ? Math.round((tt.sold / tt.quota) * 100) : 0;
@@ -323,6 +352,68 @@ export default function EventDetailPage() {
               );
             })}
           </div>
+
+          {seatMapData?.seatMapEnabled && allSeats.length > 0 && (
+            <div className="mt-4 rounded-lg border border-slate-200 p-3">
+              <p className="mb-1 text-sm font-semibold text-slate-800">{t("eventDetail.seatMapTitle")}</p>
+              <p className="mb-2 text-xs text-slate-400">{t("eventDetail.seatMapHint")}</p>
+
+              <div className="mb-2 flex flex-wrap gap-2">
+                {Array.from(seatedTierIds).map((ttId, i) => {
+                  const tt = event.ticketTypes.find((x: any) => x.id === ttId);
+                  if (!tt) return null;
+                  return (
+                    <span key={ttId} className="flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
+                      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: SEAT_TIER_COLORS[i % SEAT_TIER_COLORS.length] }} />
+                      {tt.name} — {tt.price}€
+                    </span>
+                  );
+                })}
+              </div>
+
+              <div className="relative overflow-hidden rounded-lg border border-slate-200">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={seatMapData.seatMapImageUrl || ""} alt="" className="block w-full" draggable={false} />
+                {allSeats.map((seat) => {
+                  const tierIdx = Array.from(seatedTierIds).indexOf(seat.ticketTypeId);
+                  const selected = selectedSeatIds.has(seat.id);
+                  const takenByOther = seat.status !== "AVAILABLE" && !selected;
+                  return (
+                    <button
+                      key={seat.id}
+                      type="button"
+                      title={`${seat.row}${seat.number}`}
+                      onClick={() => toggleSeat(seat)}
+                      disabled={takenByOther}
+                      className={`absolute flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[9px] font-bold text-white shadow ring-2 transition ${
+                        takenByOther ? "cursor-not-allowed opacity-40 ring-white" : "cursor-pointer ring-white hover:scale-125"
+                      } ${selected ? "scale-125 ring-4 ring-brand" : ""}`}
+                      style={{
+                        left: `${seat.x}%`,
+                        top: `${seat.y}%`,
+                        backgroundColor: takenByOther ? "#94a3b8" : SEAT_TIER_COLORS[tierIdx % SEAT_TIER_COLORS.length],
+                      }}
+                    >
+                      {seat.number}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-slate-500">
+                <span className="flex items-center gap-1">
+                  <span className="h-2 w-2 rounded-full bg-brand" /> {t("eventDetail.seatLegendSelected")}
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="h-2 w-2 rounded-full bg-slate-400 opacity-40" /> {t("eventDetail.seatLegendTaken")}
+                </span>
+              </div>
+
+              {selectedSeats.length > 0 && (
+                <p className="mt-2 text-xs font-medium text-brand">{t("eventDetail.seatsSelectedCount", { n: selectedSeats.length })}</p>
+              )}
+            </div>
+          )}
 
           <input
             value={promoCode}

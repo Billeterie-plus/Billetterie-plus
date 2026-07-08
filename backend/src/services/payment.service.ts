@@ -17,7 +17,7 @@ const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 export async function createCheckoutSession(orderId: string) {
   const order = await prisma.order.findUniqueOrThrow({
     where: { id: orderId },
-    include: { items: { include: { ticketType: true } }, event: true },
+    include: { items: { include: { ticketType: true, seat: true } }, event: true },
   });
 
   if (!stripe) {
@@ -53,7 +53,9 @@ export async function createCheckoutSession(orderId: string) {
       currency: order.currency.toLowerCase(),
       unit_amount: Math.round(item.unitPrice * 100),
       product_data: {
-        name: `${order.event.title} — ${item.ticketType.name}`,
+        name: item.seat
+          ? `${order.event.title} — ${item.ticketType.name} (Rangée ${item.seat.row}, Place ${item.seat.number})`
+          : `${order.event.title} — ${item.ticketType.name}`,
         // Repris aussi ici (sous le nom du billet), au cas où le client ne
         // remarque pas le message près du bouton de paiement.
         description: practicalInfo.slice(0, 300) || undefined,

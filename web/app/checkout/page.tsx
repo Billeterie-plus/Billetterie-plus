@@ -6,7 +6,7 @@ import Link from "next/link";
 import { api, getToken, getUser } from "../../lib/api";
 import { useT } from "../../lib/i18n/LanguageContext";
 
-type Draft = { eventId: string; quantities: Record<string, number>; promoCode?: string };
+type Draft = { eventId: string; quantities: Record<string, number>; promoCode?: string; selectedSeatIds?: string[] };
 
 function CheckoutContent() {
   const t = useT();
@@ -15,6 +15,7 @@ function CheckoutContent() {
   const cancelled = searchParams.get("cancelled") === "true";
   const [draft, setDraft] = useState<Draft | null>(null);
   const [event, setEvent] = useState<any>(null);
+  const [seats, setSeats] = useState<any[]>([]);
   const [promoCode, setPromoCode] = useState("");
   const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState("");
@@ -35,8 +36,16 @@ function CheckoutContent() {
     const parsed: Draft = JSON.parse(raw);
     setDraft(parsed);
     setPromoCode(parsed.promoCode || "");
-    api(`/events/${parsed.eventId}`, { auth: false })
-      .then(setEvent)
+    Promise.all([
+      api(`/events/${parsed.eventId}`, { auth: false }),
+      parsed.selectedSeatIds?.length
+        ? api(`/events/${parsed.eventId}/seats`, { auth: false }).catch(() => null)
+        : Promise.resolve(null),
+    ])
+      .then(([eventRes, seatsRes]) => {
+        setEvent(eventRes);
+        if (seatsRes) setSeats(seatsRes.seats || []);
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,9 +55,21 @@ function CheckoutContent() {
   if (error) return <p className="text-red-600">{error}</p>;
   if (!draft || !event) return null;
 
-  const lines = event.ticketTypes
+  const selectedSeatIds = new Set(draft.selectedSeatIds || []);
+  const selectedSeats = seats.filter((s) => selectedSeatIds.has(s.id));
+  const seatedTierIds = new Set(selectedSeats.map((s) => s.ticketTypeId));
+
+  const qtyLines = event.ticketTypes
     .map((t: any) => ({ ...t, qty: draft.quantities[t.id] || 0 }))
-    .filter((t: any) => t.qty > 0);
+    .filter((t: any) => t.qty > 0 && !seatedTierIds.has(t.id));
+  const seatLines = event.ticketTypes
+    .filter((t: any) => seatedTierIds.has(t.id))
+    .map((t: any) => ({
+      ...t,
+      qty: selectedSeats.filter((s) => s.ticketTypeId === t.id).length,
+      seatLabels: selectedSeats.filter((s) => s.ticketTypeId === t.id).map((s) => `${s.row}${s.number}`),
+    }));
+  const lines = [...qtyLines, ...seatLines];
   const total = lines.reduce((sum: number, t: any) => sum + t.qty * t.price, 0);
   const totalQty = lines.reduce((sum: number, t: any) => sum + t.qty, 0);
 
@@ -57,9 +78,14 @@ function CheckoutContent() {
     setSubmitting(true);
     setError("");
     try {
-      const items = Object.entries(draft.quantities)
-        .filter(([, qty]) => qty > 0)
+      const qtyItems = Object.entries(draft.quantities)
+        .filter(([ticketTypeId, qty]) => qty > 0 && !seatedTierIds.has(ticketTypeId))
         .map(([ticketTypeId, quantity]) => ({ ticketTypeId, quantity }));
+      const seatItems = Array.from(seatedTierIds).map((ticketTypeId) => {
+        const ids = selectedSeats.filter((s) => s.ticketTypeId === ticketTypeId).map((s) => s.id);
+        return { ticketTypeId, quantity: ids.length, seatIds: ids };
+      });
+      const items = [...qtyItems, ...seatItems];
 
       const res = await api("/orders", {
         method: "POST",
@@ -124,6 +150,9 @@ function CheckoutContent() {
                 <div key={t.id} className="flex items-center justify-between py-2 text-sm">
                   <span className="text-slate-700">
                     {t.name} <span className="text-slate-400">× {t.qty}</span>
+                    {t.seatLabels?.length ? (
+                      <span className="ml-1 text-xs text-slate-400">({t.seatLabels.join(", ")})</span>
+                    ) : null}
                   </span>
                   <span className="font-medium text-slate-900">{(t.qty * t.price).toFixed(2)}€</span>
                 </div>
