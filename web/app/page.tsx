@@ -87,10 +87,6 @@ function HomeContent() {
         </div>
       )}
 
-      <p className="mb-8 max-w-2xl text-slate-600">
-        <span className="font-semibold text-brand">My Ticket</span> {t("home.about")}
-      </p>
-
       <ArtistSearchBox />
 
       <ArtistMarquee />
