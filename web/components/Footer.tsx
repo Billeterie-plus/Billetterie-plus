@@ -33,7 +33,7 @@ export default function Footer() {
               <li><Link href="/evenements/films" className="hover:text-gold-light">{t("nav.films")}</Link></li>
               <li><Link href="/artistes" className="hover:text-gold-light">{t("nav.artists")}</Link></li>
               <li><Link href="/carte" className="hover:text-gold-light">{t("nav.map")}</Link></li>
-              <li><Link href="/faq" className="hover:text-gold-light">{t("nav.faq")}</Link></li>
+              <li><Link href="/#faq" className="hover:text-gold-light">{t("nav.faq")}</Link></li>
             </ul>
           </div>
 

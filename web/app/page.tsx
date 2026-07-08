@@ -8,6 +8,7 @@ import ArtistSpotlight from "../components/ArtistSpotlight";
 import ArtistSearchBox from "../components/ArtistSearchBox";
 import HeroBanner from "../components/HeroBanner";
 import ArtistMarquee from "../components/ArtistMarquee";
+import FaqSection from "../components/FaqSection";
 import { useT } from "../lib/i18n/LanguageContext";
 
 function HomeContent() {
@@ -28,6 +29,8 @@ function HomeContent() {
   useEffect(() => {
     if (searchParams.get("q")) {
       document.getElementById("evenements")?.scrollIntoView({ behavior: "smooth" });
+    } else if (typeof window !== "undefined" && window.location.hash) {
+      document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -93,6 +96,8 @@ function HomeContent() {
       <ArtistMarquee />
 
       <ArtistSpotlight />
+
+      <FaqSection />
     </div>
   );
 }

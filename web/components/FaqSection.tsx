@@ -1,20 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useT } from "../../lib/i18n/LanguageContext";
+import { useT } from "../lib/i18n/LanguageContext";
 
 const QUESTION_KEYS = [1, 2, 3, 4, 5, 6, 7, 8];
 
-export default function FaqPage() {
+export default function FaqSection() {
   const t = useT();
   const [open, setOpen] = useState<number | null>(1);
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <h1 className="mb-2 text-2xl font-bold text-slate-900">{t("faq.title")}</h1>
+    <section id="faq" className="mt-16 scroll-mt-20 border-t border-slate-200 pt-12">
+      <h2 className="mb-2 text-2xl font-bold text-slate-900">{t("faq.title")}</h2>
       <p className="mb-8 text-sm text-slate-500">{t("faq.subtitle")}</p>
 
-      <div className="space-y-3">
+      <div className="mx-auto max-w-3xl space-y-3">
         {QUESTION_KEYS.map((n) => {
           const isOpen = open === n;
           return (
@@ -39,6 +39,6 @@ export default function FaqPage() {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }
