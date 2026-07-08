@@ -47,8 +47,6 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4 text-sm text-white/90">
           <Link href="/" className="hover:text-gold-light">{t("nav.events")}</Link>
-          <Link href="/evenements/films" className="hover:text-gold-light">{t("nav.films")}</Link>
-          <Link href="/artistes" className="hover:text-gold-light">{t("nav.artists")}</Link>
           <Link href="/carte" className="hover:text-gold-light">{t("nav.map")}</Link>
           <Link href="/#faq" className="hover:text-gold-light">{t("nav.faq")}</Link>
           {user ? (
