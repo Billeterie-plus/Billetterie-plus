@@ -20,6 +20,7 @@ export default function EditEventPage() {
   const TYPE_OPTIONS = [
     { value: "CONCERT", label: t("event.type.CONCERT"), emoji: "🎵" },
     { value: "SOIREE", label: t("event.type.SOIREE"), emoji: "🎉" },
+    { value: "FILM", label: t("event.type.FILM"), emoji: "🎬" },
   ];
   const STATUS_OPTIONS = [
     { value: "DRAFT", label: t("organizerForm.statusDraft") },
@@ -118,7 +119,7 @@ export default function EditEventPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <h2 className="mb-2 font-semibold text-slate-800">{t("organizerForm.stepType")}</h2>
-            <div className="grid grid-cols-2 gap-2 sm:w-1/2">
+            <div className="grid grid-cols-3 gap-2 sm:w-2/3">
               {TYPE_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}

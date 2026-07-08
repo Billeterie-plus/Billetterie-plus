@@ -23,8 +23,9 @@ export const translations: Record<Locale, Record<string, string>> = {
     "common.creating": "Création…",
 
     // Navbar
-    "nav.searchPlaceholder": "Rechercher un concert ou une soirée...",
+    "nav.searchPlaceholder": "Rechercher un concert, une soirée ou un film...",
     "nav.events": "Événements",
+    "nav.films": "Films",
     "nav.artists": "Artistes",
     "nav.map": "Carte",
     "nav.faq": "FAQ",
@@ -40,7 +41,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.cgv": "Conditions générales de vente",
     "footer.privacy": "Politique de confidentialité",
     "footer.stripe": "Paiement sécurisé par Stripe",
-    "footer.brandDescription": "La billetterie de référence pour les concerts d'artistes tamouls et les soirées de la scène tamoule en France.",
+    "footer.brandDescription": "La billetterie de référence pour les concerts d'artistes tamouls, les soirées de la scène tamoule et les films en salle en France.",
     "footer.navTitle": "Navigation",
     "footer.accountTitle": "Mon compte",
     "footer.legalTitle": "Informations légales",
@@ -51,10 +52,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.label": "My Ticket",
     "hero.title": "La scène tamoule, à portée de main",
     "hero.subtitle":
-      "Concerts et soirées d'artistes tamouls, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
+      "Concerts, soirées et films d'artistes tamouls, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
     "hero.stat1": "37+ artistes tamouls référencés",
     "hero.stat2": "Billets instantanés",
     "hero.stat3": "Paiement sécurisé",
+    "hero.stat4": "Billets de cinéma disponibles",
     "hero.cta1": "Voir les événements",
     "hero.cta2": "Découvrir les artistes",
 
@@ -63,13 +65,15 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.typeAll": "Tous",
     "home.typeConcert": "Concert",
     "home.typeSoiree": "Soirée tamoule",
+    "home.typeFilm": "Film",
     "home.noEvents": "Aucun événement trouvé.",
     "home.about":
-      "My Ticket est la billetterie de référence pour les concerts d'artistes tamouls et les soirées de la scène tamoule en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
+      "My Ticket est la billetterie de référence pour les concerts d'artistes tamouls, les soirées de la scène tamoule et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
 
     // EventCard
     "event.type.CONCERT": "Concert",
     "event.type.SOIREE": "Soirée tamoule",
+    "event.type.FILM": "Film",
     "event.from": "à partir de {{price}}€",
     "event.ended": "Événement terminé",
 
@@ -82,12 +86,17 @@ export const translations: Record<Locale, Record<string, string>> = {
     "listing.soirees.intro":
       "Soirées, clubs et événements festifs de la scène tamoule — DJ sets, Gana, playback et bien plus.",
     "listing.soirees.empty": "Aucune soirée tamoule n'est publiée pour le moment. Revenez bientôt !",
+    "listing.films.title": "Films en salle",
+    "listing.films.intro":
+      "Séances, avant-premières et sorties nationales du cinéma tamoul (Kollywood) près de chez vous — réservez vos places en quelques secondes.",
+    "listing.films.empty": "Aucun film n'est publié pour le moment. Revenez bientôt !",
     "listing.organize": "Organiser un événement",
     "listing.discoverArtists": "Découvrir les artistes tamouls →",
 
     // Event detail
     "eventDetail.backConcerts": "← Retour aux concerts",
     "eventDetail.backSoirees": "← Retour aux soirées",
+    "eventDetail.backFilms": "← Retour aux films",
     "eventDetail.today": "Aujourd'hui",
     "eventDetail.tomorrow": "Demain",
     "eventDetail.inDays": "Dans {{n}} jours",
@@ -319,8 +328,9 @@ export const translations: Record<Locale, Record<string, string>> = {
     "common.edit": "Edit",
     "common.creating": "Creating…",
 
-    "nav.searchPlaceholder": "Search for a concert or party...",
+    "nav.searchPlaceholder": "Search for a concert, party or film...",
     "nav.events": "Events",
+    "nav.films": "Films",
     "nav.artists": "Artists",
     "nav.map": "Map",
     "nav.faq": "FAQ",
@@ -335,7 +345,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.cgv": "Terms & conditions",
     "footer.privacy": "Privacy policy",
     "footer.stripe": "Secure payment by Stripe",
-    "footer.brandDescription": "The go-to ticketing platform for Tamil artist concerts and Tamil scene parties in France.",
+    "footer.brandDescription": "The go-to ticketing platform for Tamil artist concerts, Tamil scene parties, and films in theaters in France.",
     "footer.navTitle": "Navigation",
     "footer.accountTitle": "My account",
     "footer.legalTitle": "Legal information",
@@ -345,10 +355,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.label": "My Ticket",
     "hero.title": "The Tamil scene, at your fingertips",
     "hero.subtitle":
-      "Concerts and parties by Tamil artists, carefully selected — find your next event and book your tickets in seconds, safely.",
+      "Concerts, parties and films by Tamil artists, carefully selected — find your next event and book your tickets in seconds, safely.",
     "hero.stat1": "37+ Tamil artists listed",
     "hero.stat2": "Instant tickets",
     "hero.stat3": "Secure payment",
+    "hero.stat4": "Movie tickets available",
     "hero.cta1": "See events",
     "hero.cta2": "Discover artists",
 
@@ -356,12 +367,14 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.typeAll": "All",
     "home.typeConcert": "Concert",
     "home.typeSoiree": "Tamil party",
+    "home.typeFilm": "Film",
     "home.noEvents": "No events found.",
     "home.about":
-      "My Ticket is the go-to ticketing platform for Tamil artist concerts and Tamil scene parties in France. Book in a few clicks, access your e-tickets anytime, and if you organize events, manage them from your own organizer space.",
+      "My Ticket is the go-to ticketing platform for Tamil artist concerts, Tamil scene parties, and films in theaters in France. Book in a few clicks, access your e-tickets anytime, and if you organize events, manage them from your own organizer space.",
 
     "event.type.CONCERT": "Concert",
     "event.type.SOIREE": "Tamil party",
+    "event.type.FILM": "Film",
     "event.from": "from €{{price}}",
     "event.ended": "Event ended",
 
@@ -372,11 +385,15 @@ export const translations: Record<Locale, Record<string, string>> = {
     "listing.soirees.title": "Tamil parties",
     "listing.soirees.intro": "Parties, clubs and festive events from the Tamil scene — DJ sets, Gana, playback and more.",
     "listing.soirees.empty": "No Tamil party is published yet. Check back soon!",
+    "listing.films.title": "Films in theaters",
+    "listing.films.intro": "Screenings, premieres and national releases from Tamil cinema (Kollywood) near you — book your seats in seconds.",
+    "listing.films.empty": "No film is published yet. Check back soon!",
     "listing.organize": "Organize an event",
     "listing.discoverArtists": "Discover Tamil artists →",
 
     "eventDetail.backConcerts": "← Back to concerts",
     "eventDetail.backSoirees": "← Back to parties",
+    "eventDetail.backFilms": "← Back to films",
     "eventDetail.today": "Today",
     "eventDetail.tomorrow": "Tomorrow",
     "eventDetail.inDays": "In {{n}} days",
@@ -597,8 +614,9 @@ export const translations: Record<Locale, Record<string, string>> = {
     "common.edit": "Bearbeiten",
     "common.creating": "Wird erstellt…",
 
-    "nav.searchPlaceholder": "Konzert oder Party suchen...",
+    "nav.searchPlaceholder": "Konzert, Party oder Film suchen...",
     "nav.events": "Veranstaltungen",
+    "nav.films": "Filme",
     "nav.artists": "Künstler",
     "nav.map": "Karte",
     "nav.faq": "FAQ",
@@ -613,7 +631,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.cgv": "Allgemeine Geschäftsbedingungen",
     "footer.privacy": "Datenschutzerklärung",
     "footer.stripe": "Sichere Zahlung mit Stripe",
-    "footer.brandDescription": "Die führende Ticketing-Plattform für Konzerte tamilischer Künstler und Partys der tamilischen Szene in Frankreich.",
+    "footer.brandDescription": "Die führende Ticketing-Plattform für Konzerte tamilischer Künstler, Partys der tamilischen Szene und Filme im Kino in Frankreich.",
     "footer.navTitle": "Navigation",
     "footer.accountTitle": "Mein Konto",
     "footer.legalTitle": "Rechtliche Hinweise",
@@ -623,10 +641,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.label": "My Ticket",
     "hero.title": "Die tamilische Musikszene, immer griffbereit",
     "hero.subtitle":
-      "Konzerte und Partys tamilischer Künstler, sorgfältig ausgewählt — finden Sie Ihre nächste Veranstaltung und buchen Sie Ihre Tickets in Sekunden, ganz sicher.",
+      "Konzerte, Partys und Filme tamilischer Künstler, sorgfältig ausgewählt — finden Sie Ihre nächste Veranstaltung und buchen Sie Ihre Tickets in Sekunden, ganz sicher.",
     "hero.stat1": "37+ gelistete tamilische Künstler",
     "hero.stat2": "Sofortige Tickets",
     "hero.stat3": "Sichere Zahlung",
+    "hero.stat4": "Kinotickets verfügbar",
     "hero.cta1": "Veranstaltungen ansehen",
     "hero.cta2": "Künstler entdecken",
 
@@ -634,12 +653,14 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.typeAll": "Alle",
     "home.typeConcert": "Konzert",
     "home.typeSoiree": "Tamilische Party",
+    "home.typeFilm": "Film",
     "home.noEvents": "Keine Veranstaltung gefunden.",
     "home.about":
-      "My Ticket ist die führende Ticketing-Plattform für Konzerte tamilischer Künstler und Partys der tamilischen Szene in Frankreich. Buchen Sie in wenigen Klicks, greifen Sie jederzeit auf Ihre E-Tickets zu, und wenn Sie selbst Veranstaltungen organisieren, verwalten Sie diese in Ihrem eigenen Veranstalterbereich.",
+      "My Ticket ist die führende Ticketing-Plattform für Konzerte tamilischer Künstler, Partys der tamilischen Szene und Filme im Kino in Frankreich. Buchen Sie in wenigen Klicks, greifen Sie jederzeit auf Ihre E-Tickets zu, und wenn Sie selbst Veranstaltungen organisieren, verwalten Sie diese in Ihrem eigenen Veranstalterbereich.",
 
     "event.type.CONCERT": "Konzert",
     "event.type.SOIREE": "Tamilische Party",
+    "event.type.FILM": "Film",
     "event.from": "ab {{price}} €",
     "event.ended": "Veranstaltung beendet",
 
@@ -650,11 +671,15 @@ export const translations: Record<Locale, Record<string, string>> = {
     "listing.soirees.title": "Tamilische Partys",
     "listing.soirees.intro": "Partys, Clubs und Festveranstaltungen der tamilischen Szene — DJ-Sets, Gana, Playback und mehr.",
     "listing.soirees.empty": "Derzeit ist keine tamilische Party veröffentlicht. Schauen Sie bald wieder vorbei!",
+    "listing.films.title": "Filme im Kino",
+    "listing.films.intro": "Vorführungen, Premieren und landesweite Kinostarts des tamilischen Kinos (Kollywood) in Ihrer Nähe — sichern Sie sich Ihre Plätze in Sekunden.",
+    "listing.films.empty": "Derzeit ist kein Film veröffentlicht. Schauen Sie bald wieder vorbei!",
     "listing.organize": "Eine Veranstaltung organisieren",
     "listing.discoverArtists": "Tamilische Künstler entdecken →",
 
     "eventDetail.backConcerts": "← Zurück zu den Konzerten",
     "eventDetail.backSoirees": "← Zurück zu den Partys",
+    "eventDetail.backFilms": "← Zurück zu den Filmen",
     "eventDetail.today": "Heute",
     "eventDetail.tomorrow": "Morgen",
     "eventDetail.inDays": "In {{n}} Tagen",

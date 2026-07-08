@@ -16,6 +16,7 @@ function HomeContent() {
     { value: "", label: t("home.typeAll") },
     { value: "CONCERT", label: t("home.typeConcert") },
     { value: "SOIREE", label: t("home.typeSoiree") },
+    { value: "FILM", label: t("home.typeFilm") },
   ];
   const searchParams = useSearchParams();
   const [events, setEvents] = useState<any[]>([]);

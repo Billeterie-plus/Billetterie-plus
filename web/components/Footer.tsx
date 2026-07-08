@@ -30,6 +30,7 @@ export default function Footer() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/50">{t("footer.navTitle")}</p>
             <ul className="space-y-2 text-sm text-white/80">
               <li><Link href="/" className="hover:text-gold-light">{t("nav.events")}</Link></li>
+              <li><Link href="/evenements/films" className="hover:text-gold-light">{t("nav.films")}</Link></li>
               <li><Link href="/artistes" className="hover:text-gold-light">{t("nav.artists")}</Link></li>
               <li><Link href="/carte" className="hover:text-gold-light">{t("nav.map")}</Link></li>
               <li><Link href="/faq" className="hover:text-gold-light">{t("nav.faq")}</Link></li>

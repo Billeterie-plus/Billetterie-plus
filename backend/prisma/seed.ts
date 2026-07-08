@@ -102,6 +102,24 @@ async function main() {
     },
   });
 
+  const film1 = await prisma.event.create({
+    data: {
+      organizationId: org.id,
+      title: "Avant-première Kollywood — Sortie nationale",
+      description: "Projection en avant-première d'un blockbuster Kollywood en VOST, suivie d'une session photo.",
+      type: "FILM",
+      venue: "UGC Ciné Cité, Paris",
+      startDateTime: new Date(Date.now() + 14 * 24 * 3600 * 1000),
+      status: "PUBLISHED",
+      ticketTypes: {
+        create: [
+          { name: "Place standard", price: 12, quota: 200, seated: true },
+          { name: "Place premium", price: 18, quota: 50, seated: true },
+        ],
+      },
+    },
+  });
+
   await prisma.promoCode.create({
     data: {
       organizationId: org.id,
@@ -117,7 +135,7 @@ async function main() {
   console.log("  Organizer login -> organisateur@demo.com / password123");
   console.log("  Buyer login     -> client@demo.com / password123");
   console.log(
-    `  Events created  -> "${tamilConcert1.title}", "${tamilConcert2.title}", "${soiree1.title}", "${soiree2.title}"`
+    `  Events created  -> "${tamilConcert1.title}", "${tamilConcert2.title}", "${soiree1.title}", "${soiree2.title}", "${film1.title}"`
   );
 }
 

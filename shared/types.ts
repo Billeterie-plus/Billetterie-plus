@@ -1,7 +1,7 @@
 // Shared types between the web app and the mobile app.
 // Mirrors the shapes returned by the backend API (see backend/prisma/schema.prisma).
 
-export type EventType = "TRAIN" | "CONCERT" | "SPORT" | "THEATRE" | "OTHER";
+export type EventType = "TRAIN" | "CONCERT" | "SOIREE" | "FILM" | "SPORT" | "THEATRE" | "OTHER";
 export type EventStatus = "DRAFT" | "PUBLISHED" | "CANCELLED";
 export type TicketStatus = "VALID" | "USED" | "CANCELLED";
 export type Role = "BUYER" | "ORGANIZER" | "ADMIN";

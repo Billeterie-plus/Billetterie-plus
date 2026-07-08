@@ -100,10 +100,20 @@ export default function EventDetailPage() {
     <div>
       {/* Fil d'ariane */}
       <Link
-        href={event.type === "SOIREE" ? "/evenements/soirees-tamoules" : "/evenements/concerts-tamouls"}
+        href={
+          event.type === "SOIREE"
+            ? "/evenements/soirees-tamoules"
+            : event.type === "FILM"
+            ? "/evenements/films"
+            : "/evenements/concerts-tamouls"
+        }
         className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-slate-500 transition hover:text-brand"
       >
-        {event.type === "SOIREE" ? t("eventDetail.backSoirees") : t("eventDetail.backConcerts")}
+        {event.type === "SOIREE"
+          ? t("eventDetail.backSoirees")
+          : event.type === "FILM"
+          ? t("eventDetail.backFilms")
+          : t("eventDetail.backConcerts")}
       </Link>
 
       {/* Bannière avec titre incrusté */}

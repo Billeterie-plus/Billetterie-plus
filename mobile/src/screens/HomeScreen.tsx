@@ -10,6 +10,7 @@ const TYPES = [
   { value: "", label: "Tous" },
   { value: "CONCERT", label: "Concert" },
   { value: "SOIREE", label: "Soirée" },
+  { value: "FILM", label: "Film" },
 ];
 
 export default function HomeScreen({ navigation }: Props) {

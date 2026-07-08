@@ -14,6 +14,7 @@ export default function NewEventPage() {
   const TYPE_OPTIONS = [
     { value: "CONCERT", label: t("event.type.CONCERT"), emoji: "🎵" },
     { value: "SOIREE", label: t("event.type.SOIREE"), emoji: "🎉" },
+    { value: "FILM", label: t("event.type.FILM"), emoji: "🎬" },
   ];
   const [form, setForm] = useState({
     title: "",
