@@ -10,7 +10,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:studio": "prisma studio",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "promote-admin": "tsx prisma/promote-admin.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",

@@ -57,6 +57,9 @@ export default function Navbar() {
               {user.role === "ORGANIZER" && (
                 <Link href="/organizer" className="hover:text-gold-light">{t("nav.organizerSpace")}</Link>
               )}
+              {user.role === "ADMIN" && (
+                <Link href="/admin/customers" className="hover:text-gold-light">{t("nav.admin")}</Link>
+              )}
               <span className="text-white/70">{t("nav.hello", { name: user.name })}</span>
               <button onClick={logout} className="rounded bg-white/10 px-3 py-1.5 hover:bg-white/20">
                 {t("nav.logout")}
