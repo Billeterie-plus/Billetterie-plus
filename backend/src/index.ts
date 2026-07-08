@@ -8,6 +8,7 @@ import ordersRoutes from "./routes/orders.routes";
 import ticketsRoutes from "./routes/tickets.routes";
 import organizerRoutes from "./routes/organizer.routes";
 import adminRoutes from "./routes/admin.routes";
+import bootstrapRoutes from "./routes/bootstrap.routes";
 import webhookRoutes from "./routes/webhook.routes";
 
 // Filet de sécurité : une erreur async non rattrapée ne doit jamais tuer le
@@ -38,6 +39,7 @@ app.use("/orders", ordersRoutes);
 app.use("/tickets", ticketsRoutes);
 app.use("/organizer", organizerRoutes);
 app.use("/admin", adminRoutes);
+app.use("/bootstrap", bootstrapRoutes);
 
 app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);
