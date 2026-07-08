@@ -130,7 +130,7 @@ model TicketType {
   seats       Seat[]
 }
 
-/** Un siège positionné sur le plan de salle (image) d'un événement, rattaché à une catégorie de billet. */
+// Un siège positionné sur le plan de salle (image) d'un événement, rattaché à une catégorie de billet.
 model Seat {
   id           String     @id @default(cuid())
   event        Event      @relation(fields: [eventId], references: [id])
