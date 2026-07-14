@@ -11,7 +11,6 @@ import FaqSection from "../components/FaqSection";
 import HowItWorks from "../components/HowItWorks";
 import TrustBadges from "../components/TrustBadges";
 import LastChanceEvents from "../components/LastChanceEvents";
-import StatsStrip from "../components/StatsStrip";
 import OrganizerCta from "../components/OrganizerCta";
 import { useT } from "../lib/i18n/LanguageContext";
 
@@ -52,6 +51,8 @@ function HomeContent() {
 
   return (
     <div>
+      <OrganizerCta />
+
       <HeroBanner />
 
       <section id="evenements" className="mb-10 scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
@@ -103,11 +104,7 @@ function HomeContent() {
 
       <ArtistSpotlight />
 
-      <StatsStrip />
-
       <TrustBadges />
-
-      <OrganizerCta />
 
       <FaqSection />
     </div>
