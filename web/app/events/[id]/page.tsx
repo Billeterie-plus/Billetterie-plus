@@ -226,21 +226,6 @@ export default function EventDetailPage() {
           <h1 className="mt-3 text-3xl font-extrabold leading-tight text-white drop-shadow-sm sm:text-5xl">
             {event.title}
           </h1>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-white/90">
-            {venue && (
-              <span className="flex items-center gap-1.5">
-                <span aria-hidden>📍</span> {venue}
-              </span>
-            )}
-            {event.type === "TRAIN" && (
-              <span className="flex items-center gap-1.5">
-                <span aria-hidden>🚆</span> {event.departureStation} → {event.arrivalStation}
-              </span>
-            )}
-            <span className="flex items-center gap-1.5">
-              <span aria-hidden>🗓️</span> {formattedDate}
-            </span>
-          </div>
         </div>
       </div>
 
