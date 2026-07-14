@@ -10,9 +10,12 @@ export default function FaqSection() {
   const [open, setOpen] = useState<number | null>(1);
 
   return (
-    <section id="faq" className="mt-16 scroll-mt-20 border-t border-slate-200 pt-12">
-      <h2 className="mb-2 text-2xl font-bold text-slate-900">{t("faq.title")}</h2>
-      <p className="mb-8 text-sm text-slate-500">{t("faq.subtitle")}</p>
+    <section
+      id="faq"
+      className="mb-10 mt-16 scroll-mt-20 rounded-2xl bg-gradient-to-br from-brand to-brand-dark p-5 text-white shadow-lg sm:p-6"
+    >
+      <h2 className="mb-2 text-2xl font-bold text-gold-light">{t("faq.title")}</h2>
+      <p className="mb-8 text-sm text-white/70">{t("faq.subtitle")}</p>
 
       <div className="mx-auto max-w-3xl space-y-3">
         {QUESTION_KEYS.map((n) => {
