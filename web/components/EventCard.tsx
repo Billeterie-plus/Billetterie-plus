@@ -16,7 +16,7 @@ export default function EventCard({ event }: { event: any }) {
   return (
     <Link
       href={`/events/${event.id}`}
-      className={`block overflow-hidden rounded-xl border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl animate-fadeInUp ${
+      className={`block overflow-hidden rounded-xl border-2 border-brand/30 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-xl animate-fadeInUp ${
         isPast ? "opacity-70" : ""
       }`}
     >
