@@ -9,6 +9,21 @@ const router = Router();
 // a fermé l'onglet Stripe, la session a expiré, etc.).
 const SEAT_HOLD_MINUTES = 20;
 
+/**
+ * Public: quelques chiffres réels pour la page d'accueil (aucun chiffre
+ * inventé — comptés en direct depuis la base à chaque appel).
+ */
+router.get("/stats", asyncHandler(async (_req, res) => {
+  const [eventCount, soldAgg] = await Promise.all([
+    prisma.event.count({ where: { status: "PUBLISHED" } }),
+    prisma.ticketType.aggregate({ _sum: { sold: true } }),
+  ]);
+  res.json({
+    eventCount,
+    ticketsSold: soldAgg._sum.sold || 0,
+  });
+}));
+
 /** Public: browse published events, with optional filters. */
 router.get("/", asyncHandler(async (req, res) => {
   const { type, q } = req.query as { type?: string; q?: string };

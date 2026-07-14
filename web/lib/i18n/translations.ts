@@ -71,6 +71,31 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.about":
       "My Ticket est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
 
+    "howItWorks.title": "Comment ça marche",
+    "howItWorks.step1Title": "Trouvez votre événement",
+    "howItWorks.step1Desc": "Concerts, soirées, films — filtrez par type ou cherchez directement un artiste.",
+    "howItWorks.step2Title": "Réservez en toute sécurité",
+    "howItWorks.step2Desc": "Choisissez vos billets ou vos places, payez par carte, PayPal ou Apple Pay.",
+    "howItWorks.step3Title": "Recevez votre billet",
+    "howItWorks.step3Desc": "Votre e-billet avec QR code arrive aussitôt, à présenter à l'entrée depuis votre téléphone.",
+
+    "trust.securePayment": "Paiement 100% sécurisé",
+    "trust.instantTicket": "Billet envoyé instantanément",
+    "trust.methods": "Carte bancaire, PayPal, Apple Pay, Google Pay",
+
+    "lastChance.title": "Dernières places",
+    "lastChance.subtitle": "Ces événements affichent complet, ne tardez pas.",
+    "lastChance.remaining": "{{n}} places restantes",
+
+    "stats.title": "My Ticket en chiffres",
+    "stats.events": "Événements publiés",
+    "stats.tickets": "Billets vendus",
+    "stats.artists": "Artistes référencés",
+
+    "organizerCta.title": "Vous organisez un événement Tamil ?",
+    "organizerCta.subtitle": "Créez votre événement en quelques minutes, suivez vos ventes en direct et gérez vos billets depuis votre espace organisateur.",
+    "organizerCta.button": "Créer mon événement",
+
     // EventCard
     "event.type.CONCERT": "Concert",
     "event.type.SOIREE": "Soirée Tamil",
@@ -451,6 +476,31 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.about":
       "My Ticket is the go-to ticketing platform for Tamil artist concerts, Tamil scene parties, and films in theaters in France. Book in a few clicks, access your e-tickets anytime, and if you organize events, manage them from your own organizer space.",
 
+    "howItWorks.title": "How it works",
+    "howItWorks.step1Title": "Find your event",
+    "howItWorks.step1Desc": "Concerts, parties, films — filter by type or search directly for an artist.",
+    "howItWorks.step2Title": "Book securely",
+    "howItWorks.step2Desc": "Choose your tickets or seats, pay by card, PayPal or Apple Pay.",
+    "howItWorks.step3Title": "Get your ticket",
+    "howItWorks.step3Desc": "Your e-ticket with QR code arrives instantly, ready to show at the door from your phone.",
+
+    "trust.securePayment": "100% secure payment",
+    "trust.instantTicket": "Ticket delivered instantly",
+    "trust.methods": "Card, PayPal, Apple Pay, Google Pay",
+
+    "lastChance.title": "Last chance",
+    "lastChance.subtitle": "These events are almost sold out, don't wait.",
+    "lastChance.remaining": "{{n}} seats left",
+
+    "stats.title": "My Ticket in numbers",
+    "stats.events": "Published events",
+    "stats.tickets": "Tickets sold",
+    "stats.artists": "Artists listed",
+
+    "organizerCta.title": "Organizing a Tamil event?",
+    "organizerCta.subtitle": "Create your event in a few minutes, track your sales live, and manage your tickets from your organizer space.",
+    "organizerCta.button": "Create my event",
+
     "event.type.CONCERT": "Concert",
     "event.type.SOIREE": "Tamil party",
     "event.type.FILM": "Film",
@@ -814,6 +864,31 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.noEvents": "Keine Veranstaltung gefunden.",
     "home.about":
       "My Ticket ist die führende Ticketing-Plattform für Konzerte tamilischer Künstler, Partys der tamilischen Szene und Filme im Kino in Frankreich. Buchen Sie in wenigen Klicks, greifen Sie jederzeit auf Ihre E-Tickets zu, und wenn Sie selbst Veranstaltungen organisieren, verwalten Sie diese in Ihrem eigenen Veranstalterbereich.",
+
+    "howItWorks.title": "So funktioniert's",
+    "howItWorks.step1Title": "Veranstaltung finden",
+    "howItWorks.step1Desc": "Konzerte, Partys, Filme — nach Typ filtern oder direkt nach einem Künstler suchen.",
+    "howItWorks.step2Title": "Sicher buchen",
+    "howItWorks.step2Desc": "Tickets oder Plätze wählen, mit Karte, PayPal oder Apple Pay bezahlen.",
+    "howItWorks.step3Title": "Ticket erhalten",
+    "howItWorks.step3Desc": "Ihr E-Ticket mit QR-Code kommt sofort an und wird am Eingang direkt vom Smartphone vorgezeigt.",
+
+    "trust.securePayment": "100% sichere Zahlung",
+    "trust.instantTicket": "Ticket sofort geliefert",
+    "trust.methods": "Karte, PayPal, Apple Pay, Google Pay",
+
+    "lastChance.title": "Letzte Chance",
+    "lastChance.subtitle": "Diese Veranstaltungen sind fast ausverkauft, warten Sie nicht.",
+    "lastChance.remaining": "{{n}} Plätze übrig",
+
+    "stats.title": "My Ticket in Zahlen",
+    "stats.events": "Veröffentlichte Veranstaltungen",
+    "stats.tickets": "Verkaufte Tickets",
+    "stats.artists": "Gelistete Künstler",
+
+    "organizerCta.title": "Organisieren Sie eine tamilische Veranstaltung?",
+    "organizerCta.subtitle": "Erstellen Sie Ihre Veranstaltung in wenigen Minuten, verfolgen Sie Ihre Verkäufe live und verwalten Sie Ihre Tickets in Ihrem Veranstalterbereich.",
+    "organizerCta.button": "Meine Veranstaltung erstellen",
 
     "event.type.CONCERT": "Konzert",
     "event.type.SOIREE": "Tamilische Party",

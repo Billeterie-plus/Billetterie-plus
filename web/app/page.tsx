@@ -8,6 +8,11 @@ import ArtistSpotlight from "../components/ArtistSpotlight";
 import ArtistSearchBox from "../components/ArtistSearchBox";
 import HeroBanner from "../components/HeroBanner";
 import FaqSection from "../components/FaqSection";
+import HowItWorks from "../components/HowItWorks";
+import TrustBadges from "../components/TrustBadges";
+import LastChanceEvents from "../components/LastChanceEvents";
+import StatsStrip from "../components/StatsStrip";
+import OrganizerCta from "../components/OrganizerCta";
 import { useT } from "../lib/i18n/LanguageContext";
 
 function HomeContent() {
@@ -90,9 +95,19 @@ function HomeContent() {
         )}
       </section>
 
+      <LastChanceEvents events={events} />
+
+      <HowItWorks />
+
       <ArtistSearchBox />
 
       <ArtistSpotlight />
+
+      <StatsStrip />
+
+      <TrustBadges />
+
+      <OrganizerCta />
 
       <FaqSection />
     </div>
