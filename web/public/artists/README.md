@@ -1,4 +1,4 @@
-# Photos des artistes tamouls
+# Photos des artistes Tamil
 
 Déposez vos photos ici avec **exactement ces noms de fichier** (format .jpg, idéalement carrées, 300×300px minimum) :
 

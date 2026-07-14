@@ -130,10 +130,10 @@ export default function EventDetailPage() {
       <Link
         href={
           event.type === "SOIREE"
-            ? "/evenements/soirees-tamoules"
+            ? "/evenements/soirees-Tamil"
             : event.type === "FILM"
             ? "/evenements/films"
-            : "/evenements/concerts-tamouls"
+            : "/evenements/concerts-Tamil"
         }
         className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-slate-500 transition hover:text-brand"
       >

@@ -1,6 +1,6 @@
 import EventTypeListing from "../../../components/EventTypeListing";
 
-export default function ConcertsTamoulsPage() {
+export default function ConcertsTamilPage() {
   return (
     <EventTypeListing
       type="CONCERT"

@@ -46,7 +46,6 @@ export default function HeroBanner() {
           <span>{t("hero.stat1")}</span>
           <span>{t("hero.stat2")}</span>
           <span>{t("hero.stat3")}</span>
-          <span>{t("hero.stat4")}</span>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3 animate-fadeInUp" style={{ animationDelay: "0.3s" }}>

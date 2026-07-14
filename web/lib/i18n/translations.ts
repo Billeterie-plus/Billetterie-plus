@@ -42,7 +42,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.cgv": "Conditions générales de vente",
     "footer.privacy": "Politique de confidentialité",
     "footer.stripe": "Paiement sécurisé par Stripe",
-    "footer.brandDescription": "La billetterie de référence pour les concerts d'artistes tamouls, les soirées de la scène tamoule et les films en salle en France.",
+    "footer.brandDescription": "La billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France.",
     "footer.navTitle": "Navigation",
     "footer.accountTitle": "Mon compte",
     "footer.legalTitle": "Informations légales",
@@ -51,13 +51,12 @@ export const translations: Record<Locale, Record<string, string>> = {
 
     // Hero
     "hero.label": "My Ticket",
-    "hero.title": "La scène tamoule, à portée de main",
+    "hero.title": "La scène Tamil, à portée de main",
     "hero.subtitle":
-      "Concerts, soirées et films d'artistes tamouls, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
-    "hero.stat1": "Le meilleur de la scène tamoule réuni ici",
+      "Concerts, soirées et films d'artistes Tamil, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
+    "hero.stat1": "Le meilleur de la scène Tamil réuni ici",
     "hero.stat2": "Billets instantanés",
     "hero.stat3": "Paiement sécurisé",
-    "hero.stat4": "Billets de cinéma disponibles",
     "hero.cta1": "Voir les événements",
     "hero.cta2": "Découvrir les artistes",
 
@@ -65,34 +64,34 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.searchPlaceholder": "Rechercher un événement...",
     "home.typeAll": "Tous",
     "home.typeConcert": "Concert",
-    "home.typeSoiree": "Soirée tamoule",
+    "home.typeSoiree": "Soirée Tamil",
     "home.typeFilm": "Film",
     "home.noEvents": "Aucun événement trouvé.",
     "home.about":
-      "My Ticket est la billetterie de référence pour les concerts d'artistes tamouls, les soirées de la scène tamoule et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
+      "My Ticket est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
 
     // EventCard
     "event.type.CONCERT": "Concert",
-    "event.type.SOIREE": "Soirée tamoule",
+    "event.type.SOIREE": "Soirée Tamil",
     "event.type.FILM": "Film",
     "event.from": "à partir de {{price}}€",
     "event.ended": "Événement terminé",
 
     // Listings
-    "listing.concerts.title": "Concerts d'artistes tamouls",
+    "listing.concerts.title": "Concerts d'artistes Tamil",
     "listing.concerts.intro":
-      "Compositeurs et chanteurs tamouls en tournée : Anirudh Ravichander, Sid Sriram, Yuvan Shankar Raja et bien d'autres. Réservez vos places avant qu'elles ne partent.",
-    "listing.concerts.empty": "Aucun concert tamoul n'est publié pour le moment. Revenez bientôt !",
-    "listing.soirees.title": "Soirées tamoules",
+      "Compositeurs et chanteurs Tamil en tournée : Anirudh Ravichander, Sid Sriram, Yuvan Shankar Raja et bien d'autres. Réservez vos places avant qu'elles ne partent.",
+    "listing.concerts.empty": "Aucun concert Tamil n'est publié pour le moment. Revenez bientôt !",
+    "listing.soirees.title": "Soirées Tamil",
     "listing.soirees.intro":
-      "Soirées, clubs et événements festifs de la scène tamoule — DJ sets, Gana, playback et bien plus.",
-    "listing.soirees.empty": "Aucune soirée tamoule n'est publiée pour le moment. Revenez bientôt !",
+      "Soirées, clubs et événements festifs de la scène Tamil — DJ sets, Gana, playback et bien plus.",
+    "listing.soirees.empty": "Aucune soirée Tamil n'est publiée pour le moment. Revenez bientôt !",
     "listing.films.title": "Films en salle",
     "listing.films.intro":
-      "Séances, avant-premières et sorties nationales du cinéma tamoul (Kollywood) près de chez vous — réservez vos places en quelques secondes.",
+      "Séances, avant-premières et sorties nationales du cinéma Tamil (Kollywood) près de chez vous — réservez vos places en quelques secondes.",
     "listing.films.empty": "Aucun film n'est publié pour le moment. Revenez bientôt !",
     "listing.organize": "Organiser un événement",
-    "listing.discoverArtists": "Découvrir les artistes tamouls →",
+    "listing.discoverArtists": "Découvrir les artistes Tamil →",
 
     // Event detail
     "eventDetail.backConcerts": "← Retour aux concerts",
@@ -138,7 +137,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.aboutArtist": "À propos de l'artiste",
     "eventDetail.viewFullProfile": "Voir la fiche complète →",
     "eventDetail.artistFallback":
-      "Cet événement met à l'honneur la scène musicale tamoule (Kollywood, playback, Gana...). Retrouvez tous les compositeurs, chanteurs et artistes tamouls référencés sur My Ticket.",
+      "Cet événement met à l'honneur la scène musicale Tamil (Kollywood, playback, Gana...). Retrouvez tous les compositeurs, chanteurs et artistes Tamil référencés sur My Ticket.",
     "eventDetail.whereItHappens": "Où se déroule l'événement",
     "eventDetail.venueUnknown": "Lieu à confirmer par l'organisateur.",
     "eventDetail.howToGetThere": "Comment s'y rendre",
@@ -232,7 +231,7 @@ export const translations: Record<Locale, Record<string, string>> = {
 
     // Organizer new/edit event
     "organizerForm.newTitle": "Nouvel événement",
-    "organizerForm.newSubtitle": "Concert d'artiste tamoul ou soirée tamoule — remplissez le formulaire, l'aperçu à droite se met à jour en direct.",
+    "organizerForm.newSubtitle": "Concert d'artiste Tamil ou soirée Tamil — remplissez le formulaire, l'aperçu à droite se met à jour en direct.",
     "organizerForm.editTitle": "Modifier l'événement",
     "organizerForm.editSubtitle": "Mettez à jour les informations de votre concert ou soirée.",
     "organizerForm.step1Type": "1. Type d'événement",
@@ -318,7 +317,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "orgStats.sold": "{{sold}} / {{quota}} vendus · {{price}}€",
 
     // Artists
-    "artists.title": "Tous les artistes tamouls",
+    "artists.title": "Tous les artistes Tamil",
     "artists.count": "{{n}} artistes référencés — recherchez un nom.",
     "artists.searchPlaceholder": "Rechercher un artiste (ex: Anirudh, Sid Sriram, Ilaiyaraaja...)",
     "artists.results": "{{n}} résultat(s)",
@@ -416,7 +415,6 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.stat1": "The best of the Tamil scene, all in one place",
     "hero.stat2": "Instant tickets",
     "hero.stat3": "Secure payment",
-    "hero.stat4": "Movie tickets available",
     "hero.cta1": "See events",
     "hero.cta2": "Discover artists",
 
@@ -758,7 +756,6 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.stat1": "Das Beste der tamilischen Szene an einem Ort",
     "hero.stat2": "Sofortige Tickets",
     "hero.stat3": "Sichere Zahlung",
-    "hero.stat4": "Kinotickets verfügbar",
     "hero.cta1": "Veranstaltungen ansehen",
     "hero.cta2": "Künstler entdecken",
 

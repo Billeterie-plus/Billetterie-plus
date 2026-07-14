@@ -1,6 +1,6 @@
 import EventTypeListing from "../../../components/EventTypeListing";
 
-export default function SoireesTamoulesPage() {
+export default function SoireesTamilPage() {
   return (
     <EventTypeListing
       type="SOIREE"

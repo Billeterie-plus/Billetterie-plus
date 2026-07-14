@@ -14,9 +14,9 @@ export default function ArtistSearchBox() {
 
   return (
     <section className="mb-10 rounded-xl border bg-white p-5">
-      <h2 className="font-semibold text-slate-900">Rechercher un artiste indien tamoul</h2>
+      <h2 className="font-semibold text-slate-900">Rechercher un artiste indien Tamil</h2>
       <p className="mt-1 text-sm text-slate-500">
-        {ARTISTS.length} artistes tamouls référencés (compositeurs, chanteurs, duos).
+        {ARTISTS.length} artistes Tamil référencés (compositeurs, chanteurs, duos).
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <input

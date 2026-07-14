@@ -34,7 +34,7 @@ async function main() {
     data: {
       organizationId: org.id,
       title: "Anirudh Ravichander Live — Tournée XV",
-      description: "Concert événement du compositeur et interprète tamoul Anirudh Ravichander, entre tubes Kollywood et énergie électro.",
+      description: "Concert événement du compositeur et interprète Tamil Anirudh Ravichander, entre tubes Kollywood et énergie électro.",
       type: "CONCERT",
       venue: "Zénith, Paris",
       startDateTime: new Date(Date.now() + 45 * 24 * 3600 * 1000),
@@ -52,7 +52,7 @@ async function main() {
     data: {
       organizationId: org.id,
       title: "Sid Sriram — Carnatic & Soul Tour",
-      description: "Le chanteur tamoul Sid Sriram mêle musique carnatique traditionnelle et R&B contemporain sur scène.",
+      description: "Le chanteur Tamil Sid Sriram mêle musique carnatique traditionnelle et R&B contemporain sur scène.",
       type: "CONCERT",
       venue: "Salle Pleyel, Paris",
       startDateTime: new Date(Date.now() + 60 * 24 * 3600 * 1000),
@@ -69,8 +69,8 @@ async function main() {
   const soiree1 = await prisma.event.create({
     data: {
       organizationId: org.id,
-      title: "Kollywood Night — Soirée Tamoule",
-      description: "Soirée tamoule avec DJ set 100% Kollywood : Anirudh, Yuvan Shankar Raja, Harris Jayaraj et tubes Gana.",
+      title: "Kollywood Night — Soirée Tamil",
+      description: "Soirée Tamil avec DJ set 100% Kollywood : Anirudh, Yuvan Shankar Raja, Harris Jayaraj et tubes Gana.",
       type: "SOIREE",
       venue: "Le Trabendo, Paris",
       startDateTime: new Date(Date.now() + 21 * 24 * 3600 * 1000),
@@ -87,8 +87,8 @@ async function main() {
   const soiree2 = await prisma.event.create({
     data: {
       organizationId: org.id,
-      title: "Chennai Nights — Soirée Tamoule",
-      description: "Grande soirée tamoule : musique, danse et ambiance festive toute la nuit.",
+      title: "Chennai Nights — Soirée Tamil",
+      description: "Grande soirée Tamil : musique, danse et ambiance festive toute la nuit.",
       type: "SOIREE",
       venue: "La Bellevilloise, Paris",
       startDateTime: new Date(Date.now() + 90 * 24 * 3600 * 1000),

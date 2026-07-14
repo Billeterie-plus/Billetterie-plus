@@ -1,4 +1,4 @@
-# Extraits audio des artistes tamouls
+# Extraits audio des artistes Tamil
 
 Déposez vos extraits ici avec **exactement ces noms de fichier** (format .mp3, quelques secondes/minutes suffisent) :
 
