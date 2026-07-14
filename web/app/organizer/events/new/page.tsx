@@ -2,6 +2,21 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  Car,
+  Check,
+  Map,
+  MapPin,
+  Music,
+  ParkingCircle,
+  PartyPopper,
+  Sparkles,
+  Ticket,
+  TrainFront,
+  Clapperboard,
+  FileText,
+  type LucideIcon,
+} from "lucide-react";
 import { api } from "../../../../lib/api";
 import ImageUploadField from "../../../../components/ImageUploadField";
 import { useT } from "../../../../lib/i18n/LanguageContext";
@@ -15,11 +30,11 @@ const SECTION_CARD = "rounded-2xl border border-slate-200 bg-white p-5 shadow-sm
 const FIELD =
   "w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15";
 
-function SectionHeader({ icon, title, hint }: { icon: string; title: string; hint?: string }) {
+function SectionHeader({ icon: Icon, title, hint }: { icon: LucideIcon; title: string; hint?: string }) {
   return (
     <div className="mb-4 flex items-start gap-3">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-lg">
-        {icon}
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+        <Icon size={18} strokeWidth={2} />
       </span>
       <div>
         <h2 className="font-semibold text-slate-800">{title}</h2>
@@ -32,10 +47,10 @@ function SectionHeader({ icon, title, hint }: { icon: string; title: string; hin
 export default function NewEventPage() {
   const t = useT();
   const router = useRouter();
-  const TYPE_OPTIONS = [
-    { value: "CONCERT", label: t("event.type.CONCERT"), emoji: "🎵" },
-    { value: "SOIREE", label: t("event.type.SOIREE"), emoji: "🎉" },
-    { value: "FILM", label: t("event.type.FILM"), emoji: "🎬" },
+  const TYPE_OPTIONS: { value: string; label: string; icon: LucideIcon }[] = [
+    { value: "CONCERT", label: t("event.type.CONCERT"), icon: Music },
+    { value: "SOIREE", label: t("event.type.SOIREE"), icon: PartyPopper },
+    { value: "FILM", label: t("event.type.FILM"), icon: Clapperboard },
   ];
   const [form, setForm] = useState({
     title: "",
@@ -163,8 +178,8 @@ export default function NewEventPage() {
     <div className="mx-auto max-w-6xl">
       {/* En-tête */}
       <div className="mb-6 flex items-center gap-4 animate-fadeInUp">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-light text-2xl text-white shadow-md">
-          ✨
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-light text-white shadow-md">
+          <Sparkles size={22} strokeWidth={2} />
         </span>
         <div>
           <h1 className="text-2xl font-bold text-slate-900">{t("organizerForm.newTitle")}</h1>
@@ -176,10 +191,11 @@ export default function NewEventPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Type d'événement en cartes visuelles */}
           <div className={SECTION_CARD + " animate-fadeInUp"} style={{ animationDelay: "0.05s" }}>
-            <SectionHeader icon="🎭" title={t("organizerForm.step1Type")} />
+            <SectionHeader icon={Ticket} title={t("organizerForm.step1Type")} />
             <div className="grid grid-cols-3 gap-3">
               {TYPE_OPTIONS.map((opt) => {
                 const active = form.type === opt.value;
+                const OptIcon = opt.icon;
                 return (
                   <button
                     key={opt.value}
@@ -192,11 +208,11 @@ export default function NewEventPage() {
                     }`}
                   >
                     {active && (
-                      <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-brand">
-                        ✓
+                      <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-white text-brand">
+                        <Check size={11} strokeWidth={3} />
                       </span>
                     )}
-                    <span className="text-2xl">{opt.emoji}</span>
+                    <OptIcon size={24} strokeWidth={1.75} />
                     <span className="text-xs font-medium">{opt.label}</span>
                   </button>
                 );
@@ -206,7 +222,7 @@ export default function NewEventPage() {
 
           {/* Infos principales */}
           <div className={SECTION_CARD + " animate-fadeInUp"} style={{ animationDelay: "0.1s" }}>
-            <SectionHeader icon="📝" title={t("organizerForm.step2Info")} />
+            <SectionHeader icon={FileText} title={t("organizerForm.step2Info")} />
             <div className="space-y-3">
               <input
                 required
@@ -246,7 +262,7 @@ export default function NewEventPage() {
 
           {/* Infos pratiques : transport / parking */}
           <div className={SECTION_CARD + " animate-fadeInUp"} style={{ animationDelay: "0.15s" }}>
-            <SectionHeader icon="🚗" title={t("organizerForm.step3Practical")} hint={t("organizerForm.practicalHint")} />
+            <SectionHeader icon={Car} title={t("organizerForm.step3Practical")} hint={t("organizerForm.practicalHint")} />
             <div className="space-y-3">
               <input
                 placeholder={t("organizerForm.transportPlaceholder")}
@@ -281,7 +297,7 @@ export default function NewEventPage() {
 
           {/* Tarifs */}
           <div className={SECTION_CARD + " animate-fadeInUp"} style={{ animationDelay: "0.2s" }}>
-            <SectionHeader icon="🎟️" title={t("organizerForm.step4Tiers")} />
+            <SectionHeader icon={Ticket} title={t("organizerForm.step4Tiers")} />
             <div className="space-y-2.5">
               {tiers.map((tier, i) => (
                 <div key={i} className="rounded-xl border border-slate-200 bg-slate-50/60 p-3">
@@ -351,7 +367,7 @@ export default function NewEventPage() {
 
           {/* Plan de salle interactif (optionnel) */}
           <div className={SECTION_CARD + " animate-fadeInUp"} style={{ animationDelay: "0.25s" }}>
-            <SectionHeader icon="🗺️" title={t("organizerForm.seatMapStep")} hint={t("organizerForm.seatMapHint")} />
+            <SectionHeader icon={Map} title={t("organizerForm.seatMapStep")} hint={t("organizerForm.seatMapHint")} />
 
             <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-slate-700">
               <span
@@ -388,22 +404,25 @@ export default function NewEventPage() {
                 {seatMapMode === "template" ? (
                   <>
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                      {SEAT_MAP_TEMPLATE_LIST.map((tpl) => (
-                        <button
-                          key={tpl.id}
-                          type="button"
-                          onClick={() => selectTemplate(tpl.id)}
-                          className={`rounded-xl border p-3 text-left transition hover:-translate-y-0.5 hover:shadow-md ${
-                            selectedTemplateId === tpl.id
-                              ? "border-brand bg-brand/5 ring-2 ring-brand"
-                              : "border-slate-200 bg-slate-50/60 hover:border-brand/30"
-                          }`}
-                        >
-                          <span className="text-2xl">{tpl.icon}</span>
-                          <p className="mt-1 text-xs font-semibold text-slate-800">{t(tpl.labelKey)}</p>
-                          <p className="mt-0.5 text-[11px] leading-snug text-slate-400">{t(tpl.descriptionKey)}</p>
-                        </button>
-                      ))}
+                      {SEAT_MAP_TEMPLATE_LIST.map((tpl) => {
+                        const TplIcon = tpl.icon;
+                        return (
+                          <button
+                            key={tpl.id}
+                            type="button"
+                            onClick={() => selectTemplate(tpl.id)}
+                            className={`rounded-xl border p-3 text-left transition hover:-translate-y-0.5 hover:shadow-md ${
+                              selectedTemplateId === tpl.id
+                                ? "border-brand bg-brand/5 ring-2 ring-brand"
+                                : "border-slate-200 bg-slate-50/60 hover:border-brand/30"
+                            }`}
+                          >
+                            <TplIcon size={22} strokeWidth={1.75} className="text-brand" />
+                            <p className="mt-1 text-xs font-semibold text-slate-800">{t(tpl.labelKey)}</p>
+                            <p className="mt-0.5 text-[11px] leading-snug text-slate-400">{t(tpl.descriptionKey)}</p>
+                          </button>
+                        );
+                      })}
                     </div>
 
                     {selectedTemplateId && (
@@ -593,18 +612,18 @@ export default function NewEventPage() {
                   onError={() => setImageError(true)}
                 />
               ) : (
-                <span className="text-5xl drop-shadow-sm">{selectedType.emoji}</span>
+                <selectedType.icon size={44} strokeWidth={1.5} className="text-white/90 drop-shadow-sm" />
               )}
             </div>
             <div className="p-4">
-              <div className="inline-flex items-center gap-1 rounded-full bg-brand/10 px-2.5 py-1 text-xs font-medium text-brand">
-                {selectedType.emoji} {selectedType.label}
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-brand/10 px-2.5 py-1 text-xs font-medium text-brand">
+                <selectedType.icon size={13} strokeWidth={2} /> {selectedType.label}
               </div>
               <h3 className="mt-2 text-lg font-semibold text-slate-900">
                 {form.title || t("organizerForm.eventTitlePreview")}
               </h3>
-              <p className="mt-1 flex items-center gap-1 text-sm text-slate-500">
-                📍 {form.venue || t("organizerForm.venuePreview")}
+              <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
+                <MapPin size={13} strokeWidth={2} /> {form.venue || t("organizerForm.venuePreview")}
               </p>
               <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3 text-sm">
                 <span className="text-slate-500">{previewDate || t("organizerForm.dateUndefined")}</span>
@@ -614,9 +633,17 @@ export default function NewEventPage() {
               </div>
 
               {(form.transportInfo || form.parkingInfo) && (
-                <div className="mt-3 space-y-1 border-t border-slate-100 pt-3 text-xs text-slate-500">
-                  {form.transportInfo && <p>🚇 {form.transportInfo}</p>}
-                  {form.parkingInfo && <p>🅿️ {form.parkingInfo}</p>}
+                <div className="mt-3 space-y-1.5 border-t border-slate-100 pt-3 text-xs text-slate-500">
+                  {form.transportInfo && (
+                    <p className="flex items-center gap-1.5">
+                      <TrainFront size={13} strokeWidth={2} /> {form.transportInfo}
+                    </p>
+                  )}
+                  {form.parkingInfo && (
+                    <p className="flex items-center gap-1.5">
+                      <ParkingCircle size={13} strokeWidth={2} /> {form.parkingInfo}
+                    </p>
+                  )}
                 </div>
               )}
             </div>

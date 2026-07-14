@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { Clapperboard, Music, PartyPopper, type LucideIcon } from "lucide-react";
 import { api } from "../../../../../lib/api";
 import ImageUploadField from "../../../../../components/ImageUploadField";
 import { useT } from "../../../../../lib/i18n/LanguageContext";
@@ -17,10 +18,10 @@ export default function EditEventPage() {
   const router = useRouter();
   const t = useT();
 
-  const TYPE_OPTIONS = [
-    { value: "CONCERT", label: t("event.type.CONCERT"), emoji: "🎵" },
-    { value: "SOIREE", label: t("event.type.SOIREE"), emoji: "🎉" },
-    { value: "FILM", label: t("event.type.FILM"), emoji: "🎬" },
+  const TYPE_OPTIONS: { value: string; label: string; icon: LucideIcon }[] = [
+    { value: "CONCERT", label: t("event.type.CONCERT"), icon: Music },
+    { value: "SOIREE", label: t("event.type.SOIREE"), icon: PartyPopper },
+    { value: "FILM", label: t("event.type.FILM"), icon: Clapperboard },
   ];
   const STATUS_OPTIONS = [
     { value: "DRAFT", label: t("organizerForm.statusDraft") },
@@ -129,7 +130,7 @@ export default function EditEventPage() {
                     form.type === opt.value ? "border-brand bg-brand/5 ring-2 ring-brand" : "border-slate-200 bg-white"
                   }`}
                 >
-                  <span className="text-2xl">{opt.emoji}</span>
+                  <opt.icon size={20} strokeWidth={1.75} className="text-slate-700" />
                   <span className="text-xs font-medium text-slate-700">{opt.label}</span>
                 </button>
               ))}
@@ -245,12 +246,12 @@ export default function EditEventPage() {
                   onError={() => setImageError(true)}
                 />
               ) : (
-                <span className="text-4xl">{selectedType.emoji}</span>
+                <selectedType.icon size={36} strokeWidth={1.5} className="text-white/90" />
               )}
             </div>
             <div className="p-4">
-              <div className="text-xs font-medium text-brand">
-                {selectedType.emoji} {selectedType.label}
+              <div className="flex items-center gap-1.5 text-xs font-medium text-brand">
+                <selectedType.icon size={13} strokeWidth={2} /> {selectedType.label}
               </div>
               <h3 className="mt-1 text-lg font-semibold">{form.title || t("organizerForm.eventTitlePreview")}</h3>
               <p className="mt-1 text-sm text-slate-500">{form.venue || t("organizerForm.venuePreview")}</p>

@@ -9,6 +9,8 @@
 // manuellement — le backend et l'acheteur n'ont donc aucune différence à
 // gérer entre les deux modes.
 
+import { Landmark, Theater, Trophy, type LucideIcon } from "lucide-react";
+
 export type SeatMapTemplateId = "theatre" | "arena" | "stadium";
 
 export interface GeneratedSeat {
@@ -22,7 +24,7 @@ export interface SeatMapTemplate {
   id: SeatMapTemplateId;
   labelKey: string;
   descriptionKey: string;
-  icon: string;
+  icon: LucideIcon;
   svg: () => string;
   /** Calcule les positions des sièges d'un tarif donné (bande dédiée dans la forme). */
   generateSeats: (tierIndex: number, tierCount: number, rows: number, seatsPerRow: number) => GeneratedSeat[];
@@ -61,7 +63,7 @@ export const SEAT_MAP_TEMPLATES: Record<SeatMapTemplateId, SeatMapTemplate> = {
     id: "theatre",
     labelKey: "organizerForm.seatMapTemplateTheatreLabel",
     descriptionKey: "organizerForm.seatMapTemplateTheatreDesc",
-    icon: "🎭",
+    icon: Theater,
     svg: () =>
       svgDataUrl(
         `<rect width="100" height="100" fill="${BG}"/>
@@ -93,7 +95,7 @@ export const SEAT_MAP_TEMPLATES: Record<SeatMapTemplateId, SeatMapTemplate> = {
     id: "arena",
     labelKey: "organizerForm.seatMapTemplateArenaLabel",
     descriptionKey: "organizerForm.seatMapTemplateArenaDesc",
-    icon: "🏟️",
+    icon: Landmark,
     svg: () =>
       svgDataUrl(
         `<rect width="100" height="100" fill="${BG}"/>
@@ -131,7 +133,7 @@ export const SEAT_MAP_TEMPLATES: Record<SeatMapTemplateId, SeatMapTemplate> = {
     id: "stadium",
     labelKey: "organizerForm.seatMapTemplateStadiumLabel",
     descriptionKey: "organizerForm.seatMapTemplateStadiumDesc",
-    icon: "🏆",
+    icon: Trophy,
     svg: () =>
       svgDataUrl(
         `<rect width="100" height="100" fill="${BG}"/>

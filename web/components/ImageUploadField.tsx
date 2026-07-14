@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Upload } from "lucide-react";
 
 const MAX_DIMENSION = 1000; // px, côté le plus long
 const JPEG_QUALITY = 0.78;
@@ -106,9 +107,15 @@ export default function ImageUploadField({
           type="button"
           disabled={processing}
           onClick={() => inputRef.current?.click()}
-          className="whitespace-nowrap rounded-lg border border-brand px-3 py-2 text-sm font-medium text-brand transition hover:bg-brand/5 disabled:opacity-50"
+          className="flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-brand px-3 py-2 text-sm font-medium text-brand transition hover:bg-brand/5 disabled:opacity-50"
         >
-          {processing ? "Optimisation…" : "📁 Choisir une photo depuis mon ordinateur"}
+          {processing ? (
+            "Optimisation…"
+          ) : (
+            <>
+              <Upload size={14} strokeWidth={2} /> Choisir une photo depuis mon ordinateur
+            </>
+          )}
         </button>
         <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
       </div>

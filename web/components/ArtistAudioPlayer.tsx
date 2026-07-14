@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Headphones, Pause, Play, Volume2, VolumeX } from "lucide-react";
 
 /**
  * Lecteur audio par artiste. Cherche un extrait dans /public/artists-audio/{slug}.mp3
@@ -54,8 +55,8 @@ export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: 
       />
 
       {error ? (
-        <p className="text-sm text-slate-400">
-          🎧 Aucun extrait audio disponible pour {name} pour le moment.
+        <p className="flex items-center gap-2 text-sm text-slate-400">
+          <Headphones size={16} strokeWidth={2} /> Aucun extrait audio disponible pour {name} pour le moment.
         </p>
       ) : (
         <div className="flex items-center gap-3">
@@ -66,7 +67,13 @@ export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: 
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm transition hover:scale-105 hover:bg-brand-dark disabled:opacity-60"
             aria-label={playing ? "Mettre en pause" : "Écouter un extrait"}
           >
-            {loading ? "…" : playing ? "⏸" : "▶"}
+            {loading ? (
+              "…"
+            ) : playing ? (
+              <Pause size={16} strokeWidth={2} fill="currentColor" />
+            ) : (
+              <Play size={16} strokeWidth={2} fill="currentColor" className="ml-0.5" />
+            )}
           </button>
 
           <div className="min-w-0 flex-1">
@@ -92,7 +99,7 @@ export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: 
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm transition hover:bg-slate-50"
             aria-label={muted ? "Réactiver le son" : "Couper le son"}
           >
-            {muted ? "🔇" : "🔊"}
+            {muted ? <VolumeX size={15} strokeWidth={2} /> : <Volume2 size={15} strokeWidth={2} />}
           </button>
         </div>
       )}

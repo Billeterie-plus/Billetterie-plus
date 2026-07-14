@@ -3,6 +3,23 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  ArrowLeft,
+  Calendar,
+  Car,
+  Check,
+  Compass,
+  Footprints,
+  Info,
+  Link2,
+  Map,
+  MapPin,
+  Mic2,
+  ParkingCircle,
+  Ticket,
+  TrainFront,
+  type LucideIcon,
+} from "lucide-react";
 import { api, getToken } from "../../../lib/api";
 import { ARTISTS } from "../../../lib/artists";
 import ArtistAvatar from "../../../components/ArtistAvatar";
@@ -12,22 +29,22 @@ const SEAT_TIER_COLORS = ["#1e2749", "#b8912f", "#0f766e", "#be185d", "#2563eb",
 
 const SECTION_CARD = "rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition sm:p-6";
 
-function SectionHeader({ icon, title }: { icon: string; title: string }) {
+function SectionHeader({ icon: Icon, title }: { icon: LucideIcon; title: string }) {
   return (
     <div className="mb-4 flex items-center gap-3">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-lg">
-        {icon}
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+        <Icon className="h-4.5 w-4.5" strokeWidth={2} size={18} />
       </span>
       <h2 className="text-lg font-bold text-slate-900">{title}</h2>
     </div>
   );
 }
 
-function InfoTile({ icon, label, value }: { icon: string; label: string; value: string }) {
+function InfoTile({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
     <div className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50/60 p-3.5">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-base shadow-sm">
-        {icon}
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-slate-500 shadow-sm">
+        <Icon size={16} strokeWidth={2} />
       </span>
       <div className="min-w-0">
         <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{label}</p>
@@ -180,7 +197,7 @@ export default function EventDetailPage() {
         href={backHref}
         className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-medium text-slate-500 shadow-sm transition hover:border-brand/30 hover:text-brand"
       >
-        <span aria-hidden>←</span> {backLabel}
+        <ArrowLeft size={14} strokeWidth={2.5} /> {backLabel}
       </Link>
 
       {/* Bannière avec titre incrusté */}
@@ -202,7 +219,8 @@ export default function EventDetailPage() {
           onClick={handleShare}
           className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-medium text-white backdrop-blur transition hover:bg-white/25"
         >
-          <span aria-hidden>{copied ? "✓" : "🔗"}</span> {copied ? t("eventDetail.shareCopied") : t("eventDetail.share")}
+          {copied ? <Check size={14} strokeWidth={2.5} /> : <Link2 size={14} strokeWidth={2} />}
+          {copied ? t("eventDetail.shareCopied") : t("eventDetail.share")}
         </button>
 
         <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
@@ -231,13 +249,13 @@ export default function EventDetailPage() {
 
       {/* Récap infos pratiques : nom, heure, adresse, transport, parking */}
       <section className={`${SECTION_CARD} mb-6`}>
-        <SectionHeader icon="ℹ️" title={t("eventDetail.practicalInfo")} />
+        <SectionHeader icon={Info} title={t("eventDetail.practicalInfo")} />
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <InfoTile icon="🎫" label={t("eventDetail.eventLabel")} value={event.title} />
-          <InfoTile icon="🗓️" label={t("eventDetail.dateTime")} value={formattedDate} />
-          <InfoTile icon="📍" label={t("eventDetail.address")} value={venue || t("eventDetail.addressUnknown")} />
+          <InfoTile icon={Ticket} label={t("eventDetail.eventLabel")} value={event.title} />
+          <InfoTile icon={Calendar} label={t("eventDetail.dateTime")} value={formattedDate} />
+          <InfoTile icon={MapPin} label={t("eventDetail.address")} value={venue || t("eventDetail.addressUnknown")} />
           <InfoTile
-            icon="🚆"
+            icon={TrainFront}
             label={t("eventDetail.transport")}
             value={event.transportInfo || t("eventDetail.transportUnknown")}
           />
@@ -254,7 +272,7 @@ export default function EventDetailPage() {
                   : "bg-slate-100 text-slate-600"
               }`}
             >
-              <span aria-hidden>🅿️</span>{" "}
+              <ParkingCircle size={13} strokeWidth={2.5} />
               {event.parkingFree === true ? t("eventDetail.parkingFree") : event.parkingFree === false ? t("eventDetail.parkingPaid") : t("eventDetail.parking")}
             </span>
             {event.parkingInfo && <span className="text-sm text-slate-600">{event.parkingInfo}</span>}
@@ -266,7 +284,7 @@ export default function EventDetailPage() {
         <div className="space-y-6 lg:col-span-2">
           {event.description && (
             <section className={SECTION_CARD}>
-              <SectionHeader icon="📝" title={t("eventDetail.about")} />
+              <h2 className="mb-2 text-lg font-bold text-slate-900">{t("eventDetail.about")}</h2>
               <p className="leading-relaxed text-slate-700">{event.description}</p>
             </section>
           )}
@@ -460,7 +478,7 @@ export default function EventDetailPage() {
       <div className="mt-8 grid grid-cols-1 gap-6 border-t border-slate-100 pt-8 lg:grid-cols-2">
         {/* À propos de l'artiste */}
         <section className={SECTION_CARD}>
-          <SectionHeader icon="🎤" title={t("eventDetail.aboutArtist")} />
+          <SectionHeader icon={Mic2} title={t("eventDetail.aboutArtist")} />
           {matchedArtist ? (
             <Link href={`/artistes/${matchedArtist.slug}`} className="group flex gap-4">
               <ArtistAvatar
@@ -488,11 +506,11 @@ export default function EventDetailPage() {
 
         {/* Carte de la salle */}
         <section className={SECTION_CARD}>
-          <SectionHeader icon="🗺️" title={t("eventDetail.whereItHappens")} />
+          <SectionHeader icon={Map} title={t("eventDetail.whereItHappens")} />
           {venue ? (
             <>
               <p className="mb-3 flex items-center gap-1.5 text-sm text-slate-600">
-                <span aria-hidden>📍</span> {venue}
+                <MapPin size={14} strokeWidth={2} /> {venue}
               </p>
               <div className="overflow-hidden rounded-xl border border-slate-100">
                 <iframe
@@ -512,7 +530,7 @@ export default function EventDetailPage() {
         {/* Comment s'y rendre */}
         {venue && (
           <section className={`${SECTION_CARD} lg:col-span-2`}>
-            <SectionHeader icon="🧭" title={t("eventDetail.howToGetThere")} />
+            <SectionHeader icon={Compass} title={t("eventDetail.howToGetThere")} />
             {(event.transportInfo || event.parkingInfo) && (
               <div className="mb-3 space-y-1 text-sm text-slate-600">
                 {event.transportInfo && (
@@ -539,7 +557,7 @@ export default function EventDetailPage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium transition hover:border-brand hover:bg-brand/5 hover:text-brand"
               >
-                <span aria-hidden>🚇</span> {t("eventDetail.publicTransit")}
+                <TrainFront size={14} strokeWidth={2} /> {t("eventDetail.publicTransit")}
               </a>
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${mapQuery}&travelmode=driving`}
@@ -547,7 +565,7 @@ export default function EventDetailPage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium transition hover:border-brand hover:bg-brand/5 hover:text-brand"
               >
-                <span aria-hidden>🚗</span> {t("eventDetail.byCar")}
+                <Car size={14} strokeWidth={2} /> {t("eventDetail.byCar")}
               </a>
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${mapQuery}&travelmode=walking`}
@@ -555,7 +573,7 @@ export default function EventDetailPage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium transition hover:border-brand hover:bg-brand/5 hover:text-brand"
               >
-                <span aria-hidden>🚶</span> {t("eventDetail.byFoot")}
+                <Footprints size={14} strokeWidth={2} /> {t("eventDetail.byFoot")}
               </a>
             </div>
             <p className="mt-3 text-xs text-slate-400">{t("eventDetail.transitTip")}</p>
