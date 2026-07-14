@@ -31,7 +31,7 @@ function InfoTile({ icon, label, value }: { icon: string; label: string; value: 
       </span>
       <div className="min-w-0">
         <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{label}</p>
-        <p className="mt-0.5 truncate text-sm font-medium text-slate-700">{value}</p>
+        <p className="mt-0.5 break-words text-sm font-medium leading-snug text-slate-700">{value}</p>
       </div>
     </div>
   );
