@@ -28,27 +28,40 @@ import { useT } from "../../../lib/i18n/LanguageContext";
 const SEAT_TIER_COLORS = ["#1e2749", "#b8912f", "#0f766e", "#be185d", "#2563eb", "#7c3aed"];
 
 const SECTION_CARD = "rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition sm:p-6";
+const SECTION_CARD_BLUE = "rounded-2xl bg-gradient-to-br from-brand to-brand-dark p-5 text-white shadow-lg transition sm:p-6";
 
-function SectionHeader({ icon: Icon, title }: { icon: LucideIcon; title: string }) {
+function SectionHeader({ icon: Icon, title, dark }: { icon: LucideIcon; title: string; dark?: boolean }) {
   return (
     <div className="mb-4 flex items-center gap-3">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+      <span
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
+          dark ? "bg-white/15 text-white" : "bg-brand/10 text-brand"
+        }`}
+      >
         <Icon className="h-4.5 w-4.5" strokeWidth={2} size={18} />
       </span>
-      <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+      <h2 className={`text-lg font-bold ${dark ? "text-white" : "text-slate-900"}`}>{title}</h2>
     </div>
   );
 }
 
-function InfoTile({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
+function InfoTile({ icon: Icon, label, value, dark }: { icon: LucideIcon; label: string; value: string; dark?: boolean }) {
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50/60 p-3.5">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-slate-500 shadow-sm">
+    <div
+      className={`flex items-start gap-3 rounded-xl p-3.5 ${
+        dark ? "bg-white/10 backdrop-blur-sm" : "border border-slate-100 bg-slate-50/60"
+      }`}
+    >
+      <span
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg shadow-sm ${
+          dark ? "bg-white/15 text-white" : "bg-white text-slate-500"
+        }`}
+      >
         <Icon size={16} strokeWidth={2} />
       </span>
       <div className="min-w-0">
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{label}</p>
-        <p className="mt-0.5 break-words text-sm font-medium leading-snug text-slate-700">{value}</p>
+        <p className={`text-[11px] font-semibold uppercase tracking-wide ${dark ? "text-white/60" : "text-slate-400"}`}>{label}</p>
+        <p className={`mt-0.5 break-words text-sm font-medium leading-snug ${dark ? "text-white" : "text-slate-700"}`}>{value}</p>
       </div>
     </div>
   );
@@ -248,34 +261,35 @@ export default function EventDetailPage() {
       </div>
 
       {/* Récap infos pratiques : nom, heure, adresse, transport, parking */}
-      <section className={`${SECTION_CARD} mb-6`}>
-        <SectionHeader icon={Info} title={t("eventDetail.practicalInfo")} />
+      <section className={`${SECTION_CARD_BLUE} mb-6`}>
+        <SectionHeader icon={Info} title={t("eventDetail.practicalInfo")} dark />
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <InfoTile icon={Ticket} label={t("eventDetail.eventLabel")} value={event.title} />
-          <InfoTile icon={Calendar} label={t("eventDetail.dateTime")} value={formattedDate} />
-          <InfoTile icon={MapPin} label={t("eventDetail.address")} value={venue || t("eventDetail.addressUnknown")} />
+          <InfoTile icon={Ticket} label={t("eventDetail.eventLabel")} value={event.title} dark />
+          <InfoTile icon={Calendar} label={t("eventDetail.dateTime")} value={formattedDate} dark />
+          <InfoTile icon={MapPin} label={t("eventDetail.address")} value={venue || t("eventDetail.addressUnknown")} dark />
           <InfoTile
             icon={TrainFront}
             label={t("eventDetail.transport")}
             value={event.transportInfo || t("eventDetail.transportUnknown")}
+            dark
           />
         </div>
 
         {(event.parkingInfo || event.parkingFree === true || event.parkingFree === false) && (
-          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-4">
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/15 pt-4">
             <span
               className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${
                 event.parkingFree === true
-                  ? "bg-green-100 text-green-700"
+                  ? "bg-green-400/20 text-green-100"
                   : event.parkingFree === false
-                  ? "bg-amber-100 text-amber-700"
-                  : "bg-slate-100 text-slate-600"
+                  ? "bg-amber-400/20 text-amber-100"
+                  : "bg-white/15 text-white"
               }`}
             >
               <ParkingCircle size={13} strokeWidth={2.5} />
               {event.parkingFree === true ? t("eventDetail.parkingFree") : event.parkingFree === false ? t("eventDetail.parkingPaid") : t("eventDetail.parking")}
             </span>
-            {event.parkingInfo && <span className="text-sm text-slate-600">{event.parkingInfo}</span>}
+            {event.parkingInfo && <span className="text-sm text-white/80">{event.parkingInfo}</span>}
           </div>
         )}
       </section>
@@ -297,9 +311,9 @@ export default function EventDetailPage() {
         </div>
 
         {/* Sélection des billets */}
-        <div className={`${SECTION_CARD} h-fit lg:sticky lg:top-20`}>
-          <h2 className="mb-1 text-lg font-bold text-slate-900">{t("eventDetail.chooseTickets")}</h2>
-          <p className="mb-4 text-xs text-slate-400">{t("eventDetail.chooseTicketsHint")}</p>
+        <div className={`${SECTION_CARD_BLUE} h-fit lg:sticky lg:top-20`}>
+          <h2 className="mb-1 text-lg font-bold text-white">{t("eventDetail.chooseTickets")}</h2>
+          <p className="mb-4 text-xs text-white/60">{t("eventDetail.chooseTicketsHint")}</p>
 
           <div className="space-y-3">
             {event.ticketTypes.map((tt: any, idx: number) => {
@@ -318,9 +332,9 @@ export default function EventDetailPage() {
               return (
                 <div
                   key={tt.id}
-                  className={`relative overflow-hidden rounded-xl border pl-4 pr-3 py-3 transition ${
-                    qty > 0 ? "border-brand bg-brand/5" : "border-slate-200"
-                  } ${soldOut ? "opacity-60" : ""}`}
+                  className={`relative overflow-hidden rounded-xl pl-4 pr-3 py-3 transition ${
+                    qty > 0 ? "bg-white/20 ring-1 ring-white/40" : "bg-white/10"
+                  } ${soldOut ? "opacity-50" : ""}`}
                 >
                   <span
                     className="absolute inset-y-0 left-0 w-1.5"
@@ -329,12 +343,12 @@ export default function EventDetailPage() {
                   />
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="font-medium text-slate-900">{tt.name}</p>
-                      <p className="text-sm font-semibold text-slate-700">{tt.price}€</p>
+                      <p className="font-medium text-white">{tt.name}</p>
+                      <p className="text-sm font-semibold text-white/80">{tt.price}€</p>
                     </div>
 
                     {soldOut ? (
-                      <span className="whitespace-nowrap rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold text-slate-500">
+                      <span className="whitespace-nowrap rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white/70">
                         {t("eventDetail.soldOut")}
                       </span>
                     ) : (
@@ -343,16 +357,16 @@ export default function EventDetailPage() {
                           type="button"
                           onClick={() => setQty(qty - 1)}
                           disabled={qty === 0}
-                          className="flex h-8 w-8 items-center justify-center rounded-full border text-lg font-semibold text-slate-600 transition hover:bg-slate-100 disabled:opacity-30"
+                          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-lg font-semibold text-white transition hover:bg-white/10 disabled:opacity-30"
                         >
                           −
                         </button>
-                        <span className="w-5 text-center font-semibold">{qty}</span>
+                        <span className="w-5 text-center font-semibold text-white">{qty}</span>
                         <button
                           type="button"
                           onClick={() => setQty(qty + 1)}
                           disabled={qty >= remaining}
-                          className="flex h-8 w-8 items-center justify-center rounded-full border text-lg font-semibold text-brand transition hover:bg-brand/10 disabled:opacity-30"
+                          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-lg font-semibold text-white transition hover:bg-white/10 disabled:opacity-30"
                         >
                           +
                         </button>
@@ -362,13 +376,13 @@ export default function EventDetailPage() {
 
                   {!soldOut && (
                     <div className="mt-2">
-                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/15">
                         <div
-                          className={`h-full rounded-full transition-all ${isLow ? "bg-red-500" : "bg-brand"}`}
+                          className={`h-full rounded-full transition-all ${isLow ? "bg-red-400" : "bg-gold"}`}
                           style={{ width: `${percentSold}%` }}
                         />
                       </div>
-                      <p className={`mt-1 text-xs ${isLow ? "font-medium text-red-600" : "text-slate-400"}`}>
+                      <p className={`mt-1 text-xs ${isLow ? "font-medium text-red-300" : "text-white/60"}`}>
                         {isLow ? t("eventDetail.lowStock", { n: remaining }) : t("eventDetail.remaining", { n: remaining })}
                       </p>
                     </div>
@@ -379,16 +393,16 @@ export default function EventDetailPage() {
           </div>
 
           {seatMapData?.seatMapEnabled && allSeats.length > 0 && (
-            <div className="mt-4 rounded-xl border border-slate-200 p-3">
-              <p className="mb-1 text-sm font-semibold text-slate-800">{t("eventDetail.seatMapTitle")}</p>
-              <p className="mb-2 text-xs text-slate-400">{t("eventDetail.seatMapHint")}</p>
+            <div className="mt-4 rounded-xl bg-white/10 p-3">
+              <p className="mb-1 text-sm font-semibold text-white">{t("eventDetail.seatMapTitle")}</p>
+              <p className="mb-2 text-xs text-white/60">{t("eventDetail.seatMapHint")}</p>
 
               <div className="mb-2 flex flex-wrap gap-2">
                 {Array.from(seatedTierIds).map((ttId, i) => {
                   const tt = event.ticketTypes.find((x: any) => x.id === ttId);
                   if (!tt) return null;
                   return (
-                    <span key={ttId} className="flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
+                    <span key={ttId} className="flex items-center gap-1 rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-medium text-white/80">
                       <span className="h-2 w-2 rounded-full" style={{ backgroundColor: SEAT_TIER_COLORS[i % SEAT_TIER_COLORS.length] }} />
                       {tt.name} — {tt.price}€
                     </span>
@@ -396,7 +410,7 @@ export default function EventDetailPage() {
                 })}
               </div>
 
-              <div className="relative overflow-hidden rounded-lg border border-slate-200">
+              <div className="relative overflow-hidden rounded-lg border border-white/20">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={seatMapData.seatMapImageUrl || ""} alt="" className="block w-full" draggable={false} />
                 {allSeats.map((seat) => {
@@ -412,7 +426,7 @@ export default function EventDetailPage() {
                       disabled={takenByOther}
                       className={`absolute flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[9px] font-bold text-white shadow ring-2 transition ${
                         takenByOther ? "cursor-not-allowed opacity-40 ring-white" : "cursor-pointer ring-white hover:scale-125"
-                      } ${selected ? "scale-125 ring-4 ring-brand" : ""}`}
+                      } ${selected ? "scale-125 ring-4 ring-gold" : ""}`}
                       style={{
                         left: `${seat.x}%`,
                         top: `${seat.y}%`,
@@ -425,17 +439,17 @@ export default function EventDetailPage() {
                 })}
               </div>
 
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-slate-500">
+              <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-white/60">
                 <span className="flex items-center gap-1">
-                  <span className="h-2 w-2 rounded-full bg-brand" /> {t("eventDetail.seatLegendSelected")}
+                  <span className="h-2 w-2 rounded-full bg-gold" /> {t("eventDetail.seatLegendSelected")}
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="h-2 w-2 rounded-full bg-slate-400 opacity-40" /> {t("eventDetail.seatLegendTaken")}
+                  <span className="h-2 w-2 rounded-full bg-white/40" /> {t("eventDetail.seatLegendTaken")}
                 </span>
               </div>
 
               {selectedSeats.length > 0 && (
-                <p className="mt-2 text-xs font-medium text-brand">{t("eventDetail.seatsSelectedCount", { n: selectedSeats.length })}</p>
+                <p className="mt-2 text-xs font-medium text-gold-light">{t("eventDetail.seatsSelectedCount", { n: selectedSeats.length })}</p>
               )}
             </div>
           )}
@@ -444,23 +458,23 @@ export default function EventDetailPage() {
             value={promoCode}
             onChange={(e) => setPromoCode(e.target.value)}
             placeholder={t("eventDetail.promoCode")}
-            className="mt-4 w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15"
+            className="mt-4 w-full rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm text-white outline-none transition placeholder:text-white/50 focus:border-white/40 focus:bg-white/15 focus:ring-2 focus:ring-white/20"
           />
 
-          <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-            <span className="font-semibold text-slate-900">{t("eventDetail.total")}</span>
-            <span className="text-xl font-bold text-brand">{total.toFixed(2)}€</span>
+          <div className="mt-4 flex items-center justify-between border-t border-white/15 pt-3">
+            <span className="font-semibold text-white">{t("eventDetail.total")}</span>
+            <span className="text-xl font-bold text-gold-light">{total.toFixed(2)}€</span>
           </div>
           {totalQty > 0 && (
-            <p className="mt-1 text-xs text-slate-400">{t("eventDetail.ticketsSelected", { n: totalQty })}</p>
+            <p className="mt-1 text-xs text-white/60">{t("eventDetail.ticketsSelected", { n: totalQty })}</p>
           )}
 
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          {error && <p className="mt-2 text-sm text-red-300">{error}</p>}
 
           <button
             onClick={handleBuy}
             disabled={totalQty === 0}
-            className="mt-4 w-full rounded-xl bg-brand py-3 font-medium text-white shadow-sm transition hover:scale-[1.01] hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+            className="mt-4 w-full rounded-xl bg-white py-3 font-medium text-brand shadow-sm transition hover:scale-[1.01] hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           >
             {totalQty === 0
               ? t("eventDetail.selectTickets")
@@ -468,7 +482,7 @@ export default function EventDetailPage() {
               ? t("eventDetail.loginAndContinue", { total: total.toFixed(2) })
               : t("eventDetail.continueToPayment", { total: total.toFixed(2) })}
           </button>
-          <p className="mt-2 text-center text-xs text-slate-400">
+          <p className="mt-2 text-center text-xs text-white/50">
             {totalQty > 0 && !loggedIn ? t("eventDetail.cartKeptLoggedOut") : t("eventDetail.securePayment")}
           </p>
         </div>
