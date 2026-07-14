@@ -7,7 +7,6 @@ import EventCard from "../components/EventCard";
 import ArtistSpotlight from "../components/ArtistSpotlight";
 import ArtistSearchBox from "../components/ArtistSearchBox";
 import HeroBanner from "../components/HeroBanner";
-import ArtistMarquee from "../components/ArtistMarquee";
 import FaqSection from "../components/FaqSection";
 import { useT } from "../lib/i18n/LanguageContext";
 
@@ -92,8 +91,6 @@ function HomeContent() {
       </section>
 
       <ArtistSearchBox />
-
-      <ArtistMarquee />
 
       <ArtistSpotlight />
 
