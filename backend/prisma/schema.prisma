@@ -63,12 +63,16 @@ enum PayoutStatus {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  passwordHash String
-  name         String
-  role         Role      @default(BUYER)
-  createdAt    DateTime  @default(now())
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  passwordHash       String
+  name               String
+  role               Role      @default(BUYER)
+  createdAt          DateTime  @default(now())
+  // Réinitialisation de mot de passe : on ne stocke jamais le token en clair,
+  // seulement son empreinte SHA-256, avec une expiration courte (1h).
+  resetTokenHash     String?   @unique
+  resetTokenExpiresAt DateTime?
 
   organization Organization?
   orders       Order[]
