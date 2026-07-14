@@ -40,7 +40,7 @@ function SectionHeader({ icon: Icon, title, dark }: { icon: LucideIcon; title: s
       >
         <Icon className="h-4.5 w-4.5" strokeWidth={2} size={18} />
       </span>
-      <h2 className={`text-lg font-bold ${dark ? "text-white" : "text-slate-900"}`}>{title}</h2>
+      <h2 className={`text-lg font-bold ${dark ? "text-gold-light" : "text-slate-900"}`}>{title}</h2>
     </div>
   );
 }
@@ -312,7 +312,7 @@ export default function EventDetailPage() {
 
         {/* Sélection des billets */}
         <div className={`${SECTION_CARD_BLUE} h-fit lg:sticky lg:top-20`}>
-          <h2 className="mb-1 text-lg font-bold text-white">{t("eventDetail.chooseTickets")}</h2>
+          <h2 className="mb-1 text-lg font-bold text-gold-light">{t("eventDetail.chooseTickets")}</h2>
           <p className="mb-4 text-xs text-white/60">{t("eventDetail.chooseTicketsHint")}</p>
 
           <div className="space-y-3">
