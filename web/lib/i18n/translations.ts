@@ -51,7 +51,7 @@ export const translations: Record<Locale, Record<string, string>> = {
 
     // Hero
     "hero.label": "My Ticket",
-    "hero.title": "La scène Tamil, à portée de main",
+    "hero.title": "Vivez la scène Tamil, en un clic",
     "hero.subtitle":
       "Concerts, soirées et films d'artistes Tamil, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
     "hero.stat1": "Le meilleur de la scène Tamil réuni ici",
@@ -409,7 +409,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.paymentList": "Card · PayPal · Google Pay · Apple Pay",
 
     "hero.label": "My Ticket",
-    "hero.title": "The Tamil scene, at your fingertips",
+    "hero.title": "Live the Tamil scene, one click away",
     "hero.subtitle":
       "Concerts, parties and films by Tamil artists, carefully selected — find your next event and book your tickets in seconds, safely.",
     "hero.stat1": "The best of the Tamil scene, all in one place",
@@ -750,7 +750,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.paymentList": "Karte · PayPal · Google Pay · Apple Pay",
 
     "hero.label": "My Ticket",
-    "hero.title": "Die tamilische Musikszene, immer griffbereit",
+    "hero.title": "Die tamilische Szene, nur einen Klick entfernt",
     "hero.subtitle":
       "Konzerte, Partys und Filme tamilischer Künstler, sorgfältig ausgewählt — finden Sie Ihre nächste Veranstaltung und buchen Sie Ihre Tickets in Sekunden, ganz sicher.",
     "hero.stat1": "Das Beste der tamilischen Szene an einem Ort",
