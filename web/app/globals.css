@@ -4,10 +4,6 @@
 
 body {
   color: #0f172a;
-  background-color: #f6f7fb;
-  background-image:
-    radial-gradient(50rem 32rem at 10% -10%, rgba(29, 78, 216, 0.06), transparent 60%),
-    radial-gradient(40rem 28rem at 105% 10%, rgba(59, 130, 246, 0.07), transparent 55%);
-  background-attachment: fixed;
+  background-color: #ffffff;
   min-height: 100vh;
 }
