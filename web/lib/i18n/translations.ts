@@ -54,7 +54,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.title": "La scène tamoule, à portée de main",
     "hero.subtitle":
       "Concerts, soirées et films d'artistes tamouls, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
-    "hero.stat1": "37+ artistes tamouls référencés",
+    "hero.stat1": "Le meilleur de la scène tamoule réuni ici",
     "hero.stat2": "Billets instantanés",
     "hero.stat3": "Paiement sécurisé",
     "hero.stat4": "Billets de cinéma disponibles",
@@ -413,7 +413,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.title": "The Tamil scene, at your fingertips",
     "hero.subtitle":
       "Concerts, parties and films by Tamil artists, carefully selected — find your next event and book your tickets in seconds, safely.",
-    "hero.stat1": "37+ Tamil artists listed",
+    "hero.stat1": "The best of the Tamil scene, all in one place",
     "hero.stat2": "Instant tickets",
     "hero.stat3": "Secure payment",
     "hero.stat4": "Movie tickets available",
@@ -755,7 +755,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.title": "Die tamilische Musikszene, immer griffbereit",
     "hero.subtitle":
       "Konzerte, Partys und Filme tamilischer Künstler, sorgfältig ausgewählt — finden Sie Ihre nächste Veranstaltung und buchen Sie Ihre Tickets in Sekunden, ganz sicher.",
-    "hero.stat1": "37+ gelistete tamilische Künstler",
+    "hero.stat1": "Das Beste der tamilischen Szene an einem Ort",
     "hero.stat2": "Sofortige Tickets",
     "hero.stat3": "Sichere Zahlung",
     "hero.stat4": "Kinotickets verfügbar",
