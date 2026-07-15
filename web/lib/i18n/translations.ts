@@ -37,6 +37,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.logout": "Déconnexion",
     "nav.login": "Connexion",
     "nav.register": "Créer un compte",
+    "nav.openMenu": "Ouvrir le menu",
+    "nav.closeMenu": "Fermer le menu",
 
     // Footer
     "footer.rights": "Tous droits réservés.",
@@ -465,6 +467,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.logout": "Log out",
     "nav.login": "Log in",
     "nav.register": "Create account",
+    "nav.openMenu": "Open menu",
+    "nav.closeMenu": "Close menu",
 
     "footer.rights": "All rights reserved.",
     "footer.cgv": "Terms & conditions",
@@ -874,6 +878,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.logout": "Abmelden",
     "nav.login": "Anmelden",
     "nav.register": "Konto erstellen",
+    "nav.openMenu": "Menü öffnen",
+    "nav.closeMenu": "Menü schließen",
 
     "footer.rights": "Alle Rechte vorbehalten.",
     "footer.cgv": "Allgemeine Geschäftsbedingungen",
