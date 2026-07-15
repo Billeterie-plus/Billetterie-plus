@@ -4,7 +4,7 @@ import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { hashPassword, comparePassword, signToken } from "../lib/auth";
 import { asyncHandler } from "../lib/asyncHandler";
-import { sendMail } from "../lib/mailer";
+import { sendMail, renderEmail } from "../lib/mailer";
 
 const router = Router();
 
@@ -87,11 +87,16 @@ router.post("/forgot-password", asyncHandler(async (req, res) => {
     const resetUrl = `${WEB_APP_URL}/reset-password?token=${rawToken}`;
     await sendMail(
       user.email,
-      "Réinitialisez votre mot de passe My Ticket",
-      `<p>Bonjour ${user.name},</p>
-       <p>Vous avez demandé à réinitialiser votre mot de passe sur My Ticket.</p>
-       <p><a href="${resetUrl}">Cliquez ici pour choisir un nouveau mot de passe</a> (lien valable 1 heure).</p>
-       <p>Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email.</p>`
+      "Réinitialisez votre mot de passe Ticket Area",
+      renderEmail({
+        title: "Réinitialisation de votre mot de passe",
+        bodyHtml: `<p style="margin:0 0 8px;">Bonjour ${user.name},</p>
+                   <p style="margin:0;">Vous avez demandé à réinitialiser votre mot de passe sur Ticket Area. Cliquez sur le bouton ci-dessous pour choisir un nouveau mot de passe. Ce lien est valable 1 heure.</p>`,
+        buttonText: "Choisir un nouveau mot de passe",
+        buttonUrl: resetUrl,
+        footerNote:
+          "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email — votre mot de passe restera inchangé.",
+      })
     );
   }
 

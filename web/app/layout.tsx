@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { LanguageProvider } from "../lib/i18n/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "My Ticket — La billetterie de la scène Tamil",
+  title: "Ticket Area — La billetterie de la scène Tamil",
   description:
-    "My Ticket est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservation simple, sécurisée et instantanée.",
+    "Ticket Area est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservation simple, sécurisée et instantanée.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

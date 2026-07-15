@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Marque */}
           <div className="col-span-2 sm:col-span-1">
             <Link href="/" className="flex items-baseline gap-0.5 text-xl font-bold tracking-tight text-white">
-              My<span className="text-gold-light">Ticket</span>
+              Ticket<span className="text-gold-light">Area</span>
             </Link>
             <p className="mt-2 text-xs leading-relaxed text-white/70">{t("footer.brandDescription")}</p>
           </div>
@@ -68,7 +68,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} My Ticket. {t("footer.rights")}</p>
+          <p>© {new Date().getFullYear()} Ticket Area. {t("footer.rights")}</p>
           <div className="flex flex-col gap-0.5 sm:items-end">
             <span className="font-medium text-white/80">{t("footer.stripe")}</span>
             <span>{t("footer.paymentList")}</span>

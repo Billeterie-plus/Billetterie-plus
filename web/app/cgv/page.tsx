@@ -15,8 +15,8 @@ export default function CgvPage() {
         <section>
           <h2 className="mb-2 text-base font-semibold text-slate-900">1. Objet</h2>
           <p>
-            My Ticket est une plateforme de billetterie qui met en relation des organisateurs d'événements (concerts,
-            soirées) et des acheteurs de billets. My Ticket agit en tant qu'intermédiaire technique ; chaque billet est
+            Ticket Area est une plateforme de billetterie qui met en relation des organisateurs d'événements (concerts,
+            soirées) et des acheteurs de billets. Ticket Area agit en tant qu'intermédiaire technique ; chaque billet est
             vendu par l'organisateur de l'événement concerné, dont le nom est indiqué sur la fiche de l'événement.
           </p>
         </section>
@@ -60,7 +60,7 @@ export default function CgvPage() {
         <section>
           <h2 className="mb-2 text-base font-semibold text-slate-900">6. Responsabilité</h2>
           <p>
-            My Ticket agit comme intermédiaire technique de billetterie et n'est pas responsable de la tenue, du
+            Ticket Area agit comme intermédiaire technique de billetterie et n'est pas responsable de la tenue, du
             contenu ou de l'annulation d'un événement, qui relève de la seule responsabilité de l'organisateur.
           </p>
         </section>

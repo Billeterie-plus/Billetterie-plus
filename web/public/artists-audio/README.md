@@ -40,7 +40,7 @@ Déposez vos extraits ici avec **exactement ces noms de fichier** (format .mp3, 
 - `vijay-prakash.mp3`
 - `saindhavi.mp3`
 
-Important : n'utilisez que des extraits dont vous détenez les droits (ou libres de droits) — My Ticket n'héberge pas de musique protégée sans autorisation.
+Important : n'utilisez que des extraits dont vous détenez les droits (ou libres de droits) — Ticket Area n'héberge pas de musique protégée sans autorisation.
 
 Tant qu'un fichier n'existe pas, la fiche artiste affiche simplement « Aucun extrait audio disponible pour le moment ».
 Dès que vous ajoutez le fichier (même nom exact) puis le poussez sur GitHub, le bouton ▶ lit l'extrait en boucle, avec pause et coupure du son — aucune autre modification de code n'est nécessaire.

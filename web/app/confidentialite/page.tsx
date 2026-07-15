@@ -15,7 +15,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="mb-2 text-base font-semibold text-slate-900">1. Données collectées</h2>
           <p>
-            Lors de la création d'un compte ou d'un achat de billet, My Ticket collecte : votre nom, votre adresse email,
+            Lors de la création d'un compte ou d'un achat de billet, Ticket Area collecte : votre nom, votre adresse email,
             un mot de passe (stocké de façon chiffrée, jamais en clair), et, si vous êtes organisateur, le nom de votre
             organisation. Les informations de paiement (numéro de carte, etc.) ne transitent jamais par nos serveurs :
             elles sont saisies directement sur la page sécurisée de notre prestataire de paiement, Stripe.
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
           <h2 className="mb-2 text-base font-semibold text-slate-900">3. Paiement sécurisé</h2>
           <p>
             Les paiements sont traités par Stripe, prestataire certifié PCI-DSS (norme de sécurité des données de
-            l'industrie des cartes de paiement). My Ticket ne stocke jamais vos coordonnées bancaires complètes sur ses
+            l'industrie des cartes de paiement). Ticket Area ne stocke jamais vos coordonnées bancaires complètes sur ses
             propres serveurs.
           </p>
         </section>
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="mb-2 text-base font-semibold text-slate-900">6. Cookies</h2>
           <p>
-            My Ticket utilise uniquement les cookies strictement nécessaires au fonctionnement du site (maintien de
+            Ticket Area utilise uniquement les cookies strictement nécessaires au fonctionnement du site (maintien de
             votre session de connexion). Aucun cookie publicitaire ou de tracking tiers n'est utilisé.
           </p>
         </section>

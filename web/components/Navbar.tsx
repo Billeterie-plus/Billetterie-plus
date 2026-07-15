@@ -32,7 +32,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-10 bg-brand text-white">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <Link href="/" className="flex items-baseline gap-0.5 text-2xl font-bold tracking-tight text-white">
-          My<span className="text-gold-light">Ticket</span>
+          Ticket<span className="text-gold-light">Area</span>
         </Link>
 
         <div className="order-3 w-full sm:order-none sm:w-auto sm:flex-1 sm:max-w-xs">

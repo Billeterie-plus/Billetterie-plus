@@ -51,7 +51,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.paymentList": "Carte bancaire · PayPal · Google Pay · Apple Pay",
 
     // Hero
-    "hero.label": "My Ticket",
+    "hero.label": "Ticket Area",
     "hero.title": "Vivez la scène Tamil, en un clic",
     "hero.subtitle":
       "Concerts, soirées et films d'artistes Tamil, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
@@ -69,7 +69,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.typeFilm": "Film",
     "home.noEvents": "Aucun événement trouvé.",
     "home.about":
-      "My Ticket est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
+      "Ticket Area est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
 
     "howItWorks.title": "Comment ça marche",
     "howItWorks.step1Title": "Trouvez votre événement",
@@ -87,7 +87,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "lastChance.subtitle": "Ces événements affichent complet, ne tardez pas.",
     "lastChance.remaining": "{{n}} places restantes",
 
-    "stats.title": "My Ticket en chiffres",
+    "stats.title": "Ticket Area en chiffres",
     "stats.events": "Événements publiés",
     "stats.tickets": "Billets vendus",
     "stats.artists": "Artistes référencés",
@@ -163,7 +163,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.aboutArtist": "À propos de l'artiste",
     "eventDetail.viewFullProfile": "Voir la fiche complète →",
     "eventDetail.artistFallback":
-      "Cet événement met à l'honneur la scène musicale Tamil (Kollywood, playback, Gana...). Retrouvez tous les compositeurs, chanteurs et artistes Tamil référencés sur My Ticket.",
+      "Cet événement met à l'honneur la scène musicale Tamil (Kollywood, playback, Gana...). Retrouvez tous les compositeurs, chanteurs et artistes Tamil référencés sur Ticket Area.",
     "eventDetail.whereItHappens": "Où se déroule l'événement",
     "eventDetail.venueUnknown": "Lieu à confirmer par l'organisateur.",
     "eventDetail.howToGetThere": "Comment s'y rendre",
@@ -191,7 +191,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "checkout.bullet3": "Connexion chiffrée de bout en bout (SSL/TLS).",
     "checkout.bullet4": "Vos données personnelles sont traitées conformément au RGPD.",
     "checkout.bullet5": "Vos e-billets sont accessibles à tout moment depuis votre espace « Mes billets ».",
-    "checkout.acceptTerms": "J'ai lu et j'accepte les conditions générales de vente et la politique de confidentialité de My Ticket.",
+    "checkout.acceptTerms": "J'ai lu et j'accepte les conditions générales de vente et la politique de confidentialité de Ticket Area.",
     "checkout.submit": "Procéder au paiement sécurisé ({{total}}€)",
     "checkout.redirecting": "Redirection…",
 
@@ -379,7 +379,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "legal.frenchOnlyNotice": "",
 
     "faq.title": "Questions fréquentes",
-    "faq.subtitle": "Tout ce qu'il faut savoir pour acheter, recevoir et utiliser vos billets sur My Ticket.",
+    "faq.subtitle": "Tout ce qu'il faut savoir pour acheter, recevoir et utiliser vos billets sur Ticket Area.",
     "faq.q1": "Comment acheter un billet ?",
     "faq.a1": "Choisissez un événement, sélectionnez vos catégories de billets et la quantité, puis cliquez sur « Continuer vers le paiement ». Vous devez être connecté à votre compte pour finaliser l'achat.",
     "faq.q2": "Quels moyens de paiement acceptez-vous ?",
@@ -390,7 +390,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "faq.a4": "Les conditions de remboursement et d'annulation sont précisées dans nos Conditions générales de vente. En général, une fois le billet acheté, la commande est définitive sauf annulation de l'événement par l'organisateur.",
     "faq.q5": "Je n'ai pas reçu mon email de confirmation, que faire ?",
     "faq.a5": "Vérifiez vos courriers indésirables/spam. Vos billets restent de toute façon accessibles à tout moment depuis l'espace « Mes billets » de votre compte.",
-    "faq.q6": "Comment devenir organisateur sur My Ticket ?",
+    "faq.q6": "Comment devenir organisateur sur Ticket Area ?",
     "faq.a6": "Créez un compte en choisissant le profil « organisateur » lors de l'inscription. Vous aurez ensuite accès à votre espace pour créer des événements, suivre vos ventes et scanner les billets à l'entrée.",
     "faq.q7": "Comment scanner les billets à l'entrée d'un événement ?",
     "faq.a7": "Depuis votre espace organisateur, ouvrez « Scanner un billet » : la caméra de votre téléphone ou ordinateur lit le QR code du billet, ou vous pouvez saisir le code manuellement.",
@@ -477,7 +477,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.paymentMethods": "Accepted payment methods",
     "footer.paymentList": "Card · PayPal · Google Pay · Apple Pay",
 
-    "hero.label": "My Ticket",
+    "hero.label": "Ticket Area",
     "hero.title": "Live the Tamil scene, one click away",
     "hero.subtitle":
       "Concerts, parties and films by Tamil artists, carefully selected — find your next event and book your tickets in seconds, safely.",
@@ -494,7 +494,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.typeFilm": "Film",
     "home.noEvents": "No events found.",
     "home.about":
-      "My Ticket is the go-to ticketing platform for Tamil artist concerts, Tamil scene parties, and films in theaters in France. Book in a few clicks, access your e-tickets anytime, and if you organize events, manage them from your own organizer space.",
+      "Ticket Area is the go-to ticketing platform for Tamil artist concerts, Tamil scene parties, and films in theaters in France. Book in a few clicks, access your e-tickets anytime, and if you organize events, manage them from your own organizer space.",
 
     "howItWorks.title": "How it works",
     "howItWorks.step1Title": "Find your event",
@@ -512,7 +512,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "lastChance.subtitle": "These events are almost sold out, don't wait.",
     "lastChance.remaining": "{{n}} seats left",
 
-    "stats.title": "My Ticket in numbers",
+    "stats.title": "Ticket Area in numbers",
     "stats.events": "Published events",
     "stats.tickets": "Tickets sold",
     "stats.artists": "Artists listed",
@@ -583,7 +583,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.aboutArtist": "About the artist",
     "eventDetail.viewFullProfile": "View full profile →",
     "eventDetail.artistFallback":
-      "This event celebrates the Tamil music scene (Kollywood, playback, Gana...). Discover all Tamil composers, singers and artists listed on My Ticket.",
+      "This event celebrates the Tamil music scene (Kollywood, playback, Gana...). Discover all Tamil composers, singers and artists listed on Ticket Area.",
     "eventDetail.whereItHappens": "Where it takes place",
     "eventDetail.venueUnknown": "Venue to be confirmed by the organizer.",
     "eventDetail.howToGetThere": "How to get there",
@@ -609,7 +609,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "checkout.bullet3": "End-to-end encrypted connection (SSL/TLS).",
     "checkout.bullet4": "Your personal data is processed in accordance with GDPR.",
     "checkout.bullet5": "Your e-tickets are accessible anytime from your \"My tickets\" space.",
-    "checkout.acceptTerms": "I have read and accept My Ticket's terms & conditions and privacy policy.",
+    "checkout.acceptTerms": "I have read and accept Ticket Area's terms & conditions and privacy policy.",
     "checkout.submit": "Proceed to secure payment (€{{total}})",
     "checkout.redirecting": "Redirecting…",
 
@@ -788,7 +788,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "legal.frenchOnlyNotice": "This document is only available in French, which is the legally binding version. Use your browser's translation tool if needed.",
 
     "faq.title": "Frequently asked questions",
-    "faq.subtitle": "Everything you need to know to buy, receive and use your tickets on My Ticket.",
+    "faq.subtitle": "Everything you need to know to buy, receive and use your tickets on Ticket Area.",
     "faq.q1": "How do I buy a ticket?",
     "faq.a1": "Choose an event, select your ticket categories and quantity, then click \"Continue to payment\". You must be logged in to complete the purchase.",
     "faq.q2": "What payment methods do you accept?",
@@ -799,7 +799,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "faq.a4": "Refund and cancellation conditions are detailed in our Terms & conditions. Generally, once a ticket is purchased the order is final unless the organizer cancels the event.",
     "faq.q5": "I haven't received my confirmation email, what should I do?",
     "faq.a5": "Check your spam/junk folder. Your tickets remain accessible at any time from your account's \"My tickets\" area regardless.",
-    "faq.q6": "How do I become an organizer on My Ticket?",
+    "faq.q6": "How do I become an organizer on Ticket Area?",
     "faq.a6": "Create an account and choose the \"organizer\" profile during registration. You'll then have access to your space to create events, track sales and scan tickets at the door.",
     "faq.q7": "How do I scan tickets at the entrance of an event?",
     "faq.a7": "From your organizer space, open \"Scan a ticket\": your phone or computer camera reads the ticket's QR code, or you can enter the code manually.",
@@ -886,7 +886,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "footer.paymentMethods": "Akzeptierte Zahlungsmethoden",
     "footer.paymentList": "Karte · PayPal · Google Pay · Apple Pay",
 
-    "hero.label": "My Ticket",
+    "hero.label": "Ticket Area",
     "hero.title": "Die tamilische Szene, nur einen Klick entfernt",
     "hero.subtitle":
       "Konzerte, Partys und Filme tamilischer Künstler, sorgfältig ausgewählt — finden Sie Ihre nächste Veranstaltung und buchen Sie Ihre Tickets in Sekunden, ganz sicher.",
@@ -903,7 +903,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "home.typeFilm": "Film",
     "home.noEvents": "Keine Veranstaltung gefunden.",
     "home.about":
-      "My Ticket ist die führende Ticketing-Plattform für Konzerte tamilischer Künstler, Partys der tamilischen Szene und Filme im Kino in Frankreich. Buchen Sie in wenigen Klicks, greifen Sie jederzeit auf Ihre E-Tickets zu, und wenn Sie selbst Veranstaltungen organisieren, verwalten Sie diese in Ihrem eigenen Veranstalterbereich.",
+      "Ticket Area ist die führende Ticketing-Plattform für Konzerte tamilischer Künstler, Partys der tamilischen Szene und Filme im Kino in Frankreich. Buchen Sie in wenigen Klicks, greifen Sie jederzeit auf Ihre E-Tickets zu, und wenn Sie selbst Veranstaltungen organisieren, verwalten Sie diese in Ihrem eigenen Veranstalterbereich.",
 
     "howItWorks.title": "So funktioniert's",
     "howItWorks.step1Title": "Veranstaltung finden",
@@ -921,7 +921,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "lastChance.subtitle": "Diese Veranstaltungen sind fast ausverkauft, warten Sie nicht.",
     "lastChance.remaining": "{{n}} Plätze übrig",
 
-    "stats.title": "My Ticket in Zahlen",
+    "stats.title": "Ticket Area in Zahlen",
     "stats.events": "Veröffentlichte Veranstaltungen",
     "stats.tickets": "Verkaufte Tickets",
     "stats.artists": "Gelistete Künstler",
@@ -992,7 +992,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.aboutArtist": "Über den Künstler",
     "eventDetail.viewFullProfile": "Vollständiges Profil ansehen →",
     "eventDetail.artistFallback":
-      "Diese Veranstaltung feiert die tamilische Musikszene (Kollywood, Playback, Gana...). Entdecken Sie alle tamilischen Komponisten, Sänger und Künstler bei My Ticket.",
+      "Diese Veranstaltung feiert die tamilische Musikszene (Kollywood, Playback, Gana...). Entdecken Sie alle tamilischen Komponisten, Sänger und Künstler bei Ticket Area.",
     "eventDetail.whereItHappens": "Wo die Veranstaltung stattfindet",
     "eventDetail.venueUnknown": "Veranstaltungsort wird vom Veranstalter noch bestätigt.",
     "eventDetail.howToGetThere": "Anfahrt",
@@ -1018,7 +1018,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "checkout.bullet3": "Durchgängig verschlüsselte Verbindung (SSL/TLS).",
     "checkout.bullet4": "Ihre personenbezogenen Daten werden gemäß DSGVO verarbeitet.",
     "checkout.bullet5": "Ihre E-Tickets sind jederzeit über „Meine Tickets“ zugänglich.",
-    "checkout.acceptTerms": "Ich habe die AGB und die Datenschutzerklärung von My Ticket gelesen und akzeptiere sie.",
+    "checkout.acceptTerms": "Ich habe die AGB und die Datenschutzerklärung von Ticket Area gelesen und akzeptiere sie.",
     "checkout.submit": "Zur sicheren Zahlung ({{total}} €)",
     "checkout.redirecting": "Weiterleitung…",
 
@@ -1197,7 +1197,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "legal.frenchOnlyNotice": "Dieses Dokument liegt nur auf Französisch vor, der rechtsverbindlichen Fassung. Nutzen Sie bei Bedarf die Übersetzungsfunktion Ihres Browsers.",
 
     "faq.title": "Häufig gestellte Fragen",
-    "faq.subtitle": "Alles, was Sie über Kauf, Erhalt und Nutzung Ihrer Tickets bei My Ticket wissen müssen.",
+    "faq.subtitle": "Alles, was Sie über Kauf, Erhalt und Nutzung Ihrer Tickets bei Ticket Area wissen müssen.",
     "faq.q1": "Wie kaufe ich ein Ticket?",
     "faq.a1": "Wählen Sie eine Veranstaltung, wählen Sie Ihre Ticketkategorien und die Anzahl, und klicken Sie dann auf „Weiter zur Zahlung“. Sie müssen angemeldet sein, um den Kauf abzuschließen.",
     "faq.q2": "Welche Zahlungsmethoden akzeptieren Sie?",
@@ -1208,7 +1208,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "faq.a4": "Die Erstattungs- und Stornierungsbedingungen sind in unseren AGB festgelegt. In der Regel ist die Bestellung nach dem Ticketkauf endgültig, es sei denn, der Veranstalter sagt die Veranstaltung ab.",
     "faq.q5": "Ich habe meine Bestätigungs-E-Mail nicht erhalten, was soll ich tun?",
     "faq.a5": "Prüfen Sie Ihren Spam-Ordner. Ihre Tickets sind in jedem Fall jederzeit im Bereich „Meine Tickets“ Ihres Kontos zugänglich.",
-    "faq.q6": "Wie werde ich Veranstalter bei My Ticket?",
+    "faq.q6": "Wie werde ich Veranstalter bei Ticket Area?",
     "faq.a6": "Erstellen Sie ein Konto und wählen Sie bei der Registrierung das Profil „Veranstalter“. Sie erhalten dann Zugang zu Ihrem Bereich, um Veranstaltungen zu erstellen, Verkäufe zu verfolgen und Tickets am Eingang zu scannen.",
     "faq.q7": "Wie scanne ich Tickets am Eingang einer Veranstaltung?",
     "faq.a7": "Öffnen Sie in Ihrem Veranstalterbereich „Ticket scannen“: Die Kamera Ihres Telefons oder Computers liest den QR-Code des Tickets, oder Sie geben den Code manuell ein.",
