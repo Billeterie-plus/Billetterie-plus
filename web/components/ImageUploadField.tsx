@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Upload } from "lucide-react";
+import { useT } from "../lib/i18n/LanguageContext";
 
 const MAX_DIMENSION = 1000; // px, côté le plus long
 const JPEG_QUALITY = 0.78;
@@ -63,6 +64,7 @@ export default function ImageUploadField({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const t = useT();
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -73,11 +75,11 @@ export default function ImageUploadField({
     e.target.value = "";
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      setError("Merci de choisir un fichier image (JPG, PNG...).");
+      setError(t("imageUpload.wrongType"));
       return;
     }
     if (file.size > 8 * 1024 * 1024) {
-      setError("Image trop lourde (8 Mo maximum).");
+      setError(t("imageUpload.tooLarge"));
       return;
     }
     setError("");
@@ -86,7 +88,7 @@ export default function ImageUploadField({
       const resized = await resizeImage(file);
       onChange(resized);
     } catch (err: any) {
-      setError(err.message || "Impossible de traiter cette image.");
+      setError(err.message || t("imageUpload.processingError"));
     } finally {
       setProcessing(false);
     }
@@ -97,7 +99,7 @@ export default function ImageUploadField({
       <div className="flex flex-wrap gap-2">
         {!isUpload && (
           <input
-            placeholder="URL d'une photo/affiche (optionnel) — ex: https://..."
+            placeholder={t("imageUpload.urlPlaceholder")}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             className="min-w-[200px] flex-1 rounded-lg border px-3 py-2"
@@ -110,10 +112,10 @@ export default function ImageUploadField({
           className="flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-brand px-3 py-2 text-sm font-medium text-brand transition hover:bg-brand/5 disabled:opacity-50"
         >
           {processing ? (
-            "Optimisation…"
+            t("imageUpload.optimizing")
           ) : (
             <>
-              <Upload size={14} strokeWidth={2} /> Choisir une photo depuis mon ordinateur
+              <Upload size={14} strokeWidth={2} /> {t("imageUpload.chooseFile")}
             </>
           )}
         </button>
@@ -135,15 +137,12 @@ export default function ImageUploadField({
             onClick={() => onChange("")}
             className="text-xs font-medium text-red-600 hover:underline"
           >
-            Retirer la photo
+            {t("imageUpload.remove")}
           </button>
         </div>
       )}
 
-      <p className="mt-1 text-xs text-slate-400">
-        Collez le lien d'une image, ou importez directement une photo depuis votre ordinateur. Elle est automatiquement
-        recadrée en haute qualité (jusqu'à {MAX_DIMENSION}px) pour bien s'afficher sur les cartes.
-      </p>
+      <p className="mt-1 text-xs text-slate-400">{t("imageUpload.hint", { size: String(MAX_DIMENSION) })}</p>
     </div>
   );
 }

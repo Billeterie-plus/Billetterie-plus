@@ -2,20 +2,23 @@
 
 import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { ARTISTS } from "../../lib/artists";
+import { ARTISTS, localizeArtist } from "../../lib/artists";
 import ArtistCard from "../../components/ArtistCard";
-import { useT } from "../../lib/i18n/LanguageContext";
+import { useLanguage, useT } from "../../lib/i18n/LanguageContext";
 
 function ArtistsCatalog() {
   const t = useT();
+  const { locale } = useLanguage();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
 
+  const localized = useMemo(() => ARTISTS.map((a) => localizeArtist(a, locale)), [locale]);
+
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return ARTISTS;
-    return ARTISTS.filter((a) => a.name.toLowerCase().includes(q) || a.tag.toLowerCase().includes(q));
-  }, [query]);
+    if (!q) return localized;
+    return localized.filter((a) => a.name.toLowerCase().includes(q) || a.tag.toLowerCase().includes(q));
+  }, [query, localized]);
 
   return (
     <div>

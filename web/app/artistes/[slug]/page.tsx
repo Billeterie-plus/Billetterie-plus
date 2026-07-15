@@ -1,21 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ARTISTS } from "../../../lib/artists";
+import { ARTISTS, localizeArtist } from "../../../lib/artists";
 import ArtistAvatar from "../../../components/ArtistAvatar";
 import ArtistAudioPlayer from "../../../components/ArtistAudioPlayer";
-
-export function generateStaticParams() {
-  return ARTISTS.map((a) => ({ slug: a.slug }));
-}
+import { useLanguage, useT } from "../../../lib/i18n/LanguageContext";
 
 export default function ArtistPage({ params }: { params: { slug: string } }) {
-  const artist = ARTISTS.find((a) => a.slug === params.slug);
-  if (!artist) return notFound();
+  const t = useT();
+  const { locale } = useLanguage();
+  const found = ARTISTS.find((a) => a.slug === params.slug);
+  if (!found) return notFound();
+  const artist = localizeArtist(found, locale);
 
   return (
     <div className="mx-auto max-w-2xl">
       <Link href="/" className="text-sm text-brand hover:underline">
-        ← Retour à l'accueil
+        ← {t("artistDetail.backHome")}
       </Link>
 
       <div className="mt-6 flex flex-col items-center text-center">
@@ -37,7 +39,7 @@ export default function ArtistPage({ params }: { params: { slug: string } }) {
       </div>
 
       <div className="mt-8 rounded-xl border bg-white p-5">
-        <h2 className="font-semibold text-slate-900">Dates clés dans le cinéma indien</h2>
+        <h2 className="font-semibold text-slate-900">{t("artistDetail.keyDatesTitle")}</h2>
         <ul className="mt-3 space-y-2 text-sm text-slate-600">
           {artist.keyDates.map((d, i) => (
             <li key={i} className="flex gap-2">
@@ -49,11 +51,9 @@ export default function ArtistPage({ params }: { params: { slug: string } }) {
       </div>
 
       <div className="mt-4 rounded-xl border bg-white p-5">
-        <h2 className="font-semibold text-slate-900">Actualité / dernier concert</h2>
+        <h2 className="font-semibold text-slate-900">{t("artistDetail.latestTitle")}</h2>
         <p className="mt-2 text-sm text-slate-600">{artist.latest}</p>
-        <p className="mt-3 text-xs text-slate-400">
-          Informations vérifiées début juillet 2026, susceptibles d'évoluer selon les annonces des artistes.
-        </p>
+        <p className="mt-3 text-xs text-slate-400">{t("artistDetail.disclaimer")}</p>
       </div>
     </div>
   );

@@ -1,8 +1,12 @@
-import Link from "next/link";
-import type { Artist } from "../lib/artists";
-import ArtistAvatar from "./ArtistAvatar";
+"use client";
 
-export default function ArtistCard({ a }: { a: Artist }) {
+import Link from "next/link";
+import type { LocalizedArtist } from "../lib/artists";
+import ArtistAvatar from "./ArtistAvatar";
+import { useT } from "../lib/i18n/LanguageContext";
+
+export default function ArtistCard({ a }: { a: LocalizedArtist }) {
+  const t = useT();
   return (
     <Link
       href={`/artistes/${a.slug}`}
@@ -15,7 +19,7 @@ export default function ArtistCard({ a }: { a: Artist }) {
       <div className="text-xs font-medium text-brand">{a.tag}</div>
       <p className="mt-2 text-sm text-slate-600">{a.short}</p>
       <span className="mt-2 inline-block text-xs font-medium text-brand transition group-hover:translate-x-1">
-        Lire l'article →
+        {t("artistCard.readMore")} →
       </span>
     </Link>
   );

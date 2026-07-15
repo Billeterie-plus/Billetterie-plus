@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Headphones, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { useT } from "../lib/i18n/LanguageContext";
 
 /**
  * Lecteur audio par artiste. Cherche un extrait dans /public/artists-audio/{slug}.mp3
@@ -9,6 +10,7 @@ import { Headphones, Pause, Play, Volume2, VolumeX } from "lucide-react";
  * Si le fichier n'existe pas, affiche un message discret au lieu de planter.
  */
 export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: string }) {
+  const t = useT();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -56,7 +58,7 @@ export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: 
 
       {error ? (
         <p className="flex items-center gap-2 text-sm text-slate-400">
-          <Headphones size={16} strokeWidth={2} /> Aucun extrait audio disponible pour {name} pour le moment.
+          <Headphones size={16} strokeWidth={2} /> {t("audioPlayer.noAudio", { name })}
         </p>
       ) : (
         <div className="flex items-center gap-3">
@@ -65,7 +67,7 @@ export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: 
             onClick={togglePlay}
             disabled={loading}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm transition hover:scale-105 hover:bg-brand-dark disabled:opacity-60"
-            aria-label={playing ? "Mettre en pause" : "Écouter un extrait"}
+            aria-label={playing ? t("audioPlayer.pause") : t("audioPlayer.listen")}
           >
             {loading ? (
               "…"
@@ -78,7 +80,7 @@ export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: 
 
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-slate-800">
-              {playing ? `Extrait de ${name} en lecture` : `Écouter un extrait de ${name}`}
+              {playing ? t("audioPlayer.playing", { name }) : t("audioPlayer.listenTo", { name })}
             </p>
             {playing && (
               <div className="mt-1.5 flex items-center gap-0.5">
@@ -97,7 +99,7 @@ export default function ArtistAudioPlayer({ slug, name }: { slug: string; name: 
             type="button"
             onClick={toggleMute}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm transition hover:bg-slate-50"
-            aria-label={muted ? "Réactiver le son" : "Couper le son"}
+            aria-label={muted ? t("audioPlayer.unmute") : t("audioPlayer.mute")}
           >
             {muted ? <VolumeX size={15} strokeWidth={2} /> : <Volume2 size={15} strokeWidth={2} />}
           </button>

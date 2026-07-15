@@ -21,9 +21,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { api, getToken } from "../../../lib/api";
-import { ARTISTS } from "../../../lib/artists";
+import { ARTISTS, localizeArtist } from "../../../lib/artists";
 import ArtistAvatar from "../../../components/ArtistAvatar";
-import { useT } from "../../../lib/i18n/LanguageContext";
+import { useLanguage, useT } from "../../../lib/i18n/LanguageContext";
 
 const SEAT_TIER_COLORS = ["#1e2749", "#b8912f", "#0f766e", "#be185d", "#2563eb", "#7c3aed"];
 
@@ -71,6 +71,7 @@ export default function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const t = useT();
+  const { locale } = useLanguage();
   const [event, setEvent] = useState<any>(null);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [promoCode, setPromoCode] = useState("");
@@ -146,7 +147,8 @@ export default function EventDetailPage() {
   const totalQty =
     Object.values(quantities).reduce((a: number, b: number) => a + b, 0) + selectedSeats.length;
 
-  const matchedArtist = ARTISTS.find((a) => event.title.toLowerCase().includes(a.name.toLowerCase()));
+  const matchedArtistRaw = ARTISTS.find((a) => event.title.toLowerCase().includes(a.name.toLowerCase()));
+  const matchedArtist = matchedArtistRaw ? localizeArtist(matchedArtistRaw, locale) : null;
   const venue = event.type === "TRAIN" ? null : event.venue;
   const mapQuery = venue ? encodeURIComponent(venue) : "";
 
