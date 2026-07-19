@@ -54,10 +54,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`sticky top-0 z-30 border-b transition-all duration-500 ${
-        scrolled
-          ? "border-white/10 bg-brand-dark/80 shadow-lg shadow-black/20 backdrop-blur-xl"
-          : "border-transparent bg-transparent"
+      className={`sticky top-0 z-30 border-b border-white/10 bg-gradient-to-r from-brand to-brand-dark transition-shadow duration-500 ${
+        scrolled ? "shadow-lg shadow-black/20 backdrop-blur-xl" : ""
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3.5">

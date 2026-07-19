@@ -14,7 +14,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative mt-24 border-t border-white/10 bg-gradient-to-b from-transparent to-black/50 text-white">
+    <footer className="relative mt-24 bg-gradient-to-br from-brand to-brand-dark text-white">
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {/* Marque */}

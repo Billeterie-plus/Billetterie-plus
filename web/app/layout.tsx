@@ -28,7 +28,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${display.variable} ${body.variable}`}>
       <body className="relative flex min-h-screen flex-col font-sans">
-        <div className="bg-grain" aria-hidden />
         <LanguageProvider>
           <Navbar />
           <main className="relative z-[1] mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>

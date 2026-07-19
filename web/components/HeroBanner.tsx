@@ -40,15 +40,14 @@ export default function HeroBanner() {
         />
       )}
       <div
-        className={`absolute inset-0 bg-gradient-to-br from-brand-dark via-brand to-brand-dark bg-200 animate-gradientMove ${
-          videoOk ? "opacity-75" : "opacity-100"
+        className={`absolute inset-0 bg-gradient-to-br from-brand-light via-brand to-brand-dark bg-200 animate-gradientMove ${
+          videoOk ? "opacity-80" : "opacity-100"
         }`}
       />
-      {/* Vignette pour la profondeur cinématique + lisibilité du texte */}
-      <div className="absolute inset-0 bg-black/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#06080f] via-transparent to-black/50" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_105%,rgba(184,145,47,0.3),transparent)]" />
+      {/* Vignette légère pour la lisibilité du texte, sans assombrir l'ensemble */}
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_105%,rgba(212,175,90,0.35),transparent)]" />
 
       {/* Orbes décoratives floues, purement esthétiques */}
       <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-gold/25 blur-[100px]" aria-hidden />
