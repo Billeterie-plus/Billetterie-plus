@@ -36,7 +36,7 @@ export default function LastChanceEvents({ events }: { events: any[] }) {
         <div className="relative mb-4 flex items-center gap-2">
           <Flame size={20} strokeWidth={2} className="text-gold-light" />
           <div>
-            <h2 className="text-xl font-bold text-gold-light">{t("lastChance.title")}</h2>
+            <h2 className="font-serif text-2xl font-semibold text-gold-light">{t("lastChance.title")}</h2>
             <p className="text-sm text-white/70">{t("lastChance.subtitle")}</p>
           </div>
         </div>

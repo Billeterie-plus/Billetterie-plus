@@ -19,7 +19,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {/* Marque */}
           <div className="col-span-2 sm:col-span-1">
-            <Link href="/" className="flex items-baseline gap-0.5 text-xl font-bold tracking-tight text-white">
+            <Link href="/" className="flex items-baseline gap-0.5 font-serif text-xl font-semibold italic tracking-tight text-white">
               Ticket<span className="text-gold-light">Area</span>
             </Link>
             <p className="mt-2 text-xs leading-relaxed text-white/70">{t("footer.brandDescription")}</p>

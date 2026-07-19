@@ -61,7 +61,7 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3.5">
-        <Link href="/" className="flex items-baseline gap-0.5 text-2xl font-bold tracking-tight text-white">
+        <Link href="/" className="flex items-baseline gap-0.5 font-serif text-2xl font-semibold italic tracking-tight text-white">
           Ticket<span className="text-gold-light">Area</span>
         </Link>
 

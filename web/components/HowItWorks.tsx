@@ -15,7 +15,7 @@ export default function HowItWorks() {
   return (
     <Reveal>
       <section className="mb-10 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6">
-        <h2 className="mb-5 text-xl font-bold text-white">{t("howItWorks.title")}</h2>
+        <h2 className="mb-5 font-serif text-2xl font-semibold text-white">{t("howItWorks.title")}</h2>
         <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-3" stagger={0.15}>
           {steps.map((s, i) => (
             <RevealItem key={i} className="relative">

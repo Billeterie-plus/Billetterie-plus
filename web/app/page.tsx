@@ -61,7 +61,7 @@ function HomeContent() {
           id="evenements"
           className="mb-10 scroll-mt-20 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6"
         >
-          <h2 className="mb-4 text-xl font-bold text-white">{t("nav.events")}</h2>
+          <h2 className="mb-4 font-serif text-2xl font-semibold text-white">{t("nav.events")}</h2>
 
           <div className="mb-6 flex flex-wrap items-center gap-3">
             <input

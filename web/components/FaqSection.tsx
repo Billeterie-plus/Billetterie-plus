@@ -18,7 +18,7 @@ export default function FaqSection() {
         className="relative mb-10 mt-16 scroll-mt-20 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark p-5 text-white shadow-xl shadow-black/30 sm:p-6"
       >
         <div className="pointer-events-none absolute -right-16 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-gold/10 blur-[90px]" aria-hidden />
-        <h2 className="relative mb-2 text-2xl font-bold text-gold-light">{t("faq.title")}</h2>
+        <h2 className="relative mb-2 font-serif text-3xl font-semibold text-gold-light">{t("faq.title")}</h2>
         <p className="relative mb-8 text-sm text-white/70">{t("faq.subtitle")}</p>
 
         <RevealGroup className="relative mx-auto max-w-3xl space-y-3" stagger={0.06}>

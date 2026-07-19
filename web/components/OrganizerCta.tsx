@@ -22,7 +22,7 @@ export default function OrganizerCta() {
             <Rocket size={20} strokeWidth={2} />
           </motion.span>
           <div>
-            <h2 className="text-xl font-bold text-gold-light">{t("organizerCta.title")}</h2>
+            <h2 className="font-serif text-xl font-semibold text-gold-light">{t("organizerCta.title")}</h2>
             <p className="mt-1 max-w-xl text-sm text-white/75">{t("organizerCta.subtitle")}</p>
           </div>
         </div>

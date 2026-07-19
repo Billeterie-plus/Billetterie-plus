@@ -18,7 +18,7 @@ export default function ArtistSearchBox() {
   return (
     <Reveal>
       <section className="mb-10 rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark p-5 text-white shadow-xl shadow-black/30 sm:p-6">
-        <h2 className="font-semibold text-gold-light">{t("artistSearch.heading")}</h2>
+        <h2 className="font-serif text-xl font-semibold text-gold-light">{t("artistSearch.heading")}</h2>
         <p className="mt-1 text-sm text-white/70">{t("artistSearch.subtitle", { n: ARTISTS.length })}</p>
         <div className="mt-3 flex flex-wrap gap-2">
           <input
