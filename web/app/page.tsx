@@ -117,9 +117,10 @@ function HomeContent() {
   );
 }
 
-const INTRO_STORAGE_KEY = "ticketarea_intro_plays";
-// Jouée seulement à la toute première arrivée du visiteur sur le site (premier clic), plus jamais ensuite
-const INTRO_MAX_PLAYS = 1;
+// sessionStorage (et non localStorage) : l'intro se rejoue à chaque nouvelle visite (nouvel onglet/session),
+// mais ni un simple rafraîchissement de page ni un clic sur le logo "Ticket Area" (retour à l'accueil dans
+// la même session) ne la redéclenchent.
+const INTRO_SESSION_KEY = "ticketarea_intro_played";
 
 export default function HomePage() {
   const [showIntro, setShowIntro] = useState(false);
@@ -127,13 +128,13 @@ export default function HomePage() {
 
   useEffect(() => {
     try {
-      const count = parseInt(window.localStorage.getItem(INTRO_STORAGE_KEY) || "0", 10);
-      if (count < INTRO_MAX_PLAYS) {
-        window.localStorage.setItem(INTRO_STORAGE_KEY, String(count + 1));
+      const alreadyPlayed = window.sessionStorage.getItem(INTRO_SESSION_KEY);
+      if (!alreadyPlayed) {
+        window.sessionStorage.setItem(INTRO_SESSION_KEY, "1");
         setShowIntro(true);
       }
     } catch {
-      // localStorage indisponible (navigation privée, etc.) : on ne joue pas l'intro par prudence
+      // sessionStorage indisponible (navigation privée, etc.) : on ne joue pas l'intro par prudence
     } finally {
       setIntroChecked(true);
     }
