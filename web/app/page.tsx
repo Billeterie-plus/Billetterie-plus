@@ -54,6 +54,8 @@ function HomeContent() {
     <div>
       <OrganizerCta />
 
+      <HowItWorks />
+
       <Reveal>
         <section
           id="evenements"
@@ -103,8 +105,6 @@ function HomeContent() {
       </Reveal>
 
       <LastChanceEvents events={events} />
-
-      <HowItWorks />
 
       <ArtistSearchBox />
 
