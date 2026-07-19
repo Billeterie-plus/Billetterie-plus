@@ -2,35 +2,49 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Ticket } from "lucide-react";
 import { useT } from "../lib/i18n/LanguageContext";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 type Stage = "logo" | "scene" | "tagline" | "exit";
 
-// Foule de silhouettes en fond de scène, à différentes profondeurs (échelle/opacité variables)
+// Foule de silhouettes en fond de scène, à différentes profondeurs (échelle/opacité variables
+// pour une perspective atmosphérique : plus loin = plus petit et plus estompé)
 const CROWD = [
-  { x: 190, y: 78, s: 0.7 },
-  { x: 205, y: 82, s: 0.8 },
-  { x: 220, y: 76, s: 0.65 },
-  { x: 235, y: 84, s: 0.85 },
-  { x: 250, y: 79, s: 0.7 },
-  { x: 265, y: 86, s: 0.9 },
-  { x: 280, y: 80, s: 0.75 },
-  { x: 200, y: 92, s: 0.95 },
-  { x: 222, y: 95, s: 1 },
-  { x: 244, y: 91, s: 1 },
-  { x: 266, y: 96, s: 1.05 },
-  { x: 288, y: 90, s: 0.9 },
+  { x: 190, y: 78, s: 0.7, o: 0.5 },
+  { x: 205, y: 82, s: 0.8, o: 0.55 },
+  { x: 220, y: 76, s: 0.65, o: 0.45 },
+  { x: 235, y: 84, s: 0.85, o: 0.6 },
+  { x: 250, y: 79, s: 0.7, o: 0.5 },
+  { x: 265, y: 86, s: 0.9, o: 0.62 },
+  { x: 280, y: 80, s: 0.75, o: 0.52 },
+  { x: 200, y: 92, s: 0.95, o: 0.85 },
+  { x: 222, y: 95, s: 1, o: 0.9 },
+  { x: 244, y: 91, s: 1, o: 0.9 },
+  { x: 266, y: 96, s: 1.05, o: 0.95 },
+  { x: 288, y: 90, s: 0.9, o: 0.85 },
 ];
 
-function CrowdPerson({ x, y, s, delay, armUp }: { x: number; y: number; s: number; delay: number; armUp?: boolean }) {
+function CrowdPerson({
+  x,
+  y,
+  s,
+  o,
+  delay,
+  armUp,
+}: {
+  x: number;
+  y: number;
+  s: number;
+  o: number;
+  delay: number;
+  armUp?: boolean;
+}) {
   return (
     <motion.g
       transform={`translate(${x} ${y}) scale(${s})`}
       initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 0.85] }}
+      animate={{ opacity: [0, o] }}
       transition={{ duration: 0.7, delay, ease: EASE }}
     >
       <circle cx="0" cy="0" r="3.2" fill="#10152b" />
@@ -101,6 +115,14 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
         }}
         aria-hidden
       />
+      {/* Vignette cinématique pour renforcer la profondeur */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 75% 75% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+        }}
+        aria-hidden
+      />
 
       <motion.button
         initial={{ opacity: 0 }}
@@ -118,12 +140,19 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
         transition={{ duration: 0.8, ease: EASE }}
         className="relative z-10 mb-2 flex items-center gap-2 text-2xl font-extrabold tracking-tight will-change-transform sm:mb-3 sm:text-4xl"
       >
-        <Ticket size={26} strokeWidth={2.3} className="text-gold-light" />
         Ticket<span className="text-gold-light">Area</span>
       </motion.div>
 
       {/* Scène : une silhouette rejoint la foule d'un vrai concert, spots et scène en fond */}
-      <svg viewBox="0 0 320 155" className="relative z-10 h-[46vh] w-full max-w-2xl sm:h-[54vh] sm:max-w-4xl" aria-hidden>
+      <motion.svg
+        viewBox="0 0 320 155"
+        className="relative z-10 h-[46vh] w-full max-w-2xl sm:h-[54vh] sm:max-w-4xl"
+        initial={{ scale: 1 }}
+        animate={sceneOn ? { scale: 1.045 } : { scale: 1 }}
+        transition={{ duration: 5, ease: "linear" }}
+        style={{ willChange: "transform" }}
+        aria-hidden
+      >
         <defs>
           <radialGradient id="stageGlow" cx="50%" cy="20%">
             <stop offset="0%" stopColor="#d4af5a" stopOpacity="0.55" />
@@ -198,7 +227,7 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
 
         {/* Foule au pied de la scène */}
         {CROWD.map((p, i) => (
-          <CrowdPerson key={i} x={p.x} y={p.y} s={p.s} delay={0.6 + i * 0.05} armUp={i % 3 === 0} />
+          <CrowdPerson key={i} x={p.x} y={p.y} s={p.s} o={p.o} delay={0.6 + i * 0.05} armUp={i % 3 === 0} />
         ))}
 
         {/* Marquise lumineuse de l'entrée */}
@@ -303,7 +332,7 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
             </motion.g>
           </motion.g>
         </motion.g>
-      </svg>
+      </motion.svg>
 
       <motion.p
         initial={{ opacity: 0, y: 10 }}
