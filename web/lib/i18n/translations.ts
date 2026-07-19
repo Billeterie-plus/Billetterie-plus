@@ -310,7 +310,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "organizerForm.parkingOptionPaid": "Payant",
     "organizerForm.seatedLabel": "Places assises",
     "organizerForm.removeTier": "Retirer",
-    "organizerForm.tierNamePlaceholder": "Nom (ex: Fosse, 1ère classe)",
+    "organizerForm.tierNamePlaceholder": "Nom (ex: Fosse, 1re classe)",
     "organizerForm.tierPricePlaceholder": "Prix €",
     "organizerForm.tierQuotaPlaceholder": "Quota",
     "organizerForm.addTier": "+ Ajouter un tarif",
