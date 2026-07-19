@@ -58,17 +58,16 @@ function HomeContent() {
       <Reveal>
         <section
           id="evenements"
-          className="relative mb-10 scroll-mt-20 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark p-5 text-white shadow-xl shadow-black/30 sm:p-6"
+          className="mb-10 scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
         >
-          <div className="pointer-events-none absolute -right-12 -top-12 h-52 w-52 rounded-full bg-emerald-500/15 blur-[80px]" aria-hidden />
-          <h2 className="relative mb-4 text-2xl font-bold text-gold-light">{t("nav.events")}</h2>
+          <h2 className="mb-4 text-2xl font-bold text-slate-900">{t("nav.events")}</h2>
 
-          <div className="relative mb-6 flex flex-wrap items-center gap-3">
+          <div className="mb-6 flex flex-wrap items-center gap-3">
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder={t("home.searchPlaceholder")}
-              className="w-full max-w-sm rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder:text-white/50 focus:border-gold-light/50 focus:bg-white/15 focus:outline-none sm:w-auto"
+              className="w-full max-w-sm rounded-lg border border-slate-200 px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-brand/50 focus:outline-none sm:w-auto"
             />
             <div className="flex flex-wrap gap-2">
               {TYPES.map((tp) => (
@@ -77,8 +76,8 @@ function HomeContent() {
                   onClick={() => setType(tp.value)}
                   className={`rounded-full px-3 py-1.5 text-sm transition hover:scale-105 ${
                     type === tp.value
-                      ? "bg-gradient-to-r from-gold-light to-gold font-medium text-brand-dark"
-                      : "bg-white/10 text-white/70 hover:bg-white/15"
+                      ? "bg-gradient-to-r from-brand to-brand-dark font-medium text-white"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
                   {tp.label}
@@ -87,13 +86,13 @@ function HomeContent() {
             </div>
           </div>
 
-          {error && <p className="relative text-red-300">{error}</p>}
+          {error && <p className="text-red-600">{error}</p>}
           {loading ? (
-            <p className="relative text-white/70">{t("common.loading")}</p>
+            <p className="text-slate-500">{t("common.loading")}</p>
           ) : events.length === 0 ? (
-            <p className="relative text-white/70">{t("home.noEvents")}</p>
+            <p className="text-slate-500">{t("home.noEvents")}</p>
           ) : (
-            <RevealGroup className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.07}>
+            <RevealGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.07}>
               {events.map((e, i) => (
                 <RevealItem key={e.id}>
                   <EventCard event={e} accentIndex={i} />
