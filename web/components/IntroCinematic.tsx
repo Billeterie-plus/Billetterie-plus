@@ -116,14 +116,14 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: EASE }}
-        className="relative z-10 mb-4 flex items-center gap-2 text-4xl font-extrabold tracking-tight will-change-transform sm:text-5xl"
+        className="relative z-10 mb-2 flex items-center gap-2 text-2xl font-extrabold tracking-tight will-change-transform sm:mb-3 sm:text-4xl"
       >
-        <Ticket size={32} strokeWidth={2.3} className="text-gold-light" />
+        <Ticket size={26} strokeWidth={2.3} className="text-gold-light" />
         Ticket<span className="text-gold-light">Area</span>
       </motion.div>
 
       {/* Scène : une silhouette rejoint la foule d'un vrai concert, spots et scène en fond */}
-      <svg viewBox="0 0 320 155" className="relative z-10 h-36 w-full max-w-xs sm:h-40 sm:max-w-md" aria-hidden>
+      <svg viewBox="0 0 320 155" className="relative z-10 h-[46vh] w-full max-w-2xl sm:h-[54vh] sm:max-w-4xl" aria-hidden>
         <defs>
           <radialGradient id="stageGlow" cx="50%" cy="20%">
             <stop offset="0%" stopColor="#d4af5a" stopOpacity="0.55" />
@@ -309,7 +309,7 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
         initial={{ opacity: 0, y: 10 }}
         animate={stage === "tagline" || stage === "exit" ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, ease: EASE }}
-        className="relative z-10 mt-4 max-w-md px-6 text-center text-sm text-white/70 sm:text-base"
+        className="relative z-10 mt-2 max-w-md px-6 text-center text-sm text-white/70 sm:mt-3 sm:text-base"
       >
         {t("intro.tagline")}
       </motion.p>
