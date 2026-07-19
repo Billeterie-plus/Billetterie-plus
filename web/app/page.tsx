@@ -8,7 +8,6 @@ import ArtistSpotlight from "../components/ArtistSpotlight";
 import ArtistSearchBox from "../components/ArtistSearchBox";
 import FaqSection from "../components/FaqSection";
 import HowItWorks from "../components/HowItWorks";
-import TrustBadges from "../components/TrustBadges";
 import LastChanceEvents from "../components/LastChanceEvents";
 import OrganizerCta from "../components/OrganizerCta";
 import Reveal, { RevealGroup, RevealItem } from "../components/Reveal";
@@ -110,8 +109,6 @@ function HomeContent() {
       <ArtistSearchBox />
 
       <ArtistSpotlight />
-
-      <TrustBadges />
 
       <FaqSection />
     </div>
