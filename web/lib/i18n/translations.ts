@@ -63,6 +63,13 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.cta1": "Voir les événements",
     "hero.cta2": "Découvrir les artistes",
 
+    // Intro cinématique
+    "intro.skip": "Passer",
+    "intro.concert": "Concerts",
+    "intro.soiree": "Soirées",
+    "intro.film": "Films",
+    "intro.tagline": "La billetterie de référence pour la scène Tamil",
+
     // Home
     "home.searchPlaceholder": "Rechercher un événement...",
     "home.typeAll": "Tous",
@@ -516,6 +523,13 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.cta1": "See events",
     "hero.cta2": "Discover artists",
 
+    // Cinematic intro
+    "intro.skip": "Skip",
+    "intro.concert": "Concerts",
+    "intro.soiree": "Parties",
+    "intro.film": "Films",
+    "intro.tagline": "The go-to ticketing platform for the Tamil scene",
+
     "home.searchPlaceholder": "Search for an event...",
     "home.typeAll": "All",
     "home.typeConcert": "Concert",
@@ -951,6 +965,13 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.stat3": "Sichere Zahlung",
     "hero.cta1": "Veranstaltungen ansehen",
     "hero.cta2": "Künstler entdecken",
+
+    // Kino-Intro
+    "intro.skip": "Überspringen",
+    "intro.concert": "Konzerte",
+    "intro.soiree": "Partys",
+    "intro.film": "Filme",
+    "intro.tagline": "Die Ticketing-Plattform für die tamilische Szene",
 
     "home.searchPlaceholder": "Veranstaltung suchen...",
     "home.typeAll": "Alle",

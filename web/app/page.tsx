@@ -13,6 +13,7 @@ import TrustBadges from "../components/TrustBadges";
 import LastChanceEvents from "../components/LastChanceEvents";
 import OrganizerCta from "../components/OrganizerCta";
 import Reveal, { RevealGroup, RevealItem } from "../components/Reveal";
+import IntroCinematic from "../components/IntroCinematic";
 import { useT } from "../lib/i18n/LanguageContext";
 
 function HomeContent() {
@@ -120,9 +121,14 @@ function HomeContent() {
 }
 
 export default function HomePage() {
+  const [showIntro, setShowIntro] = useState(true);
+
   return (
-    <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
-      <HomeContent />
-    </Suspense>
+    <>
+      {showIntro && <IntroCinematic onDone={() => setShowIntro(false)} />}
+      <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
+        <HomeContent />
+      </Suspense>
+    </>
   );
 }
