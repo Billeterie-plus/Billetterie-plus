@@ -86,15 +86,6 @@ export default function HeroBanner() {
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-light">{t("hero.label")}</p>
         </motion.div>
 
-        <motion.h1
-          variants={item}
-          className="max-w-3xl text-balance text-6xl font-extrabold leading-[1.02] tracking-tight drop-shadow-lg sm:text-8xl"
-        >
-          <span className="bg-gradient-to-r from-white to-gold-light bg-clip-text text-transparent">
-            {t("hero.title")}
-          </span>
-        </motion.h1>
-
         <motion.p variants={item} className="mt-7 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
           {t("hero.subtitle")}
         </motion.p>
