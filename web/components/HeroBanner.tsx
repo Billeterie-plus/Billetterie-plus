@@ -26,8 +26,8 @@ export default function HeroBanner() {
   }
 
   return (
-    <div className="relative mb-12 -mt-8 overflow-hidden rounded-b-[3rem] text-white shadow-2xl shadow-black/60 sm:-mt-8">
-      {/* Fond : vidéo si disponible (public/videos/hero.mp4), sinon dégradé animé */}
+    <div className="relative mb-12 -mt-8 overflow-hidden rounded-b-[3rem] text-white shadow-2xl shadow-black/40 sm:-mt-8">
+      {/* Fond : vidéo si disponible (public/videos/hero.mp4), sinon dégradé multicolore animé, esprit affiche de festival */}
       {videoOk && (
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -40,22 +40,45 @@ export default function HeroBanner() {
         />
       )}
       <div
-        className={`absolute inset-0 bg-gradient-to-br from-brand-light via-brand to-brand-dark bg-200 animate-gradientMove ${
-          videoOk ? "opacity-80" : "opacity-100"
+        className={`absolute inset-0 bg-gradient-to-br from-brand via-fuchsia-600 to-brand-dark bg-200 animate-gradientMove ${
+          videoOk ? "opacity-85" : "opacity-100"
         }`}
       />
-      {/* Vignette légère pour la lisibilité du texte, sans assombrir l'ensemble */}
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_105%,rgba(212,175,90,0.35),transparent)]" />
+      {/* Halos colorés superposés pour un rendu "affiche de festival" */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_10%_15%,rgba(59,74,122,0.7),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_90%_10%,rgba(217,70,239,0.45),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_105%,rgba(212,175,90,0.5),transparent)]" />
+      {/* Vignette légère pour la lisibilité du texte */}
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
 
-      {/* Orbes décoratives floues, purement esthétiques */}
-      <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-gold/25 blur-[100px]" aria-hidden />
-      <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-brand-light/40 blur-[110px]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.15] mix-blend-overlay" style={{
-        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
-        backgroundSize: "3px 3px",
-      }} aria-hidden />
+      {/* Orbes décoratives floues et vives, purement esthétiques */}
+      <motion.div
+        animate={{ x: [0, 20, 0], y: [0, -16, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute -left-16 top-8 h-72 w-72 rounded-full bg-gold/35 blur-[100px]"
+        aria-hidden
+      />
+      <motion.div
+        animate={{ x: [0, -24, 0], y: [0, 18, 0] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute -right-20 top-1/3 h-64 w-64 rounded-full bg-fuchsia-500/40 blur-[100px]"
+        aria-hidden
+      />
+      <motion.div
+        animate={{ x: [0, 16, 0], y: [0, -12, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute -right-10 bottom-0 h-80 w-80 rounded-full bg-brand-light/50 blur-[110px]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.15] mix-blend-overlay"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+          backgroundSize: "3px 3px",
+        }}
+        aria-hidden
+      />
 
       <motion.div
         variants={container}
@@ -71,38 +94,40 @@ export default function HeroBanner() {
 
         <motion.h1
           variants={item}
-          className="max-w-3xl text-balance font-serif text-5xl font-semibold italic leading-[1.05] tracking-tight drop-shadow-lg sm:text-7xl"
+          className="max-w-3xl text-balance font-serif text-6xl font-bold leading-[1.02] tracking-tight drop-shadow-lg sm:text-8xl"
         >
-          {t("hero.title")}
+          <span className="bg-gradient-to-r from-white via-gold-light to-fuchsia-300 bg-clip-text text-transparent">
+            {t("hero.title")}
+          </span>
         </motion.h1>
 
-        <motion.p variants={item} className="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
+        <motion.p variants={item} className="mt-7 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
           {t("hero.subtitle")}
         </motion.p>
 
-        <motion.div variants={item} className="mt-7 flex flex-wrap gap-x-7 gap-y-2 text-sm text-white/60">
+        <motion.div variants={item} className="mt-7 flex flex-wrap gap-x-7 gap-y-2 text-sm text-white/70">
           <span>{t("hero.stat1")}</span>
-          <span className="hidden text-white/25 sm:inline">/</span>
+          <span className="hidden text-white/30 sm:inline">/</span>
           <span>{t("hero.stat2")}</span>
-          <span className="hidden text-white/25 sm:inline">/</span>
+          <span className="hidden text-white/30 sm:inline">/</span>
           <span>{t("hero.stat3")}</span>
         </motion.div>
 
         <motion.div variants={item} className="mt-10 flex flex-wrap gap-4">
           <motion.button
-            whileHover={{ scale: 1.045, boxShadow: "0 20px 40px -10px rgba(184,145,47,0.55)" }}
+            whileHover={{ scale: 1.06, boxShadow: "0 20px 45px -10px rgba(217,70,239,0.55)" }}
             whileTap={{ scale: 0.97 }}
             onClick={scrollToEvents}
-            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark px-8 py-4 text-sm font-semibold text-brand-dark shadow-xl shadow-gold/25"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-gold-light via-gold to-fuchsia-500 bg-200 px-8 py-4 text-sm font-bold text-brand-dark shadow-xl shadow-gold/30 animate-gradientMove"
           >
-            <Ticket size={16} strokeWidth={2.2} />
+            <Ticket size={16} strokeWidth={2.4} />
             {t("hero.cta1")}
           </motion.button>
           <motion.a
-            whileHover={{ scale: 1.045, backgroundColor: "rgba(255,255,255,0.08)", borderColor: "rgba(212,175,90,0.6)" }}
+            whileHover={{ scale: 1.06, backgroundColor: "rgba(255,255,255,0.1)", borderColor: "rgba(212,175,90,0.7)" }}
             whileTap={{ scale: 0.97 }}
             href="/artistes"
-            className="rounded-full border border-white/25 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm"
+            className="rounded-full border-2 border-white/30 px-8 py-4 text-sm font-bold text-white backdrop-blur-sm"
           >
             {t("hero.cta2")}
           </motion.a>
@@ -115,7 +140,7 @@ export default function HeroBanner() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-white/50 transition hover:text-gold-light"
+        className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-white/60 transition hover:text-gold-light"
       >
         <motion.span animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} className="block">
           <ChevronDown size={26} strokeWidth={1.5} />

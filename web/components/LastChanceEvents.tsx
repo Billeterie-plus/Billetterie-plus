@@ -32,7 +32,8 @@ export default function LastChanceEvents({ events }: { events: any[] }) {
   return (
     <Reveal>
       <section className="relative mb-10 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark p-5 text-white shadow-xl shadow-black/30 sm:p-6">
-        <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-red-500/10 blur-[70px]" aria-hidden />
+        <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-red-500/15 blur-[70px]" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-fuchsia-500/15 blur-[70px]" aria-hidden />
         <div className="relative mb-4 flex items-center gap-2">
           <Flame size={20} strokeWidth={2} className="text-gold-light" />
           <div>

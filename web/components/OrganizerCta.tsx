@@ -12,7 +12,8 @@ export default function OrganizerCta() {
   return (
     <Reveal>
       <section className="relative mb-10 flex flex-col items-start gap-5 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark p-6 text-white shadow-xl shadow-black/30 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gold/10 blur-[80px]" aria-hidden />
+        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gold/15 blur-[80px]" aria-hidden />
+        <div className="pointer-events-none absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-fuchsia-500/20 blur-[80px]" aria-hidden />
         <div className="relative flex items-start gap-4">
           <motion.span
             animate={{ y: [0, -4, 0] }}
@@ -28,7 +29,7 @@ export default function OrganizerCta() {
         </div>
         <Link
           href="/register"
-          className="relative shrink-0 rounded-xl bg-gradient-to-r from-white to-white/90 px-5 py-2.5 text-sm font-semibold text-brand shadow-md transition hover:scale-105 hover:shadow-lg"
+          className="relative shrink-0 rounded-xl bg-gradient-to-r from-gold-light via-gold to-fuchsia-400 px-5 py-2.5 text-sm font-bold text-brand-dark shadow-md transition hover:scale-105 hover:shadow-lg"
         >
           {t("organizerCta.button")}
         </Link>

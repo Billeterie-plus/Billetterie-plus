@@ -4,8 +4,16 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useT } from "../lib/i18n/LanguageContext";
 
-export default function EventCard({ event }: { event: any }) {
+const ACCENTS = [
+  "from-brand to-brand-light",
+  "from-gold to-gold-light",
+  "from-fuchsia-500 to-fuchsia-300",
+  "from-brand-light to-fuchsia-400",
+];
+
+export default function EventCard({ event, accentIndex = 0 }: { event: any; accentIndex?: number }) {
   const t = useT();
+  const accent = ACCENTS[accentIndex % ACCENTS.length];
   const minPrice = Math.min(...event.ticketTypes.map((t: any) => t.price));
   const date = new Date(event.startDateTime).toLocaleDateString("fr-FR", {
     day: "2-digit",
@@ -18,10 +26,11 @@ export default function EventCard({ event }: { event: any }) {
     <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}>
       <Link
         href={`/events/${event.id}`}
-        className={`group block overflow-hidden rounded-2xl border-2 border-brand/15 bg-white shadow-md transition-colors duration-300 hover:border-brand hover:shadow-xl ${
+        className={`group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md transition-shadow duration-300 hover:shadow-xl ${
           isPast ? "opacity-60" : ""
         }`}
       >
+        <div className={`h-1.5 w-full bg-gradient-to-r ${accent}`} aria-hidden />
         <div className="relative overflow-hidden">
           {event.imageUrl && (
             // eslint-disable-next-line @next/next/no-img-element

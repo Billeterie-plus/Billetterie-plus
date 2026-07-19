@@ -94,9 +94,9 @@ function HomeContent() {
             <p className="text-slate-500">{t("home.noEvents")}</p>
           ) : (
             <RevealGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.07}>
-              {events.map((e) => (
+              {events.map((e, i) => (
                 <RevealItem key={e.id}>
-                  <EventCard event={e} />
+                  <EventCard event={e} accentIndex={i} />
                 </RevealItem>
               ))}
             </RevealGroup>
