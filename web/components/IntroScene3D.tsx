@@ -14,7 +14,7 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
 }
 
 function makeTicketTexture(): THREE.CanvasTexture {
-  // Format allongé de vrai billet à souche (pas une carte) : corps principal + souche détachable
+  // Format allongé de vrai billet de concert à souche (pas une carte) : corps principal + souche détachable
   const canvas = document.createElement("canvas");
   canvas.width = 640;
   canvas.height = 240;
@@ -61,7 +61,7 @@ function makeTicketTexture(): THREE.CanvasTexture {
   ctx.fill();
   ctx.restore();
 
-  // Corps principal : logo + infos
+  // Corps principal : logo + infos du concert
   ctx.fillStyle = "#1e2749";
   ctx.font = "bold 40px sans-serif";
   ctx.fillText("Ticket", 32, 76);
@@ -71,14 +71,14 @@ function makeTicketTexture(): THREE.CanvasTexture {
 
   ctx.fillStyle = "#94a3b8";
   ctx.font = "600 13px sans-serif";
-  ctx.fillText("PASS D'ACCÈS", 32, 100);
+  ctx.fillText("PASS CONCERT", 32, 100);
 
   ctx.fillStyle = "#334155";
-  ctx.font = "20px sans-serif";
-  ctx.fillText("CONCERT · SOIRÉE · FILM", 32, 138);
+  ctx.font = "bold 22px sans-serif";
+  ctx.fillText("CONCERT LIVE — CE SOIR", 32, 138);
   ctx.fillStyle = "#94a3b8";
   ctx.font = "15px sans-serif";
-  ctx.fillText("Accès valable ce soir", 32, 162);
+  ctx.fillText("Scène Tamil · Ouverture des portes 20h", 32, 162);
 
   // Ligne de séparation fine + infos type "porte / place"
   ctx.strokeStyle = "#e2e8f0";
@@ -131,6 +131,23 @@ function makeTicketTexture(): THREE.CanvasTexture {
   return texture;
 }
 
+function makeGlowTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement("canvas");
+  canvas.width = 512;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return new THREE.CanvasTexture(canvas);
+  const gradient = ctx.createRadialGradient(256, 130, 10, 256, 130, 260);
+  gradient.addColorStop(0, "rgba(212,175,90,0.55)");
+  gradient.addColorStop(0.5, "rgba(59,74,122,0.25)");
+  gradient.addColorStop(1, "rgba(16,21,43,0)");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 512, 256);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  return texture;
+}
+
 export default function IntroScene3D() {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -142,7 +159,7 @@ export default function IntroScene3D() {
     const height = mount.clientHeight || 1;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x10152b, 0.026);
+    scene.fog = new THREE.FogExp2(0x10152b, 0.022);
 
     const camera = new THREE.PerspectiveCamera(48, width / height, 0.1, 200);
     camera.position.set(0, 3.2, 27);
@@ -154,41 +171,72 @@ export default function IntroScene3D() {
     mount.appendChild(renderer.domElement);
 
     scene.add(new THREE.AmbientLight(0x223055, 0.7));
-    const point = new THREE.PointLight(0xd4af5a, 1.3, 30);
-    point.position.set(0, 6, -4);
-    scene.add(point);
 
-    // Faisceaux de spots volumétriques depuis le plafond de la scène
-    const beamColors = [0xd4af5a, 0x10b981, 0x8fa0e0];
-    const beams: THREE.Mesh[] = [];
-    beamColors.forEach((color, i) => {
-      const geo = new THREE.ConeGeometry(4.4, 17, 28, 1, true);
-      const mat = new THREE.MeshBasicMaterial({
-        color,
-        transparent: true,
-        opacity: 0.15,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-      });
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set((i - 1) * 4.2, 11.5, -13);
-      mesh.rotation.x = Math.PI;
-      mesh.rotation.z = (i - 1) * 0.22;
-      scene.add(mesh);
-      beams.push(mesh);
+    // --- Salle de concert : murs, sol et rangées de sièges pour donner du volume ---
+    const wallMat = new THREE.MeshBasicMaterial({ color: 0x141b3a, transparent: true, opacity: 0.55, side: THREE.DoubleSide });
+
+    const backWallGeo = new THREE.PlaneGeometry(34, 18);
+    const backWall = new THREE.Mesh(backWallGeo, wallMat);
+    backWall.position.set(0, 7, -22);
+    scene.add(backWall);
+
+    const sideWallGeo = new THREE.PlaneGeometry(40, 16);
+    const leftWall = new THREE.Mesh(sideWallGeo, wallMat);
+    leftWall.position.set(-14, 6, -6);
+    leftWall.rotation.y = Math.PI / 7;
+    scene.add(leftWall);
+    const rightWall = new THREE.Mesh(sideWallGeo, wallMat);
+    rightWall.position.set(14, 6, -6);
+    rightWall.rotation.y = -Math.PI / 7;
+    scene.add(rightWall);
+
+    const floorGeo = new THREE.PlaneGeometry(40, 44);
+    const floorMat = new THREE.MeshBasicMaterial({ color: 0x0b0f22, transparent: true, opacity: 0.7 });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.set(0, -0.02, 4);
+    scene.add(floor);
+
+    // Lueur douce sur le mur du fond, derrière la scène
+    const glowTexture = makeGlowTexture();
+    const glowGeo = new THREE.PlaneGeometry(26, 13);
+    const glowMat = new THREE.MeshBasicMaterial({
+      map: glowTexture,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
+    const glow = new THREE.Mesh(glowGeo, glowMat);
+    glow.position.set(0, 8, -21.8);
+    scene.add(glow);
 
-    // Structure de scène (rampe verticale)
+    // Structure de scène (rampe verticale) devant le mur du fond
     const stageGroup = new THREE.Group();
     const barGeo = new THREE.BoxGeometry(0.15, 5.5, 0.15);
-    const barMat = new THREE.MeshBasicMaterial({ color: 0x3b4a7a, transparent: true, opacity: 0.5 });
+    const barMat = new THREE.MeshBasicMaterial({ color: 0x3b4a7a, transparent: true, opacity: 0.6 });
     for (let i = 0; i < 5; i++) {
       const bar = new THREE.Mesh(barGeo, barMat);
       bar.position.set(-6.4 + i * 3.2, 5.2, -15);
       stageGroup.add(bar);
     }
     scene.add(stageGroup);
+
+    // Rangées de sièges (public), en instanced mesh pour un seul draw call
+    const seatGeo = new THREE.BoxGeometry(0.55, 0.5, 0.5);
+    const seatMat = new THREE.MeshBasicMaterial({ color: 0x1a2148, transparent: true, opacity: 0.75 });
+    const rows = 6;
+    const cols = 13;
+    const seats = new THREE.InstancedMesh(seatGeo, seatMat, rows * cols);
+    const dummy = new THREE.Object3D();
+    let seatIdx = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        dummy.position.set((c - (cols - 1) / 2) * 0.95, 0.25, 5.5 - r * 1.15);
+        dummy.updateMatrix();
+        seats.setMatrixAt(seatIdx++, dummy.matrix);
+      }
+    }
+    scene.add(seats);
 
     // Billet 3D texturé : apparaît, tourne sur lui-même, s'avance vers la caméra
     const ticketTexture = makeTicketTexture();
@@ -228,11 +276,6 @@ export default function IntroScene3D() {
       camera.position.y = 3.2 + Math.sin(t * 0.5) * 0.15;
       camera.lookAt(0, 3.4, camera.position.z - 12);
 
-      beams.forEach((b, i) => {
-        b.rotation.z = (i - 1) * 0.22 + Math.sin(t * 0.6 + i) * 0.15;
-        (b.material as THREE.MeshBasicMaterial).opacity = 0.1 + Math.sin(t * 0.8 + i) * 0.04 + Math.min(t / 1.2, 1) * 0.08;
-      });
-
       const ticketStart = 1.6;
       const ticketDuration = 2.4;
       const tt = Math.max(0, Math.min((t - ticketStart) / ticketDuration, 1));
@@ -257,12 +300,18 @@ export default function IntroScene3D() {
       if (renderer.domElement.parentElement === mount) {
         mount.removeChild(renderer.domElement);
       }
-      beams.forEach((b) => {
-        b.geometry.dispose();
-        (b.material as THREE.Material).dispose();
-      });
+      backWallGeo.dispose();
+      sideWallGeo.dispose();
+      wallMat.dispose();
+      floorGeo.dispose();
+      floorMat.dispose();
+      glowGeo.dispose();
+      glowMat.dispose();
+      glowTexture.dispose();
       barGeo.dispose();
       barMat.dispose();
+      seatGeo.dispose();
+      seatMat.dispose();
       ticketGeo.dispose();
       ticketMat.dispose();
       ticketTexture.dispose();

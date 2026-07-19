@@ -88,7 +88,7 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
         initial={{ opacity: 0, y: 10 }}
         animate={stage === "tagline" || stage === "exit" ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, ease: EASE }}
-        className="relative z-10 mt-4 max-w-md px-6 text-center text-sm text-white/80 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] sm:mt-5 sm:text-base"
+        className="relative z-10 mt-4 max-w-lg px-6 text-center text-lg font-semibold text-white/90 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] sm:mt-5 sm:text-2xl"
       >
         {t("intro.tagline")}
       </motion.p>
