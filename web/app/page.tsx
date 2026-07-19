@@ -6,7 +6,6 @@ import { api } from "../lib/api";
 import EventCard from "../components/EventCard";
 import ArtistSpotlight from "../components/ArtistSpotlight";
 import ArtistSearchBox from "../components/ArtistSearchBox";
-import HeroBanner from "../components/HeroBanner";
 import FaqSection from "../components/FaqSection";
 import HowItWorks from "../components/HowItWorks";
 import TrustBadges from "../components/TrustBadges";
@@ -54,8 +53,6 @@ function HomeContent() {
   return (
     <div>
       <OrganizerCta />
-
-      <HeroBanner />
 
       <Reveal>
         <section
