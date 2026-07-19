@@ -14,47 +14,98 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
 }
 
 function makeTicketTexture(): THREE.CanvasTexture {
+  // Format allongé de vrai billet à souche (pas une carte) : corps principal + souche détachable
   const canvas = document.createElement("canvas");
-  canvas.width = 512;
-  canvas.height = 296;
+  canvas.width = 640;
+  canvas.height = 240;
   const ctx = canvas.getContext("2d");
   if (!ctx) return new THREE.CanvasTexture(canvas);
 
+  const stubX = 470; // séparation corps / souche
+
   ctx.fillStyle = "#ffffff";
-  roundRect(ctx, 4, 4, 504, 288, 22);
+  roundRect(ctx, 4, 4, 632, 232, 18);
   ctx.fill();
-  ctx.lineWidth = 6;
+  ctx.lineWidth = 5;
   ctx.strokeStyle = "#b8912f";
-  roundRect(ctx, 4, 4, 504, 288, 22);
+  roundRect(ctx, 4, 4, 632, 232, 18);
   ctx.stroke();
 
-  ctx.setLineDash([8, 8]);
-  ctx.strokeStyle = "#e4dcc8";
-  ctx.lineWidth = 2;
+  // Souche légèrement teintée pour la distinguer du corps
+  ctx.save();
   ctx.beginPath();
-  ctx.moveTo(392, 12);
-  ctx.lineTo(392, 284);
+  roundRect(ctx, 4, 4, 632, 232, 18);
+  ctx.clip();
+  ctx.fillStyle = "#faf6ea";
+  ctx.fillRect(stubX, 4, 170, 232);
+  ctx.restore();
+
+  // Ligne de perforation
+  ctx.setLineDash([7, 7]);
+  ctx.strokeStyle = "#c9b98a";
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(stubX, 6);
+  ctx.lineTo(stubX, 234);
   ctx.stroke();
   ctx.setLineDash([]);
 
+  // Encoches "déchirées" sur les bords, découpées réellement (transparence)
+  ctx.save();
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.arc(stubX, 4, 13, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(stubX, 236, 13, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Corps principal : logo + infos
   ctx.fillStyle = "#1e2749";
-  ctx.font = "bold 42px sans-serif";
-  ctx.fillText("Ticket", 34, 92);
+  ctx.font = "bold 40px sans-serif";
+  ctx.fillText("Ticket", 32, 76);
   ctx.fillStyle = "#b8912f";
   const ticketWidth = ctx.measureText("Ticket").width;
-  ctx.fillText("Area", 34 + ticketWidth + 6, 92);
+  ctx.fillText("Area", 32 + ticketWidth + 6, 76);
 
-  ctx.fillStyle = "#64748b";
-  ctx.font = "19px sans-serif";
-  ctx.fillText("CONCERT · SOIRÉE · FILM", 34, 132);
-  ctx.fillText("Accès valable ce soir", 34, 160);
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "600 13px sans-serif";
+  ctx.fillText("PASS D'ACCÈS", 32, 100);
+
+  ctx.fillStyle = "#334155";
+  ctx.font = "20px sans-serif";
+  ctx.fillText("CONCERT · SOIRÉE · FILM", 32, 138);
   ctx.fillStyle = "#94a3b8";
   ctx.font = "15px sans-serif";
-  ctx.fillText("N° A-2026-0719", 34, 250);
+  ctx.fillText("Accès valable ce soir", 32, 162);
 
-  const qx = 412;
-  const qy = 72;
-  const qrSize = 88;
+  // Ligne de séparation fine + infos type "porte / place"
+  ctx.strokeStyle = "#e2e8f0";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(32, 182);
+  ctx.lineTo(438, 182);
+  ctx.stroke();
+
+  const cols = [
+    { label: "PORTE", value: "A3", x: 32 },
+    { label: "RANG", value: "12", x: 170 },
+    { label: "PLACE", value: "24", x: 308 },
+  ];
+  cols.forEach((c) => {
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "600 11px sans-serif";
+    ctx.fillText(c.label, c.x, 202);
+    ctx.fillStyle = "#1e2749";
+    ctx.font = "bold 20px sans-serif";
+    ctx.fillText(c.value, c.x, 225);
+  });
+
+  // Souche : QR stylisé + texte vertical "ADMIT ONE"
+  const qrSize = 84;
+  const qx = stubX + 43;
+  const qy = 34;
   const cells = 8;
   const cell = qrSize / cells;
   ctx.fillStyle = "#1e2749";
@@ -65,6 +116,15 @@ function makeTicketTexture(): THREE.CanvasTexture {
       }
     }
   }
+
+  ctx.save();
+  ctx.translate(stubX + 30, 210);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = "#8f6f22";
+  ctx.font = "600 13px sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText("ADMIT ONE  ·  TICKET AREA", 0, 4);
+  ctx.restore();
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.needsUpdate = true;
@@ -130,42 +190,9 @@ export default function IntroScene3D() {
     }
     scene.add(stageGroup);
 
-    // Foule : nuage de particules lumineuses (lampes de téléphone dans le noir)
-    const crowdCount = 420;
-    const positions = new Float32Array(crowdCount * 3);
-    const colorsArr = new Float32Array(crowdCount * 3);
-    const baseColor = new THREE.Color(0xd4af5a);
-    const altColor = new THREE.Color(0xffffff);
-    const tmpColor = new THREE.Color();
-    for (let i = 0; i < crowdCount; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = Math.sqrt(Math.random()) * 9.5;
-      positions[i * 3] = Math.cos(angle) * radius;
-      positions[i * 3 + 1] = Math.random() * 3.4;
-      positions[i * 3 + 2] = -3 - Math.random() * 13;
-      tmpColor.copy(Math.random() > 0.78 ? altColor : baseColor);
-      colorsArr[i * 3] = tmpColor.r;
-      colorsArr[i * 3 + 1] = tmpColor.g;
-      colorsArr[i * 3 + 2] = tmpColor.b;
-    }
-    const crowdGeo = new THREE.BufferGeometry();
-    crowdGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    crowdGeo.setAttribute("color", new THREE.BufferAttribute(colorsArr, 3));
-    const crowdMat = new THREE.PointsMaterial({
-      size: 0.22,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      sizeAttenuation: true,
-    });
-    const crowd = new THREE.Points(crowdGeo, crowdMat);
-    scene.add(crowd);
-
     // Billet 3D texturé : apparaît, tourne sur lui-même, s'avance vers la caméra
     const ticketTexture = makeTicketTexture();
-    const ticketGeo = new THREE.PlaneGeometry(2.7, 1.56);
+    const ticketGeo = new THREE.PlaneGeometry(3.2, 1.2);
     const ticketMat = new THREE.MeshBasicMaterial({
       map: ticketTexture,
       transparent: true,
@@ -206,9 +233,6 @@ export default function IntroScene3D() {
         (b.material as THREE.MeshBasicMaterial).opacity = 0.1 + Math.sin(t * 0.8 + i) * 0.04 + Math.min(t / 1.2, 1) * 0.08;
       });
 
-      crowdMat.opacity = Math.min(t / 2.2, 1) * 0.85;
-      crowd.rotation.y = Math.sin(t * 0.05) * 0.05;
-
       const ticketStart = 1.6;
       const ticketDuration = 2.4;
       const tt = Math.max(0, Math.min((t - ticketStart) / ticketDuration, 1));
@@ -239,8 +263,6 @@ export default function IntroScene3D() {
       });
       barGeo.dispose();
       barMat.dispose();
-      crowdGeo.dispose();
-      crowdMat.dispose();
       ticketGeo.dispose();
       ticketMat.dispose();
       ticketTexture.dispose();
