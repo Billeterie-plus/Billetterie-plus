@@ -14,10 +14,10 @@ export default function TrustBadges() {
 
   return (
     <Reveal>
-      <section className="mb-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm sm:px-6">
+      <section className="mb-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark px-5 py-4 text-white shadow-xl shadow-black/30 sm:px-6">
         {items.map((it, i) => (
-          <div key={i} className="flex items-center gap-2 text-sm font-medium text-slate-600">
-            <it.icon size={16} strokeWidth={2} className="text-brand" />
+          <div key={i} className="flex items-center gap-2 text-sm font-medium text-white/85">
+            <it.icon size={16} strokeWidth={2} className="text-gold-light" />
             {it.label}
           </div>
         ))}

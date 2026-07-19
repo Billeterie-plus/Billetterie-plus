@@ -31,14 +31,14 @@ export default function LastChanceEvents({ events }: { events: any[] }) {
 
   return (
     <Reveal>
-      <section className="relative mb-10 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark p-5 text-white shadow-xl shadow-black/30 sm:p-6">
-        <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-red-500/15 blur-[70px]" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-emerald-500/15 blur-[70px]" aria-hidden />
+      <section className="relative mb-10 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-red-500/10 blur-[70px]" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-emerald-500/10 blur-[70px]" aria-hidden />
         <div className="relative mb-4 flex items-center gap-2">
-          <Flame size={20} strokeWidth={2} className="text-gold-light" />
+          <Flame size={20} strokeWidth={2} className="text-gold-dark" />
           <div>
-            <h2 className="text-2xl font-bold text-gold-light">{t("lastChance.title")}</h2>
-            <p className="text-sm text-white/70">{t("lastChance.subtitle")}</p>
+            <h2 className="text-2xl font-bold text-slate-900">{t("lastChance.title")}</h2>
+            <p className="text-sm text-slate-500">{t("lastChance.subtitle")}</p>
           </div>
         </div>
         <RevealGroup className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
@@ -46,7 +46,7 @@ export default function LastChanceEvents({ events }: { events: any[] }) {
             <RevealItem key={event.id}>
               <Link
                 href={`/events/${event.id}`}
-                className="group block overflow-hidden rounded-xl bg-white text-slate-900 shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                className="group block overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-900 shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="relative overflow-hidden">
                   {event.imageUrl && (

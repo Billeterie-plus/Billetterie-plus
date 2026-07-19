@@ -12,9 +12,9 @@ export default function ArtistSpotlight() {
 
   return (
     <Reveal>
-      <section className="relative overflow-hidden mb-10 rounded-2xl border border-white/10 bg-gradient-to-br from-brand via-brand to-brand-dark p-5 text-white shadow-xl shadow-black/30 sm:p-6">
-        <div className="pointer-events-none absolute -right-12 -top-12 h-52 w-52 rounded-full bg-emerald-500/15 blur-[80px]" aria-hidden />
-        <h2 className="relative mb-4 text-2xl font-bold text-gold-light">{t("artistSpotlight.title")}</h2>
+      <section className="relative overflow-hidden mb-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="pointer-events-none absolute -right-12 -top-12 h-52 w-52 rounded-full bg-emerald-500/10 blur-[80px]" aria-hidden />
+        <h2 className="relative mb-4 text-2xl font-bold text-slate-900">{t("artistSpotlight.title")}</h2>
         <RevealGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
           {featured.map((a) => (
             <RevealItem key={a.slug}>
