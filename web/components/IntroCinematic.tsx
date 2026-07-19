@@ -84,7 +84,7 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: EASE }}
-        className="relative z-10 mb-9 flex items-center gap-2 text-4xl font-extrabold tracking-tight sm:text-5xl"
+        className="relative z-10 mb-9 flex items-center gap-2 text-4xl font-extrabold tracking-tight will-change-transform sm:text-5xl"
       >
         <Ticket size={32} strokeWidth={2.3} className="text-gold-light" />
         Ticket<span className="text-gold-light">Area</span>
@@ -98,7 +98,7 @@ export default function IntroCinematic({ onDone }: { onDone: () => void }) {
             variants={ticketVariants}
             initial="hidden"
             animate={stage === "logo" ? "hidden" : "visible"}
-            className="relative flex w-36 flex-col items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-5 py-6 shadow-xl backdrop-blur-sm sm:w-40"
+            className="relative flex w-36 flex-col items-center gap-2 rounded-2xl border border-white/15 bg-brand-light/40 px-5 py-6 shadow-xl will-change-transform sm:w-40"
           >
             <span className="absolute -left-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-brand-dark" aria-hidden />
             <span className="absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-brand-dark" aria-hidden />

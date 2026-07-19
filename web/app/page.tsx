@@ -126,9 +126,11 @@ export default function HomePage() {
   return (
     <>
       {showIntro && <IntroCinematic onDone={() => setShowIntro(false)} />}
-      <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
-        <HomeContent />
-      </Suspense>
+      {!showIntro && (
+        <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
+          <HomeContent />
+        </Suspense>
+      )}
     </>
   );
 }
