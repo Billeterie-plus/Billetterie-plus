@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getUser } from "../lib/api";
+import { getUser, onAuthChange } from "../lib/api";
 import { useT } from "../lib/i18n/LanguageContext";
 
 export default function Footer() {
@@ -11,6 +11,7 @@ export default function Footer() {
 
   useEffect(() => {
     setUser(getUser());
+    return onAuthChange(() => setUser(getUser()));
   }, []);
 
   return (

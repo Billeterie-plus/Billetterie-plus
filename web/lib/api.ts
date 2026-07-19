@@ -2,6 +2,23 @@
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
+// Évènement custom déclenché à chaque connexion/déconnexion : la Navbar (montée une seule fois
+// dans le layout racine) s'y abonne pour se mettre à jour immédiatement, sans que l'utilisateur
+// ait besoin de rafraîchir la page après s'être connecté.
+const AUTH_EVENT = "ticketarea-auth-changed";
+
+function notifyAuthChange() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event(AUTH_EVENT));
+  }
+}
+
+export function onAuthChange(callback: () => void): () => void {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener(AUTH_EVENT, callback);
+  return () => window.removeEventListener(AUTH_EVENT, callback);
+}
+
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
   return localStorage.getItem("token");
@@ -10,6 +27,7 @@ export function getToken(): string | null {
 export function setSession(token: string, user: unknown) {
   localStorage.setItem("token", token);
   localStorage.setItem("user", JSON.stringify(user));
+  notifyAuthChange();
 }
 
 export function getUser<T = any>(): T | null {
@@ -21,6 +39,7 @@ export function getUser<T = any>(): T | null {
 export function clearSession() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
+  notifyAuthChange();
 }
 
 export async function api<T = any>(

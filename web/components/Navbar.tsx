@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getUser, clearSession } from "../lib/api";
+import { getUser, clearSession, onAuthChange } from "../lib/api";
 import { useRouter } from "next/navigation";
 import { useLanguage, useT } from "../lib/i18n/LanguageContext";
 import { LOCALES } from "../lib/i18n/translations";
@@ -29,6 +29,9 @@ export default function Navbar() {
 
   useEffect(() => {
     setUser(getUser());
+    // Se met à jour dès qu'une connexion/déconnexion a lieu ailleurs sur le site (login, inscription,
+    // déconnexion), sans attendre un rechargement de page — la Navbar n'est montée qu'une seule fois.
+    return onAuthChange(() => setUser(getUser()));
   }, []);
 
   useEffect(() => {
