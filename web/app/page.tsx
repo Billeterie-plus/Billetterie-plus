@@ -117,13 +117,32 @@ function HomeContent() {
   );
 }
 
+const INTRO_STORAGE_KEY = "ticketarea_intro_plays";
+// Jouée seulement à la toute première arrivée du visiteur sur le site (premier clic), plus jamais ensuite
+const INTRO_MAX_PLAYS = 1;
+
 export default function HomePage() {
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
+  const [introChecked, setIntroChecked] = useState(false);
+
+  useEffect(() => {
+    try {
+      const count = parseInt(window.localStorage.getItem(INTRO_STORAGE_KEY) || "0", 10);
+      if (count < INTRO_MAX_PLAYS) {
+        window.localStorage.setItem(INTRO_STORAGE_KEY, String(count + 1));
+        setShowIntro(true);
+      }
+    } catch {
+      // localStorage indisponible (navigation privée, etc.) : on ne joue pas l'intro par prudence
+    } finally {
+      setIntroChecked(true);
+    }
+  }, []);
 
   return (
     <>
-      {showIntro && <IntroCinematic onDone={() => setShowIntro(false)} />}
-      {!showIntro && (
+      {introChecked && showIntro && <IntroCinematic onDone={() => setShowIntro(false)} />}
+      {introChecked && !showIntro && (
         <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
           <HomeContent />
         </Suspense>
