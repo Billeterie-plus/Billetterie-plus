@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { ChevronDown, Sparkles, Ticket } from "lucide-react";
+import { ChevronDown, Ticket } from "lucide-react";
 import { useT } from "../lib/i18n/LanguageContext";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -80,13 +80,7 @@ export default function HeroBanner() {
         animate="visible"
         className="relative z-10 flex min-h-[70vh] flex-col justify-center px-6 py-20 sm:px-14 sm:py-28"
       >
-        <motion.div variants={item} className="mb-5 flex items-center gap-2.5">
-          <span className="h-px w-8 bg-gradient-to-r from-transparent to-gold-light" />
-          <Sparkles size={14} strokeWidth={2} className="text-gold-light" />
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-light">{t("hero.label")}</p>
-        </motion.div>
-
-        <motion.p variants={item} className="mt-7 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+        <motion.p variants={item} className="max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
           {t("hero.subtitle")}
         </motion.p>
 
