@@ -101,7 +101,7 @@ router.post("/events", asyncHandler(async (req: AuthedRequest, res) => {
   // Créés séquentiellement (plutôt qu'en createMany) pour connaître l'id de
   // chaque catégorie créée et pouvoir y rattacher les sièges du plan de salle
   // par index (le formulaire ne connaît que la position du tarif, pas son id
-  // définitif tant que l'événement n'existe pas encore).
+  // définitif tant que l'évènement n'existe pas encore).
   const createdTicketTypes: any[] = [];
   for (const tier of ticketTypes) {
     createdTicketTypes.push(await prisma.ticketType.create({ data: { ...tier, eventId: event.id } }));

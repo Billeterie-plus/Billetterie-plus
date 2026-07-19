@@ -26,7 +26,7 @@ export async function createCheckoutSession(orderId: string) {
     return { mode: "demo" as const, redirectUrl: `${WEB_APP_URL}/my-tickets?order=${orderId}` };
   }
 
-  // Infos pratiques de l'événement (adresse, transport, parking) affichées
+  // Infos pratiques de l'évènement (adresse, transport, parking) affichées
   // directement sur la page de paiement Stripe, pour que l'acheteur les ait
   // sous les yeux au moment de payer.
   const eventDateStr = new Date(order.event.startDateTime).toLocaleString("fr-FR", {

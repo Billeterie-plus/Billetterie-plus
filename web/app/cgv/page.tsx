@@ -15,9 +15,9 @@ export default function CgvPage() {
         <section>
           <h2 className="mb-2 text-base font-semibold text-slate-900">1. Objet</h2>
           <p>
-            Ticket Area est une plateforme de billetterie qui met en relation des organisateurs d'événements (concerts,
+            Ticket Area est une plateforme de billetterie qui met en relation des organisateurs d'évènements (concerts,
             soirées) et des acheteurs de billets. Ticket Area agit en tant qu'intermédiaire technique ; chaque billet est
-            vendu par l'organisateur de l'événement concerné, dont le nom est indiqué sur la fiche de l'événement.
+            vendu par l'organisateur de l'évènement concerné, dont le nom est indiqué sur la fiche de l'évènement.
           </p>
         </section>
 
@@ -34,7 +34,7 @@ export default function CgvPage() {
           <h2 className="mb-2 text-base font-semibold text-slate-900">3. Livraison des billets</h2>
           <p>
             Les billets sont électroniques (e-billets) et accessibles immédiatement après paiement dans l'espace « Mes
-            billets » de votre compte. Chaque billet comporte un QR code unique scanné à l'entrée de l'événement.
+            billets » de votre compte. Chaque billet comporte un QR code unique scanné à l'entrée de l'évènement.
           </p>
         </section>
 
@@ -43,15 +43,15 @@ export default function CgvPage() {
           <p>
             Conformément à l'article L221-28 du Code de la consommation, le droit de rétractation ne s'applique pas aux
             prestations de services de loisirs devant être fournies à une date déterminée (spectacles, concerts,
-            événements). Les billets ne sont donc en principe ni échangeables ni remboursables, sauf annulation ou
-            report de l'événement par l'organisateur.
+            évènements). Les billets ne sont donc en principe ni échangeables ni remboursables, sauf annulation ou
+            report de l'évènement par l'organisateur.
           </p>
         </section>
 
         <section>
-          <h2 className="mb-2 text-base font-semibold text-slate-900">5. Annulation ou report d'un événement</h2>
+          <h2 className="mb-2 text-base font-semibold text-slate-900">5. Annulation ou report d'un évènement</h2>
           <p>
-            En cas d'annulation d'un événement par l'organisateur, les acheteurs sont informés par email et remboursés
+            En cas d'annulation d'un évènement par l'organisateur, les acheteurs sont informés par email et remboursés
             selon les modalités communiquées par l'organisateur. En cas de report, les billets restent valables pour la
             nouvelle date sauf indication contraire.
           </p>
@@ -61,7 +61,7 @@ export default function CgvPage() {
           <h2 className="mb-2 text-base font-semibold text-slate-900">6. Responsabilité</h2>
           <p>
             Ticket Area agit comme intermédiaire technique de billetterie et n'est pas responsable de la tenue, du
-            contenu ou de l'annulation d'un événement, qui relève de la seule responsabilité de l'organisateur.
+            contenu ou de l'annulation d'un évènement, qui relève de la seule responsabilité de l'organisateur.
           </p>
         </section>
 

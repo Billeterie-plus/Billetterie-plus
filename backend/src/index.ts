@@ -13,7 +13,7 @@ import webhookRoutes from "./routes/webhook.routes";
 
 // Filet de sécurité : une erreur async non rattrapée ne doit jamais tuer le
 // process (ce qui coupait TOUTES les requêtes en cours — login, checkout,
-// liste d'événements — pendant le redémarrage sur Railway). On journalise et
+// liste d'évènements — pendant le redémarrage sur Railway). On journalise et
 // on continue plutôt que de crasher.
 process.on("unhandledRejection", (reason) => {
   console.error("Unhandled promise rejection:", reason);

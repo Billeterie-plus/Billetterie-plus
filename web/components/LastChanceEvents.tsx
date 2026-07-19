@@ -5,9 +5,9 @@ import { Flame } from "lucide-react";
 import { useT } from "../lib/i18n/LanguageContext";
 import Reveal, { RevealGroup, RevealItem } from "./Reveal";
 
-// Un événement est considéré "dernières places" quand il reste 15% ou moins
+// Un évènement est considéré "dernières places" quand il reste 15% ou moins
 // de la jauge totale (tous tarifs confondus), le même seuil que celui utilisé
-// sur la page événement pour l'alerte de stock bas — pas de chiffre inventé,
+// sur la page évènement pour l'alerte de stock bas — pas de chiffre inventé,
 // tout est calculé depuis les vraies quantités vendues/disponibles.
 function computeRemaining(event: any) {
   const totals = event.ticketTypes.reduce(

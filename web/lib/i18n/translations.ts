@@ -9,7 +9,7 @@ export const LOCALES: { value: Locale; label: string }[] = [
 export const DEFAULT_LOCALE: Locale = "fr";
 
 // Dictionnaire de traduction de l'interface (textes fixes de l'app). Le
-// contenu saisi par les organisateurs (titres/descriptions d'événements) et
+// contenu saisi par les organisateurs (titres/descriptions d'évènements) et
 // les biographies d'artistes ne sont pas traduits automatiquement — ce sont
 // des contenus éditoriaux, pas des textes d'interface.
 export const translations: Record<Locale, Record<string, string>> = {
@@ -24,7 +24,7 @@ export const translations: Record<Locale, Record<string, string>> = {
 
     // Navbar
     "nav.searchPlaceholder": "Rechercher un concert, une soirée ou un film...",
-    "nav.events": "Événements",
+    "nav.events": "Évènements",
     "nav.films": "Films",
     "nav.artists": "Artistes",
     "nav.map": "Carte",
@@ -56,11 +56,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.label": "Ticket Area",
     "hero.title": "Vivez la scène Tamil, en un clic",
     "hero.subtitle":
-      "Concerts, soirées et films d'artistes Tamil, sélectionnés avec soin — trouvez votre prochain événement et réservez vos billets en quelques secondes, en toute sécurité.",
+      "Concerts, soirées et films d'artistes Tamil, sélectionnés avec soin — trouvez votre prochain évènement et réservez vos billets en quelques secondes, en toute sécurité.",
     "hero.stat1": "Le meilleur de la scène Tamil réuni ici",
     "hero.stat2": "Billets instantanés",
     "hero.stat3": "Paiement sécurisé",
-    "hero.cta1": "Voir les événements",
+    "hero.cta1": "Voir les évènements",
     "hero.cta2": "Découvrir les artistes",
 
     // Intro cinématique
@@ -71,17 +71,17 @@ export const translations: Record<Locale, Record<string, string>> = {
     "intro.tagline": "La billetterie de référence pour la scène Tamil",
 
     // Home
-    "home.searchPlaceholder": "Rechercher un événement...",
+    "home.searchPlaceholder": "Rechercher un évènement...",
     "home.typeAll": "Tous",
     "home.typeConcert": "Concert",
     "home.typeSoiree": "Soirée Tamil",
     "home.typeFilm": "Film",
-    "home.noEvents": "Aucun événement trouvé.",
+    "home.noEvents": "Aucun évènement trouvé.",
     "home.about":
-      "Ticket Area est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des événements, gérez-les depuis votre propre espace organisateur.",
+      "Ticket Area est la billetterie de référence pour les concerts d'artistes Tamil, les soirées de la scène Tamil et les films en salle en France. Réservez en quelques clics, retrouvez vos e-billets à tout moment, et si vous organisez des évènements, gérez-les depuis votre propre espace organisateur.",
 
     "howItWorks.title": "Comment ça marche",
-    "howItWorks.step1Title": "Trouvez votre événement",
+    "howItWorks.step1Title": "Trouvez votre évènement",
     "howItWorks.step1Desc": "Concerts, soirées, films — filtrez par type ou cherchez directement un artiste.",
     "howItWorks.step2Title": "Réservez en toute sécurité",
     "howItWorks.step2Desc": "Choisissez vos billets ou vos places, payez par carte, PayPal ou Apple Pay.",
@@ -93,24 +93,24 @@ export const translations: Record<Locale, Record<string, string>> = {
     "trust.methods": "Carte bancaire, PayPal, Apple Pay, Google Pay",
 
     "lastChance.title": "Dernières places",
-    "lastChance.subtitle": "Ces événements affichent complet, ne tardez pas.",
+    "lastChance.subtitle": "Ces évènements affichent complet, ne tardez pas.",
     "lastChance.remaining": "{{n}} places restantes",
 
     "stats.title": "Ticket Area en chiffres",
-    "stats.events": "Événements publiés",
+    "stats.events": "Évènements publiés",
     "stats.tickets": "Billets vendus",
     "stats.artists": "Artistes référencés",
 
-    "organizerCta.title": "Vous organisez un événement Tamil ?",
-    "organizerCta.subtitle": "Créez votre événement en quelques minutes, suivez vos ventes en direct et gérez vos billets depuis votre espace organisateur.",
-    "organizerCta.button": "Créer mon événement",
+    "organizerCta.title": "Vous organisez un évènement Tamil ?",
+    "organizerCta.subtitle": "Créez votre évènement en quelques minutes, suivez vos ventes en direct et gérez vos billets depuis votre espace organisateur.",
+    "organizerCta.button": "Créer mon évènement",
 
     // EventCard
     "event.type.CONCERT": "Concert",
     "event.type.SOIREE": "Soirée Tamil",
     "event.type.FILM": "Film",
     "event.from": "à partir de {{price}}€",
-    "event.ended": "Événement terminé",
+    "event.ended": "Évènement terminé",
 
     // Listings
     "listing.concerts.title": "Concerts d'artistes Tamil",
@@ -119,13 +119,13 @@ export const translations: Record<Locale, Record<string, string>> = {
     "listing.concerts.empty": "Aucun concert Tamil n'est publié pour le moment. Revenez bientôt !",
     "listing.soirees.title": "Soirées Tamil",
     "listing.soirees.intro":
-      "Soirées, clubs et événements festifs de la scène Tamil — DJ sets, Gana, playback et bien plus.",
+      "Soirées, clubs et évènements festifs de la scène Tamil — DJ sets, Gana, playback et bien plus.",
     "listing.soirees.empty": "Aucune soirée Tamil n'est publiée pour le moment. Revenez bientôt !",
     "listing.films.title": "Films en salle",
     "listing.films.intro":
       "Séances, avant-premières et sorties nationales du cinéma Tamil (Kollywood) près de chez vous — réservez vos places en quelques secondes.",
     "listing.films.empty": "Aucun film n'est publié pour le moment. Revenez bientôt !",
-    "listing.organize": "Organiser un événement",
+    "listing.organize": "Organiser un évènement",
     "listing.discoverArtists": "Découvrir les artistes Tamil →",
 
     // Event detail
@@ -135,7 +135,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.today": "Aujourd'hui",
     "eventDetail.tomorrow": "Demain",
     "eventDetail.inDays": "Dans {{n}} jours",
-    "eventDetail.about": "À propos de l'événement",
+    "eventDetail.about": "À propos de l'évènement",
     "eventDetail.organizedBy": "Organisé par {{name}}",
     "eventDetail.organizedByPrefix": "Organisé par",
     "eventDetail.share": "Partager",
@@ -160,7 +160,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.cartKeptLoggedOut": "Vos billets restent sélectionnés — connectez-vous ou créez un compte pour finaliser.",
     "eventDetail.securePayment": "Paiement sécurisé — carte bancaire, PayPal, Google Pay, Apple Pay.",
     "eventDetail.practicalInfo": "Infos pratiques",
-    "eventDetail.eventLabel": "Événement",
+    "eventDetail.eventLabel": "Évènement",
     "eventDetail.dateTime": "Date & heure",
     "eventDetail.address": "Adresse",
     "eventDetail.addressUnknown": "À confirmer par l'organisateur",
@@ -172,8 +172,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.aboutArtist": "À propos de l'artiste",
     "eventDetail.viewFullProfile": "Voir la fiche complète →",
     "eventDetail.artistFallback":
-      "Cet événement met à l'honneur la scène musicale Tamil (Kollywood, playback, Gana...). Retrouvez tous les compositeurs, chanteurs et artistes Tamil référencés sur Ticket Area.",
-    "eventDetail.whereItHappens": "Où se déroule l'événement",
+      "Cet évènement met à l'honneur la scène musicale Tamil (Kollywood, playback, Gana...). Retrouvez tous les compositeurs, chanteurs et artistes Tamil référencés sur Ticket Area.",
+    "eventDetail.whereItHappens": "Où se déroule l'évènement",
     "eventDetail.venueUnknown": "Lieu à confirmer par l'organisateur.",
     "eventDetail.howToGetThere": "Comment s'y rendre",
     "eventDetail.transportLabel": "Transport : ",
@@ -182,10 +182,10 @@ export const translations: Record<Locale, Record<string, string>> = {
     "eventDetail.byCar": "En voiture",
     "eventDetail.byFoot": "À pied",
     "eventDetail.transitTip":
-      "Pensez à vérifier les derniers horaires de transport le soir de l'événement, notamment pour les soirées tardives.",
+      "Pensez à vérifier les derniers horaires de transport le soir de l'évènement, notamment pour les soirées tardives.",
 
     // Checkout
-    "checkout.back": "← Retour à l'événement",
+    "checkout.back": "← Retour à l'évènement",
     "checkout.title": "Finaliser votre commande",
     "checkout.subtitle": "Vérifiez votre récapitulatif avant de procéder au paiement sécurisé.",
     "checkout.cancelled": "Le paiement a été annulé. Vos billets sont toujours sélectionnés, vous pouvez réessayer ci-dessous.",
@@ -274,30 +274,30 @@ export const translations: Record<Locale, Record<string, string>> = {
     // Organizer dashboard
     "organizer.title": "Espace organisateur",
     "organizer.scanTicket": "Scanner un billet",
-    "organizer.newEvent": "+ Nouvel événement",
-    "organizer.publishedEvents": "Événements publiés",
+    "organizer.newEvent": "+ Nouvel évènement",
+    "organizer.publishedEvents": "Évènements publiés",
     "organizer.ticketsSold": "Billets vendus",
     "organizer.estimatedRevenue": "Revenu estimé",
     "organizer.fillRate": "Taux de remplissage",
-    "organizer.noEvents": "Aucun événement pour l'instant. Créez-en un !",
+    "organizer.noEvents": "Aucun évènement pour l'instant. Créez-en un !",
     "organizer.unpublish": "Dépublier",
     "organizer.publish": "Publier",
     "organizer.statistics": "Statistiques",
 
     // Organizer new/edit event
-    "organizerForm.newTitle": "Nouvel événement",
+    "organizerForm.newTitle": "Nouvel évènement",
     "organizerForm.newSubtitle": "Concert d'artiste Tamil ou soirée Tamil — remplissez le formulaire, l'aperçu à droite se met à jour en direct.",
-    "organizerForm.editTitle": "Modifier l'événement",
+    "organizerForm.editTitle": "Modifier l'évènement",
     "organizerForm.editSubtitle": "Mettez à jour les informations de votre concert ou soirée.",
-    "organizerForm.step1Type": "1. Type d'événement",
-    "organizerForm.stepType": "Type d'événement",
+    "organizerForm.step1Type": "1. Type d'évènement",
+    "organizerForm.stepType": "Type d'évènement",
     "organizerForm.step2Info": "2. Informations",
     "organizerForm.stepInfo": "Informations",
     "organizerForm.step3Practical": "3. Infos pratiques (transport, parking)",
     "organizerForm.stepPractical": "Infos pratiques (transport, parking)",
-    "organizerForm.practicalHint": "Affichées sur la page de l'événement pour aider les acheteurs à s'organiser.",
+    "organizerForm.practicalHint": "Affichées sur la page de l'évènement pour aider les acheteurs à s'organiser.",
     "organizerForm.step4Tiers": "4. Tarifs / catégories de billets",
-    "organizerForm.titlePlaceholder": "Titre de l'événement (ex: Anirudh Ravichander Live à Paris)",
+    "organizerForm.titlePlaceholder": "Titre de l'évènement (ex: Anirudh Ravichander Live à Paris)",
     "organizerForm.descriptionPlaceholder": "Description",
     "organizerForm.venuePlaceholder": "Lieu (salle, club, stade...)",
     "organizerForm.transportPlaceholder": "Transport (ex: Métro ligne 4, arrêt Château d'Eau — 5 min à pied)",
@@ -336,11 +336,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     "organizerForm.seatMapSeatsPerRowPlaceholder": "Sièges par rangée",
     "organizerForm.seatMapGenerate": "Générer les sièges pour ce tarif",
     "organizerForm.seatMapRegenerateHint": "Régénérer remplace les sièges déjà placés pour ce tarif.",
-    "organizerForm.createDraft": "Créer l'événement (brouillon)",
+    "organizerForm.createDraft": "Créer l'évènement (brouillon)",
     "organizerForm.preview": "Aperçu pour les acheteurs",
-    "organizerForm.previewHint": "C'est exactement ainsi que la carte apparaîtra sur la page d'accueil et dans les listes d'événements une fois publié.",
-    "organizerForm.eventTitlePreview": "Titre de votre événement",
-    "organizerForm.venuePreview": "Lieu de l'événement",
+    "organizerForm.previewHint": "C'est exactement ainsi que la carte apparaîtra sur la page d'accueil et dans les listes d'évènements une fois publié.",
+    "organizerForm.eventTitlePreview": "Titre de votre évènement",
+    "organizerForm.venuePreview": "Lieu de l'évènement",
     "organizerForm.dateUndefined": "Date à définir",
     "organizerForm.priceUndefined": "Prix à définir",
     "organizerForm.status": "Statut",
@@ -404,29 +404,29 @@ export const translations: Record<Locale, Record<string, string>> = {
     "imageUpload.hint": "Collez le lien d'une image, ou importez directement une photo depuis votre ordinateur. Elle est automatiquement recadrée en haute qualité (jusqu'à {{size}}px) pour bien s'afficher sur les cartes.",
 
     // Map
-    "map.title": "Carte des événements",
-    "map.subtitle": "Explorez tous les événements publiés sur la carte — cliquez sur un repère pour voir les détails.",
+    "map.title": "Carte des évènements",
+    "map.subtitle": "Explorez tous les évènements publiés sur la carte — cliquez sur un repère pour voir les détails.",
     "map.loading": "Chargement de la carte…",
-    "map.noLocated": "Aucun événement localisé pour le moment.",
-    "map.viewEvent": "Voir l'événement →",
+    "map.noLocated": "Aucun évènement localisé pour le moment.",
+    "map.viewEvent": "Voir l'évènement →",
 
     "legal.frenchOnlyNotice": "",
 
     "faq.title": "Questions fréquentes",
     "faq.subtitle": "Tout ce qu'il faut savoir pour acheter, recevoir et utiliser vos billets sur Ticket Area.",
     "faq.q1": "Comment acheter un billet ?",
-    "faq.a1": "Choisissez un événement, sélectionnez vos catégories de billets et la quantité, puis cliquez sur « Continuer vers le paiement ». Vous devez être connecté à votre compte pour finaliser l'achat.",
+    "faq.a1": "Choisissez un évènement, sélectionnez vos catégories de billets et la quantité, puis cliquez sur « Continuer vers le paiement ». Vous devez être connecté à votre compte pour finaliser l'achat.",
     "faq.q2": "Quels moyens de paiement acceptez-vous ?",
     "faq.a2": "Carte bancaire, PayPal, Google Pay et Apple Pay selon votre appareil, via notre prestataire de paiement sécurisé Stripe.",
     "faq.q3": "Comment vais-je recevoir mon billet ?",
     "faq.a3": "Vos e-billets sont disponibles immédiatement après paiement dans l'espace « Mes billets » de votre compte, avec un QR code unique à présenter à l'entrée. Ils sont également envoyés par email.",
     "faq.q4": "Puis-je me faire rembourser ou annuler ma commande ?",
-    "faq.a4": "Les conditions de remboursement et d'annulation sont précisées dans nos Conditions générales de vente. En général, une fois le billet acheté, la commande est définitive sauf annulation de l'événement par l'organisateur.",
+    "faq.a4": "Les conditions de remboursement et d'annulation sont précisées dans nos Conditions générales de vente. En général, une fois le billet acheté, la commande est définitive sauf annulation de l'évènement par l'organisateur.",
     "faq.q5": "Je n'ai pas reçu mon email de confirmation, que faire ?",
     "faq.a5": "Vérifiez vos courriers indésirables/spam. Vos billets restent de toute façon accessibles à tout moment depuis l'espace « Mes billets » de votre compte.",
     "faq.q6": "Comment devenir organisateur sur Ticket Area ?",
-    "faq.a6": "Créez un compte en choisissant le profil « organisateur » lors de l'inscription. Vous aurez ensuite accès à votre espace pour créer des événements, suivre vos ventes et scanner les billets à l'entrée.",
-    "faq.q7": "Comment scanner les billets à l'entrée d'un événement ?",
+    "faq.a6": "Créez un compte en choisissant le profil « organisateur » lors de l'inscription. Vous aurez ensuite accès à votre espace pour créer des évènements, suivre vos ventes et scanner les billets à l'entrée.",
+    "faq.q7": "Comment scanner les billets à l'entrée d'un évènement ?",
     "faq.a7": "Depuis votre espace organisateur, ouvrez « Scanner un billet » : la caméra de votre téléphone ou ordinateur lit le QR code du billet, ou vous pouvez saisir le code manuellement.",
     "faq.q8": "Mes données personnelles et bancaires sont-elles sécurisées ?",
     "faq.a8": "Oui. Le paiement est traité par Stripe (certifié PCI-DSS) — vos coordonnées bancaires ne transitent jamais par nos serveurs. Vos données personnelles sont traitées conformément au RGPD.",
@@ -453,12 +453,12 @@ export const translations: Record<Locale, Record<string, string>> = {
     "admin.roleOrganizer": "Organisateur",
     "admin.noResults": "Aucun résultat.",
     "admin.payoutsTitle": "Règlements organisateurs",
-    "admin.payoutsSubtitle": "Dès qu'un événement est terminé, la recette, la commission et le montant dû à l'organisateur sont calculés automatiquement. À toi de faire le virement, puis de marquer le règlement comme payé.",
+    "admin.payoutsSubtitle": "Dès qu'un évènement est terminé, la recette, la commission et le montant dû à l'organisateur sont calculés automatiquement. À toi de faire le virement, puis de marquer le règlement comme payé.",
     "admin.payoutsPendingCount": "Règlements en attente",
     "admin.payoutsPendingTotal": "Total à verser",
     "admin.payoutsPaidTotal": "Déjà versé",
     "admin.payoutsCommissionEarned": "Commission encaissée",
-    "admin.colEvent": "Événement",
+    "admin.colEvent": "Évènement",
     "admin.colOrganizer": "Organisateur",
     "admin.colEndDate": "Terminé le",
     "admin.colGross": "Recette brute",
@@ -473,7 +473,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "admin.markPaidConfirm": "Confirmer que le virement de {{amount}}€ a bien été envoyé à {{name}} ? Cette action est définitive.",
     "admin.saveCommission": "Enregistrer",
     "admin.paidOn": "Payé le {{date}}",
-    "admin.noPayouts": "Aucun événement terminé pour l'instant.",
+    "admin.noPayouts": "Aucun évènement terminé pour l'instant.",
 
   },
 

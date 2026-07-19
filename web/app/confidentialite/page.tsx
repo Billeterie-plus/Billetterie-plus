@@ -26,7 +26,7 @@ export default function PrivacyPage() {
           <h2 className="mb-2 text-base font-semibold text-slate-900">2. Utilisation des données</h2>
           <p>
             Vos données servent uniquement à : gérer votre compte et vos billets, vous envoyer vos e-billets et
-            confirmations de commande, permettre aux organisateurs de vérifier vos billets à l'entrée d'un événement, et
+            confirmations de commande, permettre aux organisateurs de vérifier vos billets à l'entrée d'un évènement, et
             améliorer le fonctionnement du site. Nous ne vendons ni ne partageons vos données avec des tiers à des fins
             commerciales.
           </p>

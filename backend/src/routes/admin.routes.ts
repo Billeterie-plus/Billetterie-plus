@@ -8,7 +8,7 @@ const router = Router();
 router.use(requireAuth, requireRole("ADMIN"));
 
 // Commission par défaut appliquée aux nouveaux règlements (modifiable ensuite
-// par l'admin, événement par événement, tant que le règlement n'est pas payé).
+// par l'admin, évènement par évènement, tant que le règlement n'est pas payé).
 const DEFAULT_COMMISSION_RATE = 10;
 
 /**
@@ -62,9 +62,9 @@ router.get("/customers", asyncHandler(async (_req: AuthedRequest, res) => {
 /**
  * Règlements organisateurs (payouts).
  *
- * Dès qu'un événement publié est terminé (date de fin, ou date de début si
+ * Dès qu'un évènement publié est terminé (date de fin, ou date de début si
  * pas de date de fin, dans le passé), on génère automatiquement un règlement
- * "en attente" avec la recette brute de l'événement (commandes payées) et
+ * "en attente" avec la recette brute de l'évènement (commandes payées) et
  * une commission par défaut. Tant qu'il est en attente, l'admin peut ajuster
  * le % de commission ; une fois marqué "payé" (après avoir fait le virement
  * lui-même, en dehors du site), le montant est figé.

@@ -189,7 +189,7 @@ export default function NewEventPage() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-start">
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Type d'événement en cartes visuelles */}
+          {/* Type d'évènement en cartes visuelles */}
           <div className={SECTION_CARD + " animate-fadeInUp"} style={{ animationDelay: "0.05s" }}>
             <SectionHeader icon={Ticket} title={t("organizerForm.step1Type")} />
             <div className="grid grid-cols-3 gap-3">
