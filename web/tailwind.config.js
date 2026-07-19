@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
-        serif: ["var(--font-display)", "ui-serif", "Georgia", "serif"],
+        serif: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         brand: {

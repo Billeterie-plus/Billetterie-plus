@@ -7,8 +7,8 @@ import { useT } from "../lib/i18n/LanguageContext";
 const ACCENTS = [
   "from-brand to-brand-light",
   "from-gold to-gold-light",
-  "from-fuchsia-500 to-fuchsia-300",
-  "from-brand-light to-fuchsia-400",
+  "from-emerald-500 to-emerald-300",
+  "from-brand-light to-emerald-400",
 ];
 
 export default function EventCard({ event, accentIndex = 0 }: { event: any; accentIndex?: number }) {
@@ -52,7 +52,7 @@ export default function EventCard({ event, accentIndex = 0 }: { event: any; acce
           <div className="text-xs font-medium uppercase tracking-wide text-gold-dark">
             {t(`event.type.${event.type}`) || event.type}
           </div>
-          <h3 className="mt-1 font-serif text-lg font-semibold text-slate-900">{event.title}</h3>
+          <h3 className="mt-1 text-lg font-bold text-slate-900">{event.title}</h3>
           <p className="mt-1 text-sm text-slate-500">
             {event.type === "TRAIN" ? `${event.departureStation} → ${event.arrivalStation}` : event.venue}
           </p>

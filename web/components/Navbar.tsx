@@ -55,11 +55,11 @@ export default function Navbar() {
   return (
     <nav
       className={`sticky top-0 z-30 border-b border-white/10 bg-gradient-to-r from-brand to-brand-dark transition-shadow duration-500 ${
-        scrolled ? "shadow-lg shadow-black/20 backdrop-blur-xl" : ""
+        scrolled ? "shadow-lg shadow-black/20" : ""
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3.5">
-        <Link href="/" className="flex items-baseline gap-0.5 font-serif text-2xl font-semibold italic tracking-tight text-white">
+        <Link href="/" className="flex items-baseline gap-0.5 text-2xl font-extrabold tracking-tight text-white">
           Ticket<span className="text-gold-light">Area</span>
         </Link>
 
@@ -150,7 +150,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-white/10 bg-brand-dark/95 backdrop-blur-xl sm:hidden"
+            className="overflow-hidden border-t border-white/10 bg-brand-dark sm:hidden"
           >
             <div className="px-4 py-4">
               <div className="relative">

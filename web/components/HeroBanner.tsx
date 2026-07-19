@@ -40,34 +40,28 @@ export default function HeroBanner() {
         />
       )}
       <div
-        className={`absolute inset-0 bg-gradient-to-br from-brand via-fuchsia-600 to-brand-dark bg-200 animate-gradientMove ${
+        className={`absolute inset-0 bg-gradient-to-br from-brand via-brand-light to-brand-dark ${
           videoOk ? "opacity-85" : "opacity-100"
         }`}
       />
       {/* Halos colorés superposés pour un rendu "affiche de festival" */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_10%_15%,rgba(59,74,122,0.7),transparent)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_90%_10%,rgba(217,70,239,0.45),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_90%_10%,rgba(16,185,129,0.35),transparent)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_105%,rgba(212,175,90,0.5),transparent)]" />
       {/* Vignette légère pour la lisibilité du texte */}
       <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
 
-      {/* Orbes décoratives floues et vives, purement esthétiques */}
-      <motion.div
-        animate={{ x: [0, 20, 0], y: [0, -16, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      {/* Orbes décoratives floues, statiques (pas d'animation en boucle pour la fluidité) */}
+      <div
         className="pointer-events-none absolute -left-16 top-8 h-72 w-72 rounded-full bg-gold/35 blur-[100px]"
         aria-hidden
       />
-      <motion.div
-        animate={{ x: [0, -24, 0], y: [0, 18, 0] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute -right-20 top-1/3 h-64 w-64 rounded-full bg-fuchsia-500/40 blur-[100px]"
+      <div
+        className="pointer-events-none absolute -right-20 top-1/3 h-64 w-64 rounded-full bg-emerald-500/30 blur-[100px]"
         aria-hidden
       />
-      <motion.div
-        animate={{ x: [0, 16, 0], y: [0, -12, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      <div
         className="pointer-events-none absolute -right-10 bottom-0 h-80 w-80 rounded-full bg-brand-light/50 blur-[110px]"
         aria-hidden
       />
@@ -94,9 +88,9 @@ export default function HeroBanner() {
 
         <motion.h1
           variants={item}
-          className="max-w-3xl text-balance font-serif text-6xl font-bold leading-[1.02] tracking-tight drop-shadow-lg sm:text-8xl"
+          className="max-w-3xl text-balance text-6xl font-extrabold leading-[1.02] tracking-tight drop-shadow-lg sm:text-8xl"
         >
-          <span className="bg-gradient-to-r from-white via-gold-light to-fuchsia-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-white to-gold-light bg-clip-text text-transparent">
             {t("hero.title")}
           </span>
         </motion.h1>
@@ -115,10 +109,10 @@ export default function HeroBanner() {
 
         <motion.div variants={item} className="mt-10 flex flex-wrap gap-4">
           <motion.button
-            whileHover={{ scale: 1.06, boxShadow: "0 20px 45px -10px rgba(217,70,239,0.55)" }}
+            whileHover={{ scale: 1.06, boxShadow: "0 20px 45px -10px rgba(184,145,47,0.55)" }}
             whileTap={{ scale: 0.97 }}
             onClick={scrollToEvents}
-            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-gold-light via-gold to-fuchsia-500 bg-200 px-8 py-4 text-sm font-bold text-brand-dark shadow-xl shadow-gold/30 animate-gradientMove"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-gold-light to-gold px-8 py-4 text-sm font-bold text-brand-dark shadow-xl shadow-gold/30"
           >
             <Ticket size={16} strokeWidth={2.4} />
             {t("hero.cta1")}
