@@ -2,6 +2,7 @@
 
 import { ShieldCheck, Wallet, Zap } from "lucide-react";
 import { useT } from "../lib/i18n/LanguageContext";
+import Reveal from "./Reveal";
 
 export default function TrustBadges() {
   const t = useT();
@@ -12,13 +13,15 @@ export default function TrustBadges() {
   ];
 
   return (
-    <section className="mb-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 sm:px-6">
-      {items.map((it, i) => (
-        <div key={i} className="flex items-center gap-2 text-sm font-medium text-slate-600">
-          <it.icon size={16} strokeWidth={2} className="text-brand" />
-          {it.label}
-        </div>
-      ))}
-    </section>
+    <Reveal>
+      <section className="mb-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 shadow-xl shadow-black/20 backdrop-blur-xl sm:px-6">
+        {items.map((it, i) => (
+          <div key={i} className="flex items-center gap-2 text-sm font-medium text-white/75">
+            <it.icon size={16} strokeWidth={2} className="text-gold-light" />
+            {it.label}
+          </div>
+        ))}
+      </section>
+    </Reveal>
   );
 }

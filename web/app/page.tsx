@@ -12,6 +12,7 @@ import HowItWorks from "../components/HowItWorks";
 import TrustBadges from "../components/TrustBadges";
 import LastChanceEvents from "../components/LastChanceEvents";
 import OrganizerCta from "../components/OrganizerCta";
+import Reveal, { RevealGroup, RevealItem } from "../components/Reveal";
 import { useT } from "../lib/i18n/LanguageContext";
 
 function HomeContent() {
@@ -55,46 +56,53 @@ function HomeContent() {
 
       <HeroBanner />
 
-      <section id="evenements" className="mb-10 scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-        <h2 className="mb-4 text-xl font-bold text-slate-900">{t("nav.events")}</h2>
+      <Reveal>
+        <section
+          id="evenements"
+          className="mb-10 scroll-mt-20 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6"
+        >
+          <h2 className="mb-4 text-xl font-bold text-white">{t("nav.events")}</h2>
 
-        <div className="mb-6 flex flex-wrap items-center gap-3">
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder={t("home.searchPlaceholder")}
-            className="w-full max-w-sm rounded-lg border px-3 py-2 sm:w-auto"
-          />
-          <div className="flex flex-wrap gap-2">
-            {TYPES.map((t) => (
-              <button
-                key={t.value}
-                onClick={() => setType(t.value)}
-                className={`rounded-full px-3 py-1.5 text-sm transition hover:scale-105 ${
-                  type === t.value ? "bg-brand text-white" : "bg-slate-100 hover:bg-slate-200"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder={t("home.searchPlaceholder")}
+              className="w-full max-w-sm rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/40 focus:border-gold-light/50 focus:bg-white/10 focus:outline-none sm:w-auto"
+            />
+            <div className="flex flex-wrap gap-2">
+              {TYPES.map((tp) => (
+                <button
+                  key={tp.value}
+                  onClick={() => setType(tp.value)}
+                  className={`rounded-full px-3 py-1.5 text-sm transition hover:scale-105 ${
+                    type === tp.value
+                      ? "bg-gradient-to-r from-gold-light to-gold text-brand-dark font-medium"
+                      : "bg-white/5 text-white/70 hover:bg-white/10"
+                  }`}
+                >
+                  {tp.label}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {error && <p className="text-red-600">{error}</p>}
-        {loading ? (
-          <p className="text-slate-500">{t("common.loading")}</p>
-        ) : events.length === 0 ? (
-          <p className="text-slate-500">{t("home.noEvents")}</p>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {events.map((e, i) => (
-              <div key={e.id} style={{ animationDelay: `${Math.min(i, 6) * 60}ms` }}>
-                <EventCard event={e} />
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+          {error && <p className="text-red-400">{error}</p>}
+          {loading ? (
+            <p className="text-white/50">{t("common.loading")}</p>
+          ) : events.length === 0 ? (
+            <p className="text-white/50">{t("home.noEvents")}</p>
+          ) : (
+            <RevealGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.07}>
+              {events.map((e) => (
+                <RevealItem key={e.id}>
+                  <EventCard event={e} />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          )}
+        </section>
+      </Reveal>
 
       <LastChanceEvents events={events} />
 
@@ -113,7 +121,7 @@ function HomeContent() {
 
 export default function HomePage() {
   return (
-    <Suspense fallback={<p className="text-slate-500">Chargement…</p>}>
+    <Suspense fallback={<p className="text-white/50">Chargement…</p>}>
       <HomeContent />
     </Suspense>
   );
